@@ -1,10 +1,10 @@
 # TEAM: J-Sport
 
 ## 1. Team Member
-- Zanyuan Yang
-- Taohan Zhu
-- Siheng Wei
-- Yan Wang
+- Zanyuan Yang: ZanyuanYang
+- Taohan Zhu: ShaneZTH
+- Siheng Wei: Waysoning
+- Yan Wang: wangyan66
 
 ## 2. App Description
 J-Sport helps users to avoid the awkwardness of not having enough players for sports they love by allowing users to find people nearby to form a game. Not only could users form games via J-Sport, but the small-group game setting also builds stronger bonds between the people than large events of hundreds of people. Beyond the sports, users could also share their thoughts and discuss sports via J-Sport.
