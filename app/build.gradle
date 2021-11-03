@@ -37,4 +37,7 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     // Declare the dependency for the Firebase SDK for Google Analytics
     implementation 'com.google.firebase:firebase-analytics'
+
+    // Declare the dependency for for Realtime Database
+    implementation 'com.google.firebase:firebase-database'
 }
