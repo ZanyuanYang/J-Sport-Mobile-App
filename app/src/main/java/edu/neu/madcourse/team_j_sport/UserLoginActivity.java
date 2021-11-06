@@ -63,8 +63,7 @@ public class UserLoginActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), UserPageActivity.class);
             startActivity(intent);
         }
-
-
+        
         login_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
