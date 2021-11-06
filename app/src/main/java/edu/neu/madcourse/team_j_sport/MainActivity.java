@@ -19,12 +19,20 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
 
     private Button login_page;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        Button goSendStikerBtn = findViewById(R.id.Go_Send_Sticker);
+        goSendStikerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, UserSendStickerActivity.class);
+                startActivity(intent);
+            }
+        });
         login_page = findViewById(R.id.login_page);
         login_page.setOnClickListener(new View.OnClickListener() {
             @Override
