@@ -1,5 +1,8 @@
 package edu.neu.madcourse.team_j_sport;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,12 +20,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
 
 public class UserLoginActivity extends AppCompatActivity {
+
+    public static final String GET_USER_KEY = "get user";
+    public static final String GET_USER_ID = "get user id";
+
     private Button login_btn;
     private EditText username_et;
-
     private User newUser;
-
     long maxid = 0;
+
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +58,13 @@ public class UserLoginActivity extends AppCompatActivity {
         });
 
 
+        sp = getSharedPreferences("login",MODE_PRIVATE);
+        if(sp.getBoolean("logged",false)){
+            Intent intent = new Intent(getApplicationContext(), UserPageActivity.class);
+            startActivity(intent);
+        }
+
+
         login_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -65,6 +79,16 @@ public class UserLoginActivity extends AppCompatActivity {
                     newUser.setUsername(username);
                     myRef.child(String.valueOf(maxid+1)).setValue(newUser);
 
+                    Intent intent = new Intent(getApplicationContext(), UserPageActivity.class);
+//                    intent.putExtra(GET_USER_KEY,newUser);
+
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString(GET_USER_KEY, username);
+                    editor.putLong(GET_USER_ID, maxid+1);
+                    editor.apply();
+
+                    startActivity(intent);
+                    sp.edit().putBoolean("logged",true).apply();
                 }
             }
         });
