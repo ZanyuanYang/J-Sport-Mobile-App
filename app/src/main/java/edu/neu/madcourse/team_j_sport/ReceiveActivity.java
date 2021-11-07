@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -16,13 +15,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class ReceiveActivity extends AppCompatActivity {
 
@@ -87,7 +81,7 @@ public class ReceiveActivity extends AppCompatActivity {
         outState.putInt(NUMBER_OF_ITEMS, size);
 
         for(int i = 0; i < size; i++){
-            outState.putString(KEY_OF_INSTANCE + i + "0", itemReceives.get(i).getImageUrl());
+            outState.putString(KEY_OF_INSTANCE + i + "0", itemReceives.get(i).getImageName());
             outState.putString(KEY_OF_INSTANCE + i + "1", itemReceives.get(i).getSender());
             outState.putString(KEY_OF_INSTANCE + i + "2", itemReceives.get(i).getDate());
         }
@@ -114,7 +108,7 @@ public class ReceiveActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rv_receive);
         recyclerView.setHasFixedSize(true);
 
-        receiveAdapter = new ReceiveAdapter(itemReceives);
+        receiveAdapter = new ReceiveAdapter(itemReceives, getApplicationContext());
 
         recyclerView.setAdapter(receiveAdapter);
         recyclerView.setLayoutManager(layoutManager);
