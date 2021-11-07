@@ -1,5 +1,6 @@
 package edu.neu.madcourse.team_j_sport;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,14 +8,20 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 
 public class ReceiveAdapter extends RecyclerView.Adapter<ReceiveHolder> {
 
     private final ArrayList<ItemReceive> itemReceives;
+    private final Context mContext;
 
-    public ReceiveAdapter(ArrayList<ItemReceive> itemReceives) {
+    public ReceiveAdapter(ArrayList<ItemReceive> itemReceives, Context mContext) {
         this.itemReceives = itemReceives;
+        this.mContext = mContext;
     }
 
     @NonNull
@@ -27,8 +34,10 @@ public class ReceiveAdapter extends RecyclerView.Adapter<ReceiveHolder> {
     @Override
     public void onBindViewHolder(@NonNull ReceiveHolder holder, int position) {
         ItemReceive itemReceive = itemReceives.get(position);
-        //just for test
-        holder.imgSticker.setImageResource(R.drawable.common_full_open_on_phone);
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(itemReceive.getImageName());
+        Glide.with(mContext /* context */)
+                .load(storageReference)
+                .into(holder.imgSticker);
         holder.tvSender.setText(itemReceive.getSender());
         holder.tvDate.setText(itemReceive.getDate());
     }
