@@ -1,81 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".UserSendStickerActivity">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/sticker1"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/sticker_15"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sticker2" />
-
-    <ImageView
-        android:id="@+id/sticker2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2"
-        android:src="@drawable/sticker_15"/>
-
-    <ImageView
-        android:id="@+id/sticker3"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499"
-        android:src="@drawable/sticker_15"/>
-
-    <ImageView
-        android:id="@+id/sticker4"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/sticker_15"/>
-
-    <ImageView
-        android:id="@+id/sticker5"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sticker6"
-        android:src="@drawable/sticker_15"/>
-
-    <ImageView
-        android:id="@+id/sticker6"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8"
-        android:src="@drawable/sticker_15"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <GridView
+        android:id="@+id/SendSticker_GridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:columnWidth="100dp"
+        android:numColumns="3"
+        android:verticalSpacing="24dp"
+        android:horizontalSpacing="5dp"
+        android:stretchMode="spacingWidthUniform"/>
+</LinearLayout>
