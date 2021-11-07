@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ public class UserPageActivity extends AppCompatActivity {
 
     private User user;
     private TextView get_username_tv;
+    private Button receive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,5 +39,14 @@ public class UserPageActivity extends AppCompatActivity {
 //        System.out.println("once we entered homepage, the userId: "+ userId);
 //        System.out.println("username: "+ username);
 
+
+        receive = findViewById(R.id.btn_receive);
+        receive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserPageActivity.this, ReceiveActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
