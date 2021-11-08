@@ -1,6 +1,5 @@
 package edu.neu.madcourse.team_j_sport;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -79,7 +78,6 @@ public class UserLoginActivity extends AppCompatActivity {
                     myRef.child(String.valueOf(maxid+1)).setValue(newUser);
 
                     Intent intent = new Intent(getApplicationContext(), UserPageActivity.class);
-//                    intent.putExtra(GET_USER_KEY,newUser);
 
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString(GET_USER_KEY, username);

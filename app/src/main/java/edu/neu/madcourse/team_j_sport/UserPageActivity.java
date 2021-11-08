@@ -7,7 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.NotNull;
 
 public class UserPageActivity extends AppCompatActivity {
 
@@ -28,6 +36,10 @@ public class UserPageActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
         String value = sharedPreferences.getString(GET_USER_KEY,"");
         get_username_tv.setText(value);
+
+        // Return ID by username
+        long getIdFromFB = getIdFromFirebase("yang");
+        System.out.println("getIdFromFB: " + getIdFromFB);
 
 //        Intent preIntent = getIntent();
         //if the user already has a ticket in firebase, then stop jump to the SubmitTicket page.
@@ -54,4 +66,32 @@ public class UserPageActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
+
+    // get Id From Firebase
+    public long getIdFromFirebase(String username){
+        long[] id = {0};
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference().child("Users");
+        myRef.addValueEventListener(new ValueEventListener(){
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot){
+//                System.out.println("dataSnapshot: " + dataSnapshot.getValue());
+                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                    if(userSnapshot.child("username").getValue().equals(username)){
+                        System.out.println("dataSnapshot: " + userSnapshot.child("id").getValue());
+                        id[0] = (long) userSnapshot.child("id").getValue();
+                    }
+                }
+
+            }
+            @Override
+            public void onCancelled(@NotNull DatabaseError databaseError){
+
+            }
+        });
+        return id[0];
+    }
 }
+
+
