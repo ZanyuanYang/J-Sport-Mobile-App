@@ -1,6 +1,5 @@
 package edu.neu.madcourse.team_j_sport;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +16,7 @@ public class UserPageActivity extends AppCompatActivity {
     private User user;
     private TextView get_username_tv;
     private Button receive;
+    private Button sent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +41,17 @@ public class UserPageActivity extends AppCompatActivity {
 
 
         receive = findViewById(R.id.btn_receive);
-        receive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UserPageActivity.this, ReceiveActivity.class);
-                startActivity(intent);
-            }
+        receive.setOnClickListener(v -> {
+            Intent intent = new Intent(UserPageActivity.this, MessageActivity.class);
+            intent.putExtra("inbox", "receive");
+            startActivity(intent);
+        });
+
+        sent = findViewById(R.id.btn_sent);
+        sent.setOnClickListener(v -> {
+            Intent intent = new Intent(UserPageActivity.this, MessageActivity.class);
+            intent.putExtra("inbox", "sent");
+            startActivity(intent);
         });
     }
 }
