@@ -1,6 +1,5 @@
 package edu.neu.madcourse.team_j_sport;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,6 +27,8 @@ public class UserLoginActivity extends AppCompatActivity {
     private EditText username_et;
     private User newUser;
     long maxid = 0;
+
+    UtilsFunction utilsFunction;
 
     SharedPreferences sp;
 
@@ -72,22 +73,34 @@ public class UserLoginActivity extends AppCompatActivity {
                 if(TextUtils.isEmpty(username)){
                     username_et.setError("Please enter username");
                 }else{
-                    System.out.println("max_id:" + maxid);
-                    newUser = new User();
-                    newUser.setId(maxid+1);
-                    newUser.setUsername(username);
-                    myRef.child(String.valueOf(maxid+1)).setValue(newUser);
+                    boolean checkUserExistsOrNot = utilsFunction.checkUserExistsOrNot(username);
+                    if(checkUserExistsOrNot == true){
+                        Intent intent = new Intent(getApplicationContext(), UserPageActivity.class);
 
-                    Intent intent = new Intent(getApplicationContext(), UserPageActivity.class);
-//                    intent.putExtra(GET_USER_KEY,newUser);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString(GET_USER_KEY, username);
+                        editor.putLong(GET_USER_ID, utilsFunction.getIdFromFirebase(username));
+                        editor.apply();
 
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putString(GET_USER_KEY, username);
-                    editor.putLong(GET_USER_ID, maxid+1);
-                    editor.apply();
+                        startActivity(intent);
+                        sp.edit().putBoolean("logged",true).apply();
+                    }else{
+                        System.out.println("max_id:" + maxid);
+                        newUser = new User();
+                        newUser.setId(maxid+1);
+                        newUser.setUsername(username);
+                        myRef.child(String.valueOf(maxid+1)).setValue(newUser);
 
-                    startActivity(intent);
-                    sp.edit().putBoolean("logged",true).apply();
+                        Intent intent = new Intent(getApplicationContext(), UserPageActivity.class);
+
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString(GET_USER_KEY, username);
+                        editor.putLong(GET_USER_ID, maxid+1);
+                        editor.apply();
+
+                        startActivity(intent);
+                        sp.edit().putBoolean("logged",true).apply();
+                    }
                 }
             }
         });

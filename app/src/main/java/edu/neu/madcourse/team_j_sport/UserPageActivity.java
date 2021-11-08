@@ -7,7 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.NotNull;
 
 public class UserPageActivity extends AppCompatActivity {
 
@@ -17,6 +25,8 @@ public class UserPageActivity extends AppCompatActivity {
     private TextView get_username_tv;
     private Button receive;
     private Button sent;
+
+    UtilsFunction utilsFunction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +38,10 @@ public class UserPageActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
         String value = sharedPreferences.getString(GET_USER_KEY,"");
         get_username_tv.setText(value);
+
+        // Return ID by username
+        long getIdFromFB = utilsFunction.getIdFromFirebase("yang");
+        System.out.println("getIdFromFB: " + getIdFromFB);
 
 //        Intent preIntent = getIntent();
         //if the user already has a ticket in firebase, then stop jump to the SubmitTicket page.
@@ -55,3 +69,5 @@ public class UserPageActivity extends AppCompatActivity {
         });
     }
 }
+
+
