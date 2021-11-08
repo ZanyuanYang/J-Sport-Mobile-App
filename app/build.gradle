@@ -51,6 +51,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics' //firebase add
     implementation 'com.google.firebase:firebase-auth:16.0.5'
     implementation 'com.google.firebase:firebase-firestore:22.0.0'
+    implementation 'com.google.firebase:firebase-messaging' // for the Firebase Cloud Messaging
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.google.android.material:material:1.4.0'
 
