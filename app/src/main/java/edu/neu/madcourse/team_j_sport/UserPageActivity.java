@@ -21,9 +21,12 @@ public class UserPageActivity extends AppCompatActivity {
     public static final String GET_USER_KEY = "get user";
     public static final String TOPIC_USER_ID = "userId-";
 
+    private Button receive;
+    private Button sent;
+
     private User user;
     private TextView get_username_tv;
-    private Button receive;
+
     private Long userId;
     private String topic;
 
@@ -60,12 +63,17 @@ public class UserPageActivity extends AppCompatActivity {
 
 
         receive = findViewById(R.id.btn_receive);
-        receive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UserPageActivity.this, ReceiveActivity.class);
-                startActivity(intent);
-            }
+        receive.setOnClickListener(v -> {
+            Intent intent = new Intent(UserPageActivity.this, MessageActivity.class);
+            intent.putExtra("inbox", "receive");
+            startActivity(intent);
+        });
+
+        sent = findViewById(R.id.btn_sent);
+        sent.setOnClickListener(v -> {
+            Intent intent = new Intent(UserPageActivity.this, MessageActivity.class);
+            intent.putExtra("inbox", "sent");
+            startActivity(intent);
         });
     }
 

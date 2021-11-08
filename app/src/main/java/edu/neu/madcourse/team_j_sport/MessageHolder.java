@@ -7,17 +7,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ReceiveHolder extends RecyclerView.ViewHolder {
+public class MessageHolder extends RecyclerView.ViewHolder {
 
     public ImageView imgSticker;
-    public TextView tvSender;
+    public TextView tvUser;
     public TextView tvDate;
 
 
-    public ReceiveHolder(@NonNull View itemView) {
+    public MessageHolder(@NonNull View itemView) {
         super(itemView);
         this.imgSticker = itemView.findViewById(R.id.img_sticker);
-        this.tvSender = itemView.findViewById(R.id.tv_sender);
+        this.tvUser = itemView.findViewById(R.id.tv_user);
         this.tvDate = itemView.findViewById(R.id.tv_date);
     }
 }
