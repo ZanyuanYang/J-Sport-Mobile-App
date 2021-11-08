@@ -33,6 +33,8 @@ public class UserLoginActivity extends AppCompatActivity {
     private User newUser;
     long maxId = -1;
 
+    UtilsFunction utilsFunction;
+
     SharedPreferences sp;
 
     @Override
@@ -103,29 +105,37 @@ public class UserLoginActivity extends AppCompatActivity {
                 if(TextUtils.isEmpty(username)){
                     username_et.setError("Please enter username");
                 }else{
-                    Log.d(TAG, "userId: " + userId);
-                    newUser = new User();
+                    boolean checkUserExistsOrNot = utilsFunction.checkUserExistsOrNot(username);
+                    if(checkUserExistsOrNot == true){
+                        Intent intent = new Intent(getApplicationContext(), UserPageActivity.class);
 
-                    newUser.setId(userId);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString(GET_USER_KEY, username);
+                        editor.putLong(GET_USER_ID, utilsFunction.getIdFromFirebase(username));
+                        editor.apply();
 
-                    newUser.setUsername(username);
-                    myRef.child(String.valueOf(userId)).setValue(newUser);
+                        startActivity(intent);
+                        sp.edit().putBoolean("logged",true).apply();
+                    }else{
+                        Log.d(TAG, "userId: " + userId);
+                        newUser = new User();
 
-                    Intent intent = new Intent(getApplicationContext(), UserPageActivity.class);
-//                    intent.putExtra(GET_USER_KEY,newUser);
+                        newUser.setId(userId);
+                        newUser.setUsername(username);
+                        myRef.child(String.valueOf(userId)).setValue(newUser);
 
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putString(GET_USER_KEY, username);
+                        Intent intent = new Intent(getApplicationContext(), UserPageActivity.class);
 
-                    editor.putLong(GET_USER_ID, userId);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString(GET_USER_KEY, username);
+                        editor.putLong(GET_USER_ID, userId);
+                        editor.apply();
 
-                    editor.apply();
-
-                    startActivity(intent);
-                    sp.edit().putBoolean("logged",true).apply();
+                        startActivity(intent);
+                        sp.edit().putBoolean("logged",true).apply();
+                    }
                 }
             }
         });
     }
-
 }

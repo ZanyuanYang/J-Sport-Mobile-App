@@ -10,10 +10,16 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import edu.neu.madcourse.team_j_sport.FCM.FCMServer;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.NotNull;
 
 public class UserPageActivity extends AppCompatActivity {
     public static final String TAG = "UserPageActivity";
@@ -23,11 +29,14 @@ public class UserPageActivity extends AppCompatActivity {
     private Button receive;
     private Button sent;
 
+
     private User user;
     private TextView get_username_tv;
 
     private Long userId;
     private String topic;
+
+    UtilsFunction utilsFunction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +58,10 @@ public class UserPageActivity extends AppCompatActivity {
         FCMServer.testSend((long) 0);
 
         get_username_tv.setText(value);
+
+        // Return ID by username
+        long getIdFromFB = utilsFunction.getIdFromFirebase("yang");
+        System.out.println("getIdFromFB: " + getIdFromFB);
 
 //        Intent preIntent = getIntent();
         //if the user already has a ticket in firebase, then stop jump to the SubmitTicket page.
@@ -117,3 +130,5 @@ public class UserPageActivity extends AppCompatActivity {
     }
 
 }
+
+
