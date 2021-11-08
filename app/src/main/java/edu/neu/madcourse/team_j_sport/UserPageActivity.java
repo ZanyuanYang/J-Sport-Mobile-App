@@ -48,5 +48,16 @@ public class UserPageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button goSendStikerBtn = findViewById(R.id.Go_Send_Sticker);
+        goSendStikerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserPageActivity.this, UserSendStickerActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 }
