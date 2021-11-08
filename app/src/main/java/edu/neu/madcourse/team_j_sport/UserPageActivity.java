@@ -26,6 +26,8 @@ public class UserPageActivity extends AppCompatActivity {
     private Button receive;
     private Button sent;
 
+    UtilsFunction utilsFunction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +40,7 @@ public class UserPageActivity extends AppCompatActivity {
         get_username_tv.setText(value);
 
         // Return ID by username
-        long getIdFromFB = getIdFromFirebase("yang");
+        long getIdFromFB = utilsFunction.getIdFromFirebase("yang");
         System.out.println("getIdFromFB: " + getIdFromFB);
 
 //        Intent preIntent = getIntent();
@@ -65,32 +67,6 @@ public class UserPageActivity extends AppCompatActivity {
             intent.putExtra("inbox", "sent");
             startActivity(intent);
         });
-    }
-
-
-    // get Id From Firebase
-    public long getIdFromFirebase(String username){
-        long[] id = {0};
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference().child("Users");
-        myRef.addValueEventListener(new ValueEventListener(){
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot){
-//                System.out.println("dataSnapshot: " + dataSnapshot.getValue());
-                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
-                    if(userSnapshot.child("username").getValue().equals(username)){
-                        System.out.println("dataSnapshot: " + userSnapshot.child("id").getValue());
-                        id[0] = (long) userSnapshot.child("id").getValue();
-                    }
-                }
-
-            }
-            @Override
-            public void onCancelled(@NotNull DatabaseError databaseError){
-
-            }
-        });
-        return id[0];
     }
 }
 
