@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -53,7 +55,7 @@ public class UserSendStickerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_send_sticker);
-        initView();
+//        initView();
 
     }
     public void initView(){
@@ -126,10 +128,12 @@ public class UserSendStickerActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 sentFlag = false;
                 receivedFlag = false;
-//                writeReceived(position, );
-
-//                writeSent(position,);
-                Toast.makeText(UserSendStickerActivity.this, "Send", Toast.LENGTH_SHORT).show();
+                EditText dt = v.findViewById(R.id.Sticker_Dialog_Username);
+                String receivedUsername = dt.getText().toString();
+//                Long receivedUserId = UtilsFunction.getIdFromFirebase(receivedUsername);
+//                writeSent(position, receivedUsername);
+//                writeReceived(position, receivedUserId);
+                Toast.makeText(UserSendStickerActivity.this, "Sent Sticker!", Toast.LENGTH_SHORT).show();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -153,12 +157,12 @@ public class UserSendStickerActivity extends AppCompatActivity {
                 }
                 if (snapshot.exists()){
                     receivedCnt = snapshot.getChildrenCount();
-                    ItemMessage itemMessage = new ItemMessage(imageName, userName, getDate());
+                    ItemReceivedMessages item = new ItemReceivedMessages(imageName, userName, getDate());
 
                     mDatabase.child("Users")
                             .child(String.valueOf(receivedUserId))
                             .child("ReceivedMessages")
-                            .child(String.valueOf(receivedCnt + 1)).setValue(itemMessage);
+                            .child(String.valueOf(receivedCnt + 1)).setValue(item);
                     receivedFlag = true;
                 }
             }
@@ -207,24 +211,29 @@ public class UserSendStickerActivity extends AppCompatActivity {
     }
 
     private class ItemSentMessages{
-        private String imageName;
-        private String receiverName;
-        private String date;
+        public String imageName;
+        public String receiverName;
+        public String date;
         public ItemSentMessages(String imageName, String userName, String date){
             this.imageName = imageName;
             this.receiverName = userName;
             this.date = date;
+        }
+        public ItemSentMessages(){
 
         }
     }
     private class ItemReceivedMessages{
-        private String imageName;
-        private String senderName;
-        private String date;
+        public String imageName;
+        public String senderName;
+        public String date;
         public ItemReceivedMessages(String imageName, String userName, String date){
             this.imageName = imageName;
             this.senderName = userName;
             this.date = date;
+        }
+        public  ItemReceivedMessages(){
+
         }
     }
 
