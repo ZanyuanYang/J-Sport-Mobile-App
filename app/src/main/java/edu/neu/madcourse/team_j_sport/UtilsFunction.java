@@ -1,5 +1,7 @@
 package edu.neu.madcourse.team_j_sport;
 
+import android.os.Handler;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -14,15 +16,15 @@ public class UtilsFunction {
     // get Id From Firebase
     public static long getIdFromFirebase(String username){
         long[] id = {0};
+        int a = 0;
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference().child("Users");
         myRef.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot){
-//                System.out.println("dataSnapshot: " + dataSnapshot.getValue());
                 for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                    System.out.println("dataSnapshot1: " + id[0]);
                     if(userSnapshot.child("username").getValue().equals(username)){
-                        System.out.println("dataSnapshot: " + userSnapshot.child("id").getValue());
                         id[0] = (long) userSnapshot.child("id").getValue();
                     }
                 }
@@ -33,6 +35,7 @@ public class UtilsFunction {
 
             }
         });
+        System.out.println("dataSnapshot2: " + id[0]);
         return id[0];
     }
 

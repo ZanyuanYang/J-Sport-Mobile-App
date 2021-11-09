@@ -32,6 +32,7 @@ public class UserLoginActivity extends AppCompatActivity {
     private EditText username_et;
     private User newUser;
     long maxId = -1;
+    long id;
 
     UtilsFunction utilsFunction;
 
@@ -102,38 +103,77 @@ public class UserLoginActivity extends AppCompatActivity {
                 String username = username_et.getText().toString();
                 Long userId = (long) ++maxId;
 
+                final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                final DatabaseReference myRef = database.getReference().child("Users");
+
                 if(TextUtils.isEmpty(username)){
                     username_et.setError("Please enter username");
                 }else{
-                    boolean checkUserExistsOrNot = utilsFunction.checkUserExistsOrNot(username);
-                    if(checkUserExistsOrNot == true){
-                        Intent intent = new Intent(getApplicationContext(), UserPageActivity.class);
+                    final boolean[] checkUserExistsOrNot = {false};
 
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putString(GET_USER_KEY, username);
-                        editor.putLong(GET_USER_ID, utilsFunction.getIdFromFirebase(username));
-                        editor.apply();
 
-                        startActivity(intent);
-                        sp.edit().putBoolean("logged",true).apply();
-                    }else{
-                        Log.d(TAG, "userId: " + userId);
-                        newUser = new User();
+                    myRef.addValueEventListener(new ValueEventListener(){
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot){
+                            for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                                if(userSnapshot.child("username").getValue().equals(username)){
+                                    checkUserExistsOrNot[0] = true;
+                                }
+                            }
 
-                        newUser.setId(userId);
-                        newUser.setUsername(username);
-                        myRef.child(String.valueOf(userId)).setValue(newUser);
+                            if(checkUserExistsOrNot[0] == true){
+                                Intent intent = new Intent(getApplicationContext(), UserPageActivity.class);
 
-                        Intent intent = new Intent(getApplicationContext(), UserPageActivity.class);
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.putString(GET_USER_KEY, username);
 
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putString(GET_USER_KEY, username);
-                        editor.putLong(GET_USER_ID, userId);
-                        editor.apply();
+                                // get user id by username
+                                myRef.addValueEventListener(new ValueEventListener(){
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot){
+                                        for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                                            if(userSnapshot.child("username").getValue().equals(username)){
+                                                id = (long) userSnapshot.child("id").getValue();
+                                                editor.putLong(GET_USER_ID, id);
+                                                editor.apply();
+                                                startActivity(intent);
+                                                sp.edit().putBoolean("logged",true).apply();
+                                            }
+                                        }
 
-                        startActivity(intent);
-                        sp.edit().putBoolean("logged",true).apply();
-                    }
+                                    }
+                                    @Override
+                                    public void onCancelled(@NotNull DatabaseError databaseError){
+
+                                    }
+                                });
+                            }else{
+                                Log.d(TAG, "userId: " + userId);
+                                newUser = new User();
+
+                                newUser.setId(userId);
+                                newUser.setUsername(username);
+                                myRef.child(String.valueOf(userId)).setValue(newUser);
+
+                                Intent intent = new Intent(getApplicationContext(), UserPageActivity.class);
+
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.putString(GET_USER_KEY, username);
+                                editor.putLong(GET_USER_ID, userId);
+                                editor.apply();
+
+                                startActivity(intent);
+                                sp.edit().putBoolean("logged",true).apply();
+                            }
+
+
+                        }
+                        @Override
+                        public void onCancelled(@NotNull DatabaseError databaseError){
+
+                        }
+                    });
+
                 }
             }
         });
