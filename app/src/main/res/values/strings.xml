@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Team_J-Sport</string>
+
+    <!--    FCM -->
+    <string name="msg_token_fmt" translatable="false">FCM registration Token: %s</string>
+    <string name="msg_subscribed">Subscribed to user\'s own topic</string>
+    <string name="msg_subscribe_failed">Failed to subscribe to user\'s own topic</string>
+    <string name="msg_unsubscribed">Unsubscribed to user\'s own topic</string>
+    <string name="msg_unsubscribe_failed">Failed to unsubscribe to user\'s own topic</string>
+
 </resources>
