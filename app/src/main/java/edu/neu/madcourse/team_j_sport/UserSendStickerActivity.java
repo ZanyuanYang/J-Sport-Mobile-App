@@ -29,7 +29,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserSendStickerActivity extends AppCompatActivity {
@@ -39,6 +41,7 @@ public class UserSendStickerActivity extends AppCompatActivity {
     private List<StorageReference> refList;
     public static final String GET_USER_KEY = "get user";
     public static final String GET_USER_ID = "get user id";
+
     private String userName;
     private Long userId;
     private DatabaseReference mDatabase;
@@ -121,7 +124,11 @@ public class UserSendStickerActivity extends AppCompatActivity {
         builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                sentFlag = false;
+                receivedFlag = false;
+//                writeReceived(position, );
 
+//                writeSent(position,);
                 Toast.makeText(UserSendStickerActivity.this, "Send", Toast.LENGTH_SHORT).show();
             }
         });
@@ -135,26 +142,52 @@ public class UserSendStickerActivity extends AppCompatActivity {
         dialog.show();
 
     }
-    private void writeReceived(){
+    private void writeReceived(int position, Long receivedUserId){
+        StickerGridViewCell cell = (StickerGridViewCell) cellList.get(position);
+        String imageName = cell.imageReference.getName();
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (receivedFlag == true){
+                    return;
+                }
+                if (snapshot.exists()){
+                    receivedCnt = snapshot.getChildrenCount();
+                    ItemMessage itemMessage = new ItemMessage(imageName, userName, getDate());
 
+                    mDatabase.child("Users")
+                            .child(String.valueOf(receivedUserId))
+                            .child("ReceivedMessages")
+                            .child(String.valueOf(receivedCnt + 1)).setValue(itemMessage);
+                    receivedFlag = true;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        mDatabase.addValueEventListener(listener);
 
     }
-    private void writeSent(){
-
+    private void writeSent(int position, String receivedUserName){
+        StickerGridViewCell cell = (StickerGridViewCell) cellList.get(position);
+        String imageName = cell.imageReference.getName();
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (sentFlag == true){
-                    sentFlag = false;
                     return;
                 }
                 if (snapshot.exists()){
                     sentCnt = snapshot.getChildrenCount();
-//                    ItemReceive item = new ItemReceive()
+                    ItemSentMessages item = new ItemSentMessages(imageName, receivedUserName, getDate());
+
                     mDatabase.child("Users")
                             .child(String.valueOf(userId))
                             .child("SentMessages")
-                            .child(String.valueOf(sentCnt + 1)).setValue();
+                            .child(String.valueOf(sentCnt + 1)).setValue(item);
                     sentFlag = true;
                 }
             }
@@ -166,4 +199,34 @@ public class UserSendStickerActivity extends AppCompatActivity {
         };
         mDatabase.addValueEventListener(listener);
     }
+    private String getDate(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy - MM - DD HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        String dstr = "" + simpleDateFormat.format(date);
+        return dstr;
+    }
+
+    private class ItemSentMessages{
+        private String imageName;
+        private String receiverName;
+        private String date;
+        public ItemSentMessages(String imageName, String userName, String date){
+            this.imageName = imageName;
+            this.receiverName = userName;
+            this.date = date;
+
+        }
+    }
+    private class ItemReceivedMessages{
+        private String imageName;
+        private String senderName;
+        private String date;
+        public ItemReceivedMessages(String imageName, String userName, String date){
+            this.imageName = imageName;
+            this.senderName = userName;
+            this.date = date;
+        }
+    }
+
+
 }
