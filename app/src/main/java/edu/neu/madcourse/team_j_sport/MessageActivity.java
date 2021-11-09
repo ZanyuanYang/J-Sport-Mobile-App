@@ -25,9 +25,6 @@ public class MessageActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
-    private static final String KEY_OF_INSTANCE = "KEY_OF_INSTANCE";
-    private static final String NUMBER_OF_ITEMS = "NUMBER_OF_ITEMS";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,38 +79,6 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
-        initialItemData(savedInstanceState);
-    }
-
-    // Handling Orientation Changes on Android
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-
-        int size = itemMessages == null ? 0 : itemMessages.size();
-        outState.putInt(NUMBER_OF_ITEMS, size);
-
-        for(int i = 0; i < size; i++){
-            outState.putString(KEY_OF_INSTANCE + i + "0", itemMessages.get(i).getImageName());
-            outState.putString(KEY_OF_INSTANCE + i + "1", itemMessages.get(i).getUserName());
-            outState.putString(KEY_OF_INSTANCE + i + "2", itemMessages.get(i).getDate());
-        }
-
-        super.onSaveInstanceState(outState);
-    }
-
-    private void initialItemData(Bundle savedInstanceState) {
-        if(savedInstanceState != null && savedInstanceState.containsKey(NUMBER_OF_ITEMS)){
-            if(itemMessages == null || itemMessages.size() == 0){
-                int size = savedInstanceState.getInt(NUMBER_OF_ITEMS);
-                for(int i = 0; i < size; i++){
-                    String imageUrl = savedInstanceState.getString(KEY_OF_INSTANCE + i + "0");
-                    String sender = savedInstanceState.getString(KEY_OF_INSTANCE + i + "1");
-                    String date = savedInstanceState.getString(KEY_OF_INSTANCE + i + "1");
-                    assert itemMessages != null;
-                    itemMessages.add(new ItemMessage(imageUrl, sender, date));
-                }
-            }
-        }
     }
 
     private void createRecyclerView() {
