@@ -29,6 +29,7 @@ public class UserPageActivity extends AppCompatActivity {
 
     private Button receive;
     private Button sent;
+    private Button logout;
 
 
     private User user;
@@ -38,6 +39,8 @@ public class UserPageActivity extends AppCompatActivity {
     private String topic;
 
     UtilsFunction utilsFunction;
+
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +64,7 @@ public class UserPageActivity extends AppCompatActivity {
         get_username_tv.setText(value);
 
         // Return ID by username
-        long getIdFromFB = utilsFunction.getIdFromFirebase("yang");
+        long getIdFromFB = utilsFunction.getIdFromFirebase(value);
         System.out.println("getIdFromFB: " + getIdFromFB);
 
 //        Intent preIntent = getIntent();
@@ -99,7 +102,13 @@ public class UserPageActivity extends AppCompatActivity {
 
         });
 
-
+        logout = findViewById(R.id.btn_logout);
+        logout.setOnClickListener(v -> {
+            Intent intent = new Intent(UserPageActivity.this, UserLoginActivity.class);
+            startActivity(intent);
+            sp = getSharedPreferences("login", MODE_PRIVATE);
+            sp.edit().putBoolean("logged",false).apply();
+        });
     }
 
     /**

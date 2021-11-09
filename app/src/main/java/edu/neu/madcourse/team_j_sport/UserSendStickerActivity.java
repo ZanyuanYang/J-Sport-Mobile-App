@@ -47,15 +47,11 @@ public class UserSendStickerActivity extends AppCompatActivity {
     private String userName;
     private Long userId;
     private DatabaseReference mDatabase;
-    private Long sentCnt;
-    private Long receivedCnt;
-    private boolean sentFlag = false;
-    private boolean receivedFlag = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_send_sticker);
-//        initView();
+        initView();
 
     }
     public void initView(){
@@ -63,9 +59,7 @@ public class UserSendStickerActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
         userName = sharedPreferences.getString(GET_USER_KEY,"");
         userId = sharedPreferences.getLong(UserLoginActivity.GET_USER_ID,1L);
-
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
         FirebaseStorage storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
         StorageReference storageRef = storage.getReference();
@@ -75,14 +69,11 @@ public class UserSendStickerActivity extends AppCompatActivity {
                     public void onSuccess(ListResult listResult) {
                         for (StorageReference prefix : listResult.getPrefixes()) {
                             // All the prefixes under listRef.
-                            // You may call listAll() recursively on them.
-                            Log.w(TAG, "!!!"+ prefix.toString());
                         }
 
                         for (StorageReference item : listResult.getItems()) {
                             // All the items under listRef.
                             refList.add(item);
-                            Log.w(TAG, " "+ item.toString());
 
                         }
                         loadStickers();
@@ -105,7 +96,6 @@ public class UserSendStickerActivity extends AppCompatActivity {
             cell.imageReference = refList.get(i);
             cellList.add(cell);
         }
-        //        .notifyItemInserted(0)
         stickerGridView.setAdapter(new StickerGridViewAdapter(this, cellList));
         stickerGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -126,44 +116,37 @@ public class UserSendStickerActivity extends AppCompatActivity {
         builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                sentFlag = false;
-                receivedFlag = false;
                 EditText dt = v.findViewById(R.id.Sticker_Dialog_Username);
                 String receivedUsername = dt.getText().toString();
-//                Long receivedUserId = UtilsFunction.getIdFromFirebase(receivedUsername);
-//                writeSent(position, receivedUsername);
-//                writeReceived(position, receivedUserId);
-                Toast.makeText(UserSendStickerActivity.this, "Sent Sticker!", Toast.LENGTH_SHORT).show();
+                findUserIdByUserName(receivedUsername, position);
+                writeSent(position,receivedUsername);
+                Toast.makeText(UserSendStickerActivity.this, "Sent Sticker Successfully!", Toast.LENGTH_SHORT).show();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(UserSendStickerActivity.this, "Cancel" + i, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(UserSendStickerActivity.this, "Cancel" + i, Toast.LENGTH_SHORT).show();
             }
         });
         AlertDialog dialog=builder.create();
         dialog.show();
-
     }
     private void writeReceived(int position, Long receivedUserId){
         StickerGridViewCell cell = (StickerGridViewCell) cellList.get(position);
         String imageName = cell.imageReference.getName();
+
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (receivedFlag == true){
-                    return;
-                }
                 if (snapshot.exists()){
-                    receivedCnt = snapshot.getChildrenCount();
+                    long childCnt = snapshot.getChildrenCount();
                     ItemReceivedMessages item = new ItemReceivedMessages(imageName, userName, getDate());
-
                     mDatabase.child("Users")
                             .child(String.valueOf(receivedUserId))
                             .child("ReceivedMessages")
-                            .child(String.valueOf(receivedCnt + 1)).setValue(item);
-                    receivedFlag = true;
+                            .child(String.valueOf(childCnt + 1)).setValue(item);
+//                    receivedFlag = true;
                 }
             }
 
@@ -172,7 +155,9 @@ public class UserSendStickerActivity extends AppCompatActivity {
 
             }
         };
-        mDatabase.addValueEventListener(listener);
+        mDatabase.child("Users")
+                .child(String.valueOf(receivedUserId))
+                .child("ReceivedMessages").addListenerForSingleValueEvent(listener);
 
     }
     private void writeSent(int position, String receivedUserName){
@@ -181,18 +166,15 @@ public class UserSendStickerActivity extends AppCompatActivity {
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (sentFlag == true){
-                    return;
-                }
+
                 if (snapshot.exists()){
-                    sentCnt = snapshot.getChildrenCount();
+                    Long childCnt = snapshot.getChildrenCount();
                     ItemSentMessages item = new ItemSentMessages(imageName, receivedUserName, getDate());
 
                     mDatabase.child("Users")
                             .child(String.valueOf(userId))
                             .child("SentMessages")
-                            .child(String.valueOf(sentCnt + 1)).setValue(item);
-                    sentFlag = true;
+                            .child(String.valueOf(childCnt + 1)).setValue(item);
                 }
             }
 
@@ -201,10 +183,12 @@ public class UserSendStickerActivity extends AppCompatActivity {
 
             }
         };
-        mDatabase.addValueEventListener(listener);
+        mDatabase.child("Users")
+                .child(String.valueOf(userId))
+                .child("SentMessages").addListenerForSingleValueEvent(listener);
     }
     private String getDate(){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy - MM - DD HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd,HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
         String dstr = "" + simpleDateFormat.format(date);
         return dstr;
@@ -235,6 +219,25 @@ public class UserSendStickerActivity extends AppCompatActivity {
         public  ItemReceivedMessages(){
 
         }
+    }
+    private  void findUserIdByUserName(String userName, int position){
+
+        mDatabase.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ss : snapshot.getChildren()){
+                    if(ss.child("username").getValue().equals(userName)){
+                        Long receivedUserId = (Long) ss.child("id").getValue();
+                        writeReceived(position, receivedUserId);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 
