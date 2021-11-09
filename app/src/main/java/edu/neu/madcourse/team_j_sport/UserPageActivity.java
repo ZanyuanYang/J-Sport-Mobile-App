@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -89,6 +90,16 @@ public class UserPageActivity extends AppCompatActivity {
             Intent intent = new Intent(UserPageActivity.this, MessageActivity.class);
             intent.putExtra("inbox", "sent");
             startActivity(intent);
+        });
+
+        Button goSendStikerBtn = findViewById(R.id.Go_Send_Sticker);
+        goSendStikerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserPageActivity.this, UserSendStickerActivity.class);
+                startActivity(intent);
+            }
+
         });
 
         logout = findViewById(R.id.btn_logout);
