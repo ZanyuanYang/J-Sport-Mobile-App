@@ -135,18 +135,22 @@ public class UserSendStickerActivity extends AppCompatActivity {
     private void writeReceived(int position, Long receivedUserId){
         StickerGridViewCell cell = (StickerGridViewCell) cellList.get(position);
         String imageName = cell.imageReference.getName();
-
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                long childCnt = snapshot.getChildrenCount();
+                ReceivedMessages item = new ReceivedMessages(imageName, userName, getDate());
                 if (snapshot.exists()){
-                    long childCnt = snapshot.getChildrenCount();
-                    ItemReceivedMessages item = new ItemReceivedMessages(imageName, userName, getDate());
+
                     mDatabase.child("Users")
                             .child(String.valueOf(receivedUserId))
                             .child("ReceivedMessages")
                             .child(String.valueOf(childCnt + 1)).setValue(item);
-//                    receivedFlag = true;
+                }else{
+                    mDatabase.child("Users")
+                            .child(String.valueOf(receivedUserId))
+                            .child("ReceivedMessages")
+                            .child(String.valueOf(1)).setValue(item);
                 }
             }
 
@@ -155,6 +159,7 @@ public class UserSendStickerActivity extends AppCompatActivity {
 
             }
         };
+
         mDatabase.child("Users")
                 .child(String.valueOf(receivedUserId))
                 .child("ReceivedMessages").addListenerForSingleValueEvent(listener);
@@ -166,15 +171,20 @@ public class UserSendStickerActivity extends AppCompatActivity {
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                Long childCnt = snapshot.getChildrenCount();
+                SentMessages item = new SentMessages(imageName, receivedUserName, getDate());
                 if (snapshot.exists()){
-                    Long childCnt = snapshot.getChildrenCount();
-                    ItemSentMessages item = new ItemSentMessages(imageName, receivedUserName, getDate());
+
 
                     mDatabase.child("Users")
                             .child(String.valueOf(userId))
                             .child("SentMessages")
                             .child(String.valueOf(childCnt + 1)).setValue(item);
+                }else{
+                    mDatabase.child("Users")
+                            .child(String.valueOf(userId))
+                            .child("SentMessages")
+                            .child(String.valueOf(1)).setValue(item);
                 }
             }
 
@@ -194,29 +204,29 @@ public class UserSendStickerActivity extends AppCompatActivity {
         return dstr;
     }
 
-    private class ItemSentMessages{
+    private class SentMessages{
         public String imageName;
         public String receiverName;
         public String date;
-        public ItemSentMessages(String imageName, String userName, String date){
+        public SentMessages(String imageName, String userName, String date){
             this.imageName = imageName;
             this.receiverName = userName;
             this.date = date;
         }
-        public ItemSentMessages(){
+        public SentMessages(){
 
         }
     }
-    private class ItemReceivedMessages{
+    private class ReceivedMessages{
         public String imageName;
         public String senderName;
         public String date;
-        public ItemReceivedMessages(String imageName, String userName, String date){
+        public ReceivedMessages(String imageName, String userName, String date){
             this.imageName = imageName;
             this.senderName = userName;
             this.date = date;
         }
-        public  ItemReceivedMessages(){
+        public  ReceivedMessages(){
 
         }
     }
