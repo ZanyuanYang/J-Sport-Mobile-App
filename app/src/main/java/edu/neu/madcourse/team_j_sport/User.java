@@ -1,13 +1,13 @@
 package edu.neu.madcourse.team_j_sport;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private long id;
     private String username;
-
     public User() { }
 
     public User(long id, String username) {
