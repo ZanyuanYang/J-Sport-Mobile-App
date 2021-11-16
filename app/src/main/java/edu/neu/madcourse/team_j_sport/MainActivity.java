@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,10 +24,34 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     private Button login_page;
+
+    private TextView register_btn, forgot_password_btn;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        register_btn = findViewById(R.id.register);
+        register_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        forgot_password_btn = findViewById(R.id.forgot_password);
+        forgot_password_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
         getMyToken();
 
@@ -40,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        Toast.makeText(MainActivity.this, "Firebase connection success", Toast.LENGTH_LONG).show();
 
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
