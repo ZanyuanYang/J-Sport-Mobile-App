@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "427928794145",
-    "firebase_url": "https://cse5520-jsport-default-rtdb.firebaseio.com",
-    "project_id": "cse5520-jsport",
-    "storage_bucket": "cse5520-jsport.appspot.com"
+    "project_number": "442697084051",
+    "project_id": "cs5520-jsport-final",
+    "storage_bucket": "cs5520-jsport-final.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:427928794145:android:b01a082ba475b9c4af5f60",
+        "mobilesdk_app_id": "1:442697084051:android:9ebe2ec6fc74eca075b166",
         "android_client_info": {
           "package_name": "edu.neu.madcourse.team_j_sport"
         }
       },
       "oauth_client": [
         {
-          "client_id": "427928794145-ute5tu4hnac5bbrvcmmu11qssn6bphsu.apps.googleusercontent.com",
+          "client_id": "442697084051-93adqkfdicqe94c13eqi1f666402tbj1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBfYisKNPWDMw1mKVuaSEUmCaRdMoFY8_k"
+          "current_key": "AIzaSyDOz5T2pKnXEnZcGD2G1_3e8M9HlolvcP4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "427928794145-ute5tu4hnac5bbrvcmmu11qssn6bphsu.apps.googleusercontent.com",
+              "client_id": "442697084051-93adqkfdicqe94c13eqi1f666402tbj1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
