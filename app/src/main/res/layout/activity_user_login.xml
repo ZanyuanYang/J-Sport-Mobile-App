@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/firstname"
+        android:id="@+id/emailEditText"
         android:layout_width="270dp"
         android:layout_height="48dp"
         android:layout_gravity="center"
@@ -29,7 +29,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstname" />
+        app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
