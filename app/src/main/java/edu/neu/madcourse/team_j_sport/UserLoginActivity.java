@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -45,7 +44,7 @@ public class UserLoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_login);
 
         login_btn = findViewById(R.id.login);
-        username_et = findViewById(R.id.firstname);
+        username_et = findViewById(R.id.emailEditText);
 
         // Write a message to the database
         final FirebaseDatabase database = FirebaseDatabase.getInstance();

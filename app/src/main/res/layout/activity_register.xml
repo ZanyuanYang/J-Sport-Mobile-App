@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/register_text" />
 
     <EditText
-        android:id="@+id/firstname"
+        android:id="@+id/emailEditText"
         android:layout_width="352dp"
         android:layout_height="48dp"
         android:layout_gravity="center"
@@ -62,8 +62,8 @@
         android:text="Last Name"
         android:textColor="#555555"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/firstname"
-        app:layout_constraintTop_toBottomOf="@+id/firstname" />
+        app:layout_constraintStart_toStartOf="@+id/emailEditText"
+        app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
 
     <EditText
         android:id="@+id/lastname"
@@ -124,7 +124,7 @@
         app:layout_constraintTop_toBottomOf="@+id/password_text" />
 
     <Button
-        android:id="@+id/AcceptTicket"
+        android:id="@+id/register"
         android:layout_width="352dp"
         android:layout_height="48dp"
         android:layout_gravity="center"
