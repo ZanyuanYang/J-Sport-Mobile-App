@@ -2,6 +2,7 @@ package edu.neu.madcourse.team_j_sport.navi_bar;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -13,6 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import edu.neu.madcourse.team_j_sport.EventList.AddEvent;
 import edu.neu.madcourse.team_j_sport.R;
 
 public class EventFragment extends Fragment {
@@ -41,6 +45,7 @@ public class EventFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_event, container, false);
         initTextView();
+        initFloatingBtn();
         return view;
     }
 
@@ -64,5 +69,15 @@ public class EventFragment extends Fragment {
                 + "lastname: " + lastname + "\n"
                 + "email:" + email + "\n"
                 + "userid: " + userId);
+    }
+    private void initFloatingBtn(){
+        FloatingActionButton fab = view.findViewById(R.id.Event_FAB);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AddEvent.class);
+                startActivity(intent);
+            }
+        });
     }
 }

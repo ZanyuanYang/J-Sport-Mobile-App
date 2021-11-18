@@ -12,5 +12,11 @@
     <string name="me">Me</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="Event_Title">Title</string>
+    <string name="Event_Summary">Summary</string>
+    <string name="Event_Description">Description</string>
+    <string name="Event_Location">Location</string>
+    <string name="Event_LimitPerson">Limit Person</string>
+    <string name="Event_Contact">Contact</string>
+    <string name="Event_Time">Time</string>
 </resources>
