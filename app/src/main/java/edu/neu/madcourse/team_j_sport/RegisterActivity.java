@@ -62,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         sp = getSharedPreferences("login", MODE_PRIVATE);
         if(sp.getBoolean("logged",false)){
-            Intent intent = new Intent(getApplicationContext(), EventListActivity.class);
+            Intent intent = new Intent(getApplicationContext(), HomepageActivity.class);
             startActivity(intent);
         }
 
@@ -128,7 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         newUser.setLastname(lastname);
                                         newUser.setEmail(email);
                                         newUser.setId(userId);
-                                        Intent intent = new Intent(getApplicationContext(), EventListActivity.class);
+                                        Intent intent = new Intent(getApplicationContext(), HomepageActivity.class);
 //                                        intent.putExtra(GET_USER_KEY,newUser);
 
                                         SharedPreferences.Editor editor = sp.edit();

@@ -1,13 +1,21 @@
-package edu.neu.madcourse.team_j_sport;
+package edu.neu.madcourse.team_j_sport.navi_bar;
 
-import androidx.appcompat.app.AppCompatActivity;
+import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class EventListActivity extends AppCompatActivity {
+import edu.neu.madcourse.team_j_sport.R;
+
+public class EventFragment extends Fragment {
 
     public static final String TAG = "EventListActivity";
     public static final String USERS_TABLE_KEY = "users";
@@ -17,18 +25,29 @@ public class EventListActivity extends AppCompatActivity {
     public static final String USER_ID_KEY = "user id";
     public static final String GET_USER_KEY = "get user";
 
-    TextView textView_tv;
+    TextView tvEvent;
 
-    SharedPreferences sp;
+    View view;
+
+
+    public EventFragment() {
+        // Required empty public constructor
+    }
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_list);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_event, container, false);
+        initTextView();
+        return view;
+    }
 
-        textView_tv = findViewById(R.id.test);
+    private void initTextView() {
+        tvEvent = view.findViewById(R.id.tv_event_list);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
         String firstname = sharedPreferences.getString(FIRST_NAME_KEY,"");
         String lastname = sharedPreferences.getString(LAST_NAME_KEY,"");
         String email = sharedPreferences.getString(EMAIL_KEY,"");
@@ -41,7 +60,7 @@ public class EventListActivity extends AppCompatActivity {
 
 
 
-        textView_tv.setText("firstname: " + firstname + "\n"
+        tvEvent.setText("firstname: " + firstname + "\n"
                 + "lastname: " + lastname + "\n"
                 + "email:" + email + "\n"
                 + "userid: " + userId);
