@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         sp = getSharedPreferences("login", MODE_PRIVATE);
         if(sp.getBoolean("logged",false)){
-            Intent intent = new Intent(getApplicationContext(), EventListActivity.class);
+            Intent intent = new Intent(getApplicationContext(), HomepageActivity.class);
             startActivity(intent);
         }
 
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                                             for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
                                                 if(userSnapshot.child("email").getValue().equals(email)){
                                                     Log.d(TAG, "FIRSTNAME: " + userSnapshot.child("firstname").getValue());
-                                                    Intent intent = new Intent(getApplicationContext(), EventListActivity.class);
+                                                    Intent intent = new Intent(getApplicationContext(), HomepageActivity.class);
 
                                                     SharedPreferences.Editor editor = sp.edit();
                                                     editor.putString(FIRST_NAME_KEY, userSnapshot.child("firstname").getValue().toString());

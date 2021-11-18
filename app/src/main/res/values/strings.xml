@@ -7,5 +7,10 @@
     <string name="msg_subscribe_failed">Failed to subscribe to user\'s own topic</string>
     <string name="msg_unsubscribed">Unsubscribed to user\'s own topic</string>
     <string name="msg_unsubscribe_failed">Failed to unsubscribe to user\'s own topic</string>
+    <string name="post">Post</string>
+    <string name="event">Event</string>
+    <string name="me">Me</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
