@@ -51,15 +51,13 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(null);
         setContentView(R.layout.activity_homepage);
-
 
         initView();
         initFragment();
         initEvent();
         selectFragment(1);
-        initTextView();
     }
 
     private void initView() {
@@ -144,25 +142,4 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
         meImgButton.setImageResource(R.drawable.navi_me_normal);
     }
 
-    private void initTextView() {
-//        textView_tv = findViewById(R.id.test);
-//
-//        SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
-//        String firstname = sharedPreferences.getString(FIRST_NAME_KEY,"");
-//        String lastname = sharedPreferences.getString(LAST_NAME_KEY,"");
-//        String email = sharedPreferences.getString(EMAIL_KEY,"");
-//        String userId = sharedPreferences.getString(USER_ID_KEY,"");
-//
-//        Log.d(TAG, "firstname: " + firstname);
-//        Log.d(TAG, "lastname: " + lastname);
-//        Log.d(TAG, "email: " + email);
-//        Log.d(TAG, "userId: " + userId);
-//
-//
-//
-//        textView_tv.setText("firstname: " + firstname + "\n"
-//                + "lastname: " + lastname + "\n"
-//                + "email:" + email + "\n"
-//                + "userid: " + userId);
-    }
 }
