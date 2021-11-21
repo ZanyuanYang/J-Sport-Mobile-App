@@ -19,5 +19,6 @@
     <string name="Event_LimitPerson">Limit Person</string>
     <string name="Event_Contact">Contact</string>
     <string name="Event_Time">Time</string>
+    <string name="Event_Date">Date</string>
     <string name="textview">TextView</string>
 </resources>
