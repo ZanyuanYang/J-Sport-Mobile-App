@@ -6,78 +6,114 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 import edu.neu.madcourse.team_j_sport.EventList.AddEvent;
+import edu.neu.madcourse.team_j_sport.EventList.EventAdapter;
+import edu.neu.madcourse.team_j_sport.EventList.ItemEvent;
 import edu.neu.madcourse.team_j_sport.R;
 
 public class EventFragment extends Fragment {
 
-    public static final String TAG = "EventListActivity";
-    public static final String USERS_TABLE_KEY = "users";
-    public static final String FIRST_NAME_KEY = "firstname";
-    public static final String LAST_NAME_KEY = "lastname";
-    public static final String EMAIL_KEY = "email";
-    public static final String USER_ID_KEY = "user id";
-    public static final String GET_USER_KEY = "get user";
+  private final ArrayList<ItemEvent> itemEvents = new ArrayList<>();
 
-    TextView tvEvent;
+  View view;
+  SharedPreferences sharedPreferences;
 
-    View view;
+  public EventFragment() {
+    // Required empty public constructor
+  }
 
+  @Override
+  public View onCreateView(
+      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    // Inflate the layout for this fragment
+    view = inflater.inflate(R.layout.fragment_event, container, false);
+    sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
+    initEventList();
+    initFloatingBtn();
+    return view;
+  }
 
-    public EventFragment() {
-        // Required empty public constructor
-    }
+  private void initFloatingBtn() {
+    FloatingActionButton fab = view.findViewById(R.id.Event_FAB);
+    fab.setOnClickListener(
+            view -> {
+              Intent intent = new Intent(getActivity(), AddEvent.class);
+              startActivity(intent);
+            });
+  }
 
+  private void initEventList() {
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_event, container, false);
-        initTextView();
-        initFloatingBtn();
-        return view;
-    }
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    final DatabaseReference myRef;
 
-    private void initTextView() {
-        tvEvent = view.findViewById(R.id.tv_event_list);
+    myRef = database.getReference().child("Events");
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
-        String firstname = sharedPreferences.getString(FIRST_NAME_KEY,"");
-        String lastname = sharedPreferences.getString(LAST_NAME_KEY,"");
-        String email = sharedPreferences.getString(EMAIL_KEY,"");
-        String userId = sharedPreferences.getString(USER_ID_KEY,"");
+    myRef
+        .orderByKey()
+        .addChildEventListener(
+            new ChildEventListener() {
+              @Override
+              public void onChildAdded(
+                  @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                HashMap hashMap = (HashMap) snapshot.getValue();
+                assert hashMap != null;
+                itemEvents.add(
+                    new ItemEvent(
+                        Objects.requireNonNull(hashMap.get("title")).toString(),
+                        Objects.requireNonNull(hashMap.get("time")).toString(),
+                        Objects.requireNonNull(hashMap.get("summary")).toString(),
+                        Objects.requireNonNull(hashMap.get("contact")).toString(),
+                        Objects.requireNonNull(hashMap.get("location")).toString(),
+                        snapshot.getKey()));
+                  createRecyclerView();
+              }
 
-        Log.d(TAG, "firstname: " + firstname);
-        Log.d(TAG, "lastname: " + lastname);
-        Log.d(TAG, "email: " + email);
-        Log.d(TAG, "userId: " + userId);
+              @Override
+              public void onChildChanged(
+                  @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
 
+              @Override
+              public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
 
+              @Override
+              public void onChildMoved(
+                  @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
 
-        tvEvent.setText("firstname: " + firstname + "\n"
-                + "lastname: " + lastname + "\n"
-                + "email:" + email + "\n"
-                + "userid: " + userId);
-    }
-    private void initFloatingBtn(){
-        FloatingActionButton fab = view.findViewById(R.id.Event_FAB);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddEvent.class);
-                startActivity(intent);
-            }
-        });
-    }
+              @Override
+              public void onCancelled(@NonNull DatabaseError error) {}
+            });
+  }
+
+  private void createRecyclerView() {
+    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+    RecyclerView recyclerView = view.findViewById(R.id.rv_event_list);
+    recyclerView.setHasFixedSize(true);
+
+    EventAdapter eventAdapter = new EventAdapter(itemEvents, getActivity().getApplicationContext());
+
+    recyclerView.setAdapter(eventAdapter);
+    recyclerView.setLayoutManager(layoutManager);
+  }
 }
