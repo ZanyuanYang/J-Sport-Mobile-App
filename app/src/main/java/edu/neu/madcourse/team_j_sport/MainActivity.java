@@ -72,11 +72,16 @@ public class MainActivity extends AppCompatActivity {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference userTable = database.getReference().child("Users");
 
-        sp = getSharedPreferences("login", MODE_PRIVATE);
-        if(sp.getBoolean("logged",false)){
-            Intent intent = new Intent(getApplicationContext(), HomepageActivity.class);
+        if(FirebaseAuth.getInstance().getCurrentUser()!= null){
+            Intent intent = new Intent(this, HomepageActivity.class);
             startActivity(intent);
         }
+
+        sp = getSharedPreferences("login", MODE_PRIVATE);
+//        if(sp.getBoolean("logged",false)){
+//            Intent intent = new Intent(getApplicationContext(), HomepageActivity.class);
+//            startActivity(intent);
+//        }
 
         email_et = findViewById(R.id.email);
         password_et = findViewById(R.id.password);

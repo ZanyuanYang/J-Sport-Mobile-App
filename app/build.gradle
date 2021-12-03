@@ -52,9 +52,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics' //firebase add
     implementation 'com.google.firebase:firebase-auth:16.0.5'
     implementation 'com.google.firebase:firebase-firestore:22.0.0'
-    implementation 'com.google.firebase:firebase-messaging' // for the Firebase Cloud Messaging
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.google.android.material:material:1.4.0'
+
+    implementation 'com.google.firebase:firebase-messaging:21.0.0' // for the Firebase Cloud Messaging
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.google.firebase:firebase-core:17.2.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

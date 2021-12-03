@@ -1,20 +1,20 @@
 package edu.neu.madcourse.team_j_sport;
 
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-
-import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
+import edu.neu.madcourse.team_j_sport.SendNotificationPack.APIService;
 import edu.neu.madcourse.team_j_sport.navi_bar.EventFragment;
 import edu.neu.madcourse.team_j_sport.navi_bar.MeFragment;
 import edu.neu.madcourse.team_j_sport.navi_bar.PostFragment;
@@ -47,20 +47,24 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
     private ImageButton eventImgButton;
     private ImageButton meImgButton;
 
-
+    // notification
+    EditText UserTB,Title,Message;
+    Button send;
+    private APIService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
 
-
         initView();
         initFragment();
         initEvent();
-        selectFragment(1);
+        selectFragment(0);
         initTextView();
     }
+
+    //--------------------------notification end--------------------------------
 
     private void initView() {
         postLinearLayout = findViewById(R.id.tab_post);
