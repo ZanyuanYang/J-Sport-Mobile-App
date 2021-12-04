@@ -3,6 +3,7 @@ package edu.neu.madcourse.team_j_sport.EventList;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,13 +28,13 @@ public class EventHolder extends RecyclerView.ViewHolder {
         tvEventOrganizer = itemView.findViewById(R.id.tv_event_organizer);
         tvEventLocation = itemView.findViewById(R.id.tv_event_location);
 
-    itemView.setOnClickListener(
-            view -> {
-              System.out.println("????" + getLayoutPosition());
-              Intent intent = new Intent(mContext, EventDetailActivity.class);
-              intent.putExtra("eventKey", eventKey);
-              mContext.startActivity(intent);
-            });
+        itemView.setOnClickListener(
+                view -> {
+                  System.out.println("????" + getLayoutPosition());
+                  Intent intent = new Intent(mContext, EventDetailActivity.class);
+                  intent.putExtra("eventKey", eventKey);
+                  mContext.startActivity(intent);
+                });
     }
 
     public void setEventKey(String eventKey) {
