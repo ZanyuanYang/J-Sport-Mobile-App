@@ -1,4 +1,4 @@
-# TEAM: J-Sport
+# TEAM: J-Sport Final Project
 
 ## 1. Team Member
 - Zanyuan Yang: ZanyuanYang
