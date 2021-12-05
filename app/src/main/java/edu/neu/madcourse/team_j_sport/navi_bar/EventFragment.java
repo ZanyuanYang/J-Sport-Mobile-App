@@ -12,9 +12,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
@@ -38,6 +41,8 @@ public class EventFragment extends Fragment {
 
   View view;
   SharedPreferences sharedPreferences;
+
+
 
   public EventFragment() {
     // Required empty public constructor
@@ -111,9 +116,40 @@ public class EventFragment extends Fragment {
     RecyclerView recyclerView = view.findViewById(R.id.rv_event_list);
     recyclerView.setHasFixedSize(true);
 
+    EditText editText = view.findViewById(R.id.edittext);
+
     EventAdapter eventAdapter = new EventAdapter(itemEvents, getActivity().getApplicationContext());
+
+      editText.addTextChangedListener(new TextWatcher() {
+          @Override
+          public void beforeTextChanged(CharSequence s, int start, int count, int after){
+
+          }
+
+          @Override
+          public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+          }
+
+          @Override
+          public void afterTextChanged(Editable s){
+              filter(s.toString(), eventAdapter);
+          }
+      });
+
 
     recyclerView.setAdapter(eventAdapter);
     recyclerView.setLayoutManager(layoutManager);
+  }
+
+  private void filter(String text, EventAdapter eventAdapter){
+      ArrayList<ItemEvent> filteredList = new ArrayList<>();
+      for(ItemEvent item : itemEvents){
+          if(item.getTitle().toLowerCase().contains(text.toLowerCase())){
+              filteredList.add(item);
+          }
+      }
+      eventAdapter.filterList(filteredList);
+
   }
 }

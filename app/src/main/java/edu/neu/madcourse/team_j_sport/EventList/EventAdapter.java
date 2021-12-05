@@ -14,7 +14,7 @@ import edu.neu.madcourse.team_j_sport.R;
 
 public class EventAdapter extends RecyclerView.Adapter<EventHolder> {
 
-    private final ArrayList<ItemEvent> eventList;
+    private ArrayList<ItemEvent> eventList;
     private final Context mContext;
 
     public EventAdapter(ArrayList<ItemEvent> eventList, Context mContext) {
@@ -44,5 +44,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventHolder> {
     @Override
     public int getItemCount() {
         return eventList.size();
+    }
+
+    public void filterList(ArrayList<ItemEvent> filteredList){
+        eventList = filteredList;
+        notifyDataSetChanged();
     }
 }
