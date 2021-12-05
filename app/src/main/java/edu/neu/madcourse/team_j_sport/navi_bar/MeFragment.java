@@ -1,5 +1,6 @@
 package edu.neu.madcourse.team_j_sport.navi_bar;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,9 @@ import edu.neu.madcourse.team_j_sport.R;
 
 
 public class MeFragment extends Fragment {
+
+    View view;
+    SharedPreferences sharedPreferences;
 
     public MeFragment() {
         // Required empty public constructor
