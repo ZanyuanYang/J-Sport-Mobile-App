@@ -8,10 +8,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/custom_add_input.xml" value="0.3921875" />
         <entry key="app/src/main/res/drawable/custom_input.xml" value="0.3921875" />
         <entry key="app/src/main/res/drawable/custom_search_icon.xml" value="0.3921875" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3026041666666667" />
         <entry key="app/src/main/res/drawable/ic_list.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/ic_post_add.xml" value="0.3921875" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.3921875" />
         <entry key="app/src/main/res/drawable/ic_search_focused.xml" value="0.3921875" />
         <entry key="app/src/main/res/drawable/shape.xml" value="0.3921875" />
@@ -26,8 +28,10 @@
         <entry key="app/src/main/res/layout/activity_user_page.xml" value="0.36594202898550726" />
         <entry key="app/src/main/res/layout/activity_user_send_sticker.xml" value="0.3114695245577566" />
         <entry key="app/src/main/res/layout/fragment_event.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_me.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_post.xml" value="0.21197916666666666" />
         <entry key="app/src/main/res/layout/item_event.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/item_message.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/list_users.xml" value="0.3704710144927536" />
         <entry key="app/src/main/res/layout/navi_bar.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/sticker_grid_view_cell.xml" value="0.10099637681159421" />
