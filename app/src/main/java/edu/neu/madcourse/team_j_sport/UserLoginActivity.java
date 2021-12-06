@@ -92,7 +92,7 @@ public class UserLoginActivity extends AppCompatActivity {
 
 
         sp = getSharedPreferences("login", MODE_PRIVATE);
-        if(sp.getBoolean("logged",false)){
+        if(sp.getBoolean("isUserLogin",true)){
             Intent intent = new Intent(getApplicationContext(), UserPageActivity.class);
             startActivity(intent);
         }
@@ -137,7 +137,7 @@ public class UserLoginActivity extends AppCompatActivity {
                                                 editor.putLong(GET_USER_ID, id);
                                                 editor.apply();
                                                 startActivity(intent);
-                                                sp.edit().putBoolean("logged",true).apply();
+                                                sp.edit().putBoolean("isUserLogin",true).apply();
                                             }
                                         }
 
@@ -163,7 +163,7 @@ public class UserLoginActivity extends AppCompatActivity {
                                 editor.apply();
 
                                 startActivity(intent);
-                                sp.edit().putBoolean("logged",true).apply();
+                                sp.edit().putBoolean("isUserLogin",true).apply();
                             }
 
 

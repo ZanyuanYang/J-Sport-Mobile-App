@@ -107,7 +107,7 @@ public class UserPageActivity extends AppCompatActivity {
             Intent intent = new Intent(UserPageActivity.this, UserLoginActivity.class);
             startActivity(intent);
             sp = getSharedPreferences("login", MODE_PRIVATE);
-            sp.edit().putBoolean("logged",false).apply();
+            sp.edit().putBoolean("isUserLogin",false).apply();
         });
     }
 
