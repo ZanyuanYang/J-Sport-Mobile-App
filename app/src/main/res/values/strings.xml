@@ -24,5 +24,7 @@
     <string name="tv_my_posts">My Posts</string>
     <string name="tv_my_events">My Events</string>
     <string name="tv_change_password">Change Password</string>
+    <string name="join">join</string>
+    <string name="Event_Name">Name</string>
 
 </resources>
