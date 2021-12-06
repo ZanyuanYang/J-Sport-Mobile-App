@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         final DatabaseReference userTable = database.getReference().child("Users");
 
         sp = getSharedPreferences("login", MODE_PRIVATE);
-        if(sp.getBoolean("logged",false)){
+        if(sp.getBoolean("isUserLogin",false)){
             Intent intent = new Intent(getApplicationContext(), HomepageActivity.class);
             startActivity(intent);
         }
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                                                     editor.apply();
 
                                                     startActivity(intent);
-                                                    sp.edit().putBoolean("logged",true).apply();
+                                                    sp.edit().putBoolean("isUserLogin",true).apply();
                                                 }
                                             }
                                         }

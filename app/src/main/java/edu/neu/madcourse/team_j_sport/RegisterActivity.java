@@ -61,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
 
         sp = getSharedPreferences("login", MODE_PRIVATE);
-        if(sp.getBoolean("logged",false)){
+        if(sp.getBoolean("isUserLogin",true)){
             Intent intent = new Intent(getApplicationContext(), HomepageActivity.class);
             startActivity(intent);
         }
@@ -139,7 +139,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         editor.apply();
 
                                         startActivity(intent);
-                                        sp.edit().putBoolean("logged",true).apply();
+                                        sp.edit().putBoolean("isUserLogin",true).apply();
 
                                     } else {
                                         Log.e("tag", task.getException().toString());

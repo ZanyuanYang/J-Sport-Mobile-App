@@ -9,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".about_me.EditProfileActivity"></activity>
+        <activity android:name=".about_me.ChangePasswordActivity" />
+        <activity android:name=".about_me.MyEventsActivity" />
+        <activity android:name=".about_me.MyPostsActivity" />
         <activity
             android:name=".EventList.EventDetailActivity"
             android:exported="true" />

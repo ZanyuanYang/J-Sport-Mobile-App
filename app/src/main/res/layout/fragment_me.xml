@@ -26,7 +26,6 @@
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="15dp"
-
                 android:layout_marginBottom="10dp"
                 android:background="#FFFFFF"
                 android:src="@drawable/me_edit_profile_icon"
@@ -146,37 +145,40 @@
 
             <TextView
                 android:id="@+id/tv_my_posts"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:text="@string/tv_my_posts"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imageButton1"
+                app:layout_constraintEnd_toStartOf="@+id/iv_arrow_1"
                 app:layout_constraintStart_toEndOf="@+id/imageButton1"
                 app:layout_constraintTop_toTopOf="@+id/imageButton1" />
 
             <TextView
                 android:id="@+id/tv_my_events"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:text="@string/tv_my_events"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
+                app:layout_constraintEnd_toStartOf="@+id/iv_arrow_2"
                 app:layout_constraintStart_toEndOf="@+id/imageButton2"
                 app:layout_constraintTop_toTopOf="@+id/imageButton2" />
 
             <TextView
                 android:id="@+id/tv_change_password"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:text="@string/tv_change_password"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imageButton3"
+                app:layout_constraintEnd_toStartOf="@+id/iv_arrow_3"
                 app:layout_constraintStart_toEndOf="@+id/imageButton3"
                 app:layout_constraintTop_toTopOf="@+id/imageButton3" />
 
