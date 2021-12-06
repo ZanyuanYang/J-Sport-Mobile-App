@@ -33,9 +33,14 @@ public class EventAdapter extends RecyclerView.Adapter<EventHolder> {
     public void onBindViewHolder(@NonNull EventHolder holder, int position) {
         ItemEvent currentEvent = eventList.get(position);
 
+        String summary = currentEvent.getSummary();
+        if(summary.length() >= 32){
+            summary = summary.substring(0,32) + "...";
+        }
+
         holder.tvEventTitle.setText(currentEvent.getTitle());
         holder.tvEventTime.setText(currentEvent.getTime());
-        holder.tvEventSummary.setText(currentEvent.getSummary());
+        holder.tvEventSummary.setText(summary);
         holder.tvEventOrganizer.setText("Organizer: " + currentEvent.getOrganizer());
         holder.tvEventLocation.setText(currentEvent.getLocation());
         holder.setEventKey(currentEvent.getEventId());

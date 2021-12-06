@@ -33,6 +33,7 @@ public class EventHolder extends RecyclerView.ViewHolder {
                   System.out.println("????" + getLayoutPosition());
                   Intent intent = new Intent(mContext, EventDetailActivity.class);
                   intent.putExtra("eventKey", eventKey);
+                  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                   mContext.startActivity(intent);
                 });
     }
