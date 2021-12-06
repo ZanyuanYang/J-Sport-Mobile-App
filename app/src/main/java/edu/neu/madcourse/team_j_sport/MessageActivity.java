@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
+import edu.neu.madcourse.prev_assignment.ItemMessage;
+import edu.neu.madcourse.prev_assignment.UserLoginActivity;
+
 public class MessageActivity extends AppCompatActivity {
 
     private final ArrayList<ItemMessage> itemMessages = new ArrayList<>();

@@ -14,6 +14,9 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+import edu.neu.madcourse.prev_assignment.ItemMessage;
+import edu.neu.madcourse.prev_assignment.MessageHolder;
+
 public class MessageAdapter extends RecyclerView.Adapter<MessageHolder> {
 
     private final ArrayList<ItemMessage> itemMessages;
