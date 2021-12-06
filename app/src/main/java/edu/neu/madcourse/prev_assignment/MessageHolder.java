@@ -1,4 +1,4 @@
-package edu.neu.madcourse.team_j_sport;
+package edu.neu.madcourse.prev_assignment;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import edu.neu.madcourse.team_j_sport.R;
 
 public class MessageHolder extends RecyclerView.ViewHolder {
 

@@ -38,9 +38,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserLoginActivity" />
-        <activity android:name=".UserPageActivity" />
-        <activity android:name=".UserSendStickerActivity" /> <!-- android:name="com.google.firebase.messaging.MyFirebaseMessagingService" -->
+        <activity android:name="edu.neu.madcourse.prev_assignment.UserLoginActivity" />
+        <activity android:name="edu.neu.madcourse.prev_assignment.UserPageActivity" />
+        <activity android:name="edu.neu.madcourse.prev_assignment.UserSendStickerActivity" /> <!-- android:name="com.google.firebase.messaging.MyFirebaseMessagingService" -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />

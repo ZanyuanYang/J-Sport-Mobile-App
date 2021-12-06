@@ -1,4 +1,4 @@
-package edu.neu.madcourse.team_j_sport;
+package edu.neu.madcourse.prev_assignment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +22,8 @@ import java.util.HashMap;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import edu.neu.madcourse.team_j_sport.R;
 
 public class UserLoginActivity extends AppCompatActivity {
     public static final String TAG = "UserLoginActivity";
