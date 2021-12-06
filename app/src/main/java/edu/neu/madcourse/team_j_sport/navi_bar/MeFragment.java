@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import edu.neu.madcourse.team_j_sport.EventList.AddEvent;
 import edu.neu.madcourse.team_j_sport.R;
 import edu.neu.madcourse.team_j_sport.about_me.ChangePasswordActivity;
+import edu.neu.madcourse.team_j_sport.about_me.EditProfileActivity;
 import edu.neu.madcourse.team_j_sport.about_me.MyEventsActivity;
 import edu.neu.madcourse.team_j_sport.about_me.MyPostsActivity;
 
@@ -31,6 +32,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_me, container, false);
+        view.findViewById(R.id.iv_edit_profile).setOnClickListener(this::onClick);
+        view.findViewById(R.id.iv_log_out).setOnClickListener(this::onClick);
         view.findViewById(R.id.tv_my_posts).setOnClickListener(this::onClick);
         view.findViewById(R.id.tv_my_events).setOnClickListener(this::onClick);
         view.findViewById(R.id.tv_change_password).setOnClickListener(this::onClick);
@@ -44,6 +47,13 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()){
+            case R.id.iv_edit_profile:
+                intent = new Intent(getActivity(), EditProfileActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.iv_log_out:
+                // TODO: some action to log out
+                break;
             case R.id.tv_my_posts:
             case R.id.iv_arrow_1:
                 intent = new Intent(getActivity(), MyPostsActivity.class);
