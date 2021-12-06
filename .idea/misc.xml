@@ -8,6 +8,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/border_radius.xml" value="0.3921875" />
         <entry key="app/src/main/res/drawable/custom_add_input.xml" value="0.3921875" />
         <entry key="app/src/main/res/drawable/custom_input.xml" value="0.3921875" />
         <entry key="app/src/main/res/drawable/custom_search_icon.xml" value="0.3921875" />
