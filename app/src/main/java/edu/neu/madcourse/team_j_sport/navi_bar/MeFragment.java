@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import edu.neu.madcourse.team_j_sport.EventList.AddEvent;
 import edu.neu.madcourse.team_j_sport.R;
@@ -24,6 +25,11 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MeFragment extends Fragment implements View.OnClickListener {
 
+    public static final String TAG = "MeFragment";
+    public static final String FIRST_NAME_KEY = "firstname";
+    public static final String LAST_NAME_KEY = "lastname";
+    public static final String EMAIL_KEY = "email";
+
     View view;
     SharedPreferences sharedPreferences;
 
@@ -37,6 +43,14 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_me, container, false);
         sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
+
+        String name = sharedPreferences.getString(FIRST_NAME_KEY, "fName")
+                + " "
+                + sharedPreferences.getString(LAST_NAME_KEY, "lName");
+        String email = sharedPreferences.getString(EMAIL_KEY, "email");
+
+        ((TextView)(view.findViewById(R.id.tv_me_name))).setText(name);
+        ((TextView)(view.findViewById(R.id.tv_me_email))).setText(email);
 
         view.findViewById(R.id.iv_edit_profile).setOnClickListener(this::onClick);
         view.findViewById(R.id.iv_log_out).setOnClickListener(this::onClick);
