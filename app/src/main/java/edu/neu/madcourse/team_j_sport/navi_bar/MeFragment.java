@@ -12,10 +12,14 @@ import android.view.ViewGroup;
 
 import edu.neu.madcourse.team_j_sport.EventList.AddEvent;
 import edu.neu.madcourse.team_j_sport.R;
+import edu.neu.madcourse.team_j_sport.UserLoginActivity;
+import edu.neu.madcourse.team_j_sport.UserPageActivity;
 import edu.neu.madcourse.team_j_sport.about_me.ChangePasswordActivity;
 import edu.neu.madcourse.team_j_sport.about_me.EditProfileActivity;
 import edu.neu.madcourse.team_j_sport.about_me.MyEventsActivity;
 import edu.neu.madcourse.team_j_sport.about_me.MyPostsActivity;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class MeFragment extends Fragment implements View.OnClickListener {
@@ -32,6 +36,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_me, container, false);
+        sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
+
         view.findViewById(R.id.iv_edit_profile).setOnClickListener(this::onClick);
         view.findViewById(R.id.iv_log_out).setOnClickListener(this::onClick);
         view.findViewById(R.id.tv_my_posts).setOnClickListener(this::onClick);
@@ -53,6 +59,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.iv_log_out:
                 // TODO: some action to log out
+                sharedPreferences.edit().putBoolean("isUserLogin",false).apply();
+                intent = new Intent(getActivity(), UserLoginActivity.class);
+                startActivity(intent);
                 break;
             case R.id.tv_my_posts:
             case R.id.iv_arrow_1:
