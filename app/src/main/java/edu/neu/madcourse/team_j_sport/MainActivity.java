@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String USER_ID_KEY = "user id";
     public static final String GET_USER_KEY = "get user";
 
-    private Button login_page;
-
     private EditText email_et, password_et;
     private Button login_btn;
 
@@ -164,17 +162,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         getMyToken();
-
-
-        login_page = findViewById(R.id.login_page);
-        login_page.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, UserLoginActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
         // Write a message to the database
         DatabaseReference myRef = database.getReference("message");
