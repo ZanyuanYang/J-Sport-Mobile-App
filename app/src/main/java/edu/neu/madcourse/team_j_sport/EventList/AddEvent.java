@@ -30,9 +30,9 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import edu.neu.madcourse.team_j_sport.R;
-import edu.neu.madcourse.team_j_sport.UserLoginActivity;
 
 public class AddEvent extends AppCompatActivity {
     private DatabaseReference mDatabase;
@@ -41,6 +41,8 @@ public class AddEvent extends AppCompatActivity {
     private SharedPreferences sp;
     public static final String FIRST_NAME_KEY = "firstname";
     public static final String LAST_NAME_KEY = "lastname";
+
+    public static final String USER_ID_KEY = "user id";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -193,6 +195,9 @@ public class AddEvent extends AppCompatActivity {
                 event.latitude = latitude;
                 event.longitude = longitude;
                 event.location = city;
+                event.participants = new HashMap<>();
+
+                event.participants.put(sp.getString(USER_ID_KEY,""), event.organizer);
                 mDatabase.child("Events")
                         .child(String.valueOf(childCnt + 1))
                         .setValue(event);
