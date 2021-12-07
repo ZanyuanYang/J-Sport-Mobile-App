@@ -1,7 +1,10 @@
 package edu.neu.madcourse.team_j_sport;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,7 +13,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +33,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import java.util.Objects;
 
@@ -40,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String EMAIL_KEY = "email";
     public static final String USER_ID_KEY = "user id";
     public static final String GET_USER_KEY = "get user";
-
+    public static final String USER_LATITUDE_KEY = "user latitude";
+    public static final String USER_LONGITUDE_KEY = "user longitude";
     private Button login_page;
 
     private EditText email_et, password_et;
@@ -58,12 +66,13 @@ public class MainActivity extends AppCompatActivity {
     // check auto login
     SharedPreferences sp;
 
-
+    //location
+    private FusedLocationProviderClient fusedLocationClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        setUpLocation();
         // Firebase
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -223,5 +232,60 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         return res;
+    }
+    public void setUpLocation(){
+        Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if(ActivityCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            //when permission granted
+            Toast.makeText(MainActivity.this, "2", Toast.LENGTH_SHORT).show();
+            getCurrentLocation();
+        }else{
+            //When permission denied
+            //Request permission
+            Toast.makeText(MainActivity.this, "3", Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
+    }
+    public void getCurrentLocation(){
+        try {
+
+            Toast.makeText(MainActivity.this, "4", Toast.LENGTH_SHORT).show();
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    //When success
+                    if(location != null){
+                        String str = String.valueOf(location.getLatitude() ) + String.valueOf(location.getLongitude());
+                        Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
+                        System.out.println(str);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString(USER_LATITUDE_KEY, String.valueOf(location.getLatitude() ));
+                        editor.putString(USER_LONGITUDE_KEY, String.valueOf(location.getLongitude()));
+                        editor.apply();
+                    }else{
+                        Toast.makeText(MainActivity.this, "5", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }catch(Exception e){
+//            Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if(requestCode == 44){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                //When permission granted
+                getCurrentLocation();
+            }
+        }
     }
 }
