@@ -155,7 +155,7 @@ public class AddEvent extends AppCompatActivity {
         String limitPerson = limitPersonET.getText().toString();
         String time = timeET.getText().toString() + " " + dateET.getText().toString();
         String contact = contactET.getText().toString();
-        String organizer = sp.getString(FIRST_NAME_KEY,"") + sp.getString(LAST_NAME_KEY, "");
+        String organizer = sp.getString(FIRST_NAME_KEY,"") + " "+ sp.getString(LAST_NAME_KEY, "");
         Events event = new Events(title, summary, description, zipCode, limitPerson, time, contact,organizer);
         return event;
     }
