@@ -35,7 +35,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        emailEditText = findViewById(R.id.emailEditText);
+        emailEditText = findViewById(R.id.et_old_password);
         resetPasswordButton = findViewById(R.id.submit_reset);
         back_to_login_btn = findViewById(R.id.back_to_login);
         progressBar = findViewById(R.id.progressBar);

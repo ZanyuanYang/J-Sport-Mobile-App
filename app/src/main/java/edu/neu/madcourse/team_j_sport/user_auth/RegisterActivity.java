@@ -68,7 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        firstname_et = findViewById(R.id.emailEditText);
+        firstname_et = findViewById(R.id.et_old_password);
         lastname_et = findViewById(R.id.lastname);
         email_et = findViewById(R.id.email);
         password_et = findViewById(R.id.password);
