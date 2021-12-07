@@ -48,7 +48,6 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
     private ImageButton meImgButton;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
