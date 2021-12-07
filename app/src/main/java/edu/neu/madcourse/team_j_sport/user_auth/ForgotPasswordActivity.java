@@ -1,7 +1,9 @@
-package edu.neu.madcourse.team_j_sport;
+package edu.neu.madcourse.team_j_sport.user_auth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import edu.neu.madcourse.team_j_sport.MainActivity;
+import edu.neu.madcourse.team_j_sport.R;
 
 import android.content.Intent;
 import android.os.Bundle;

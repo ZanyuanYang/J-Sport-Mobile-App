@@ -23,13 +23,13 @@
             android:name=".HomepageActivity"
             android:exported="true" />
         <activity
-            android:name=".ForgotPasswordActivity"
+            android:name=".user_auth.ForgotPasswordActivity"
             android:exported="true" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".user_auth.RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".MessageActivity"
+            android:name="edu.neu.madcourse.prev_assignment.MessageActivity"
             android:exported="true" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -14,7 +14,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import edu.neu.madcourse.team_j_sport.FCM.FCMServer;
-import edu.neu.madcourse.team_j_sport.MessageActivity;
 import edu.neu.madcourse.team_j_sport.R;
 
 public class UserPageActivity extends AppCompatActivity {
