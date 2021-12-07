@@ -46,7 +46,7 @@ public class UserLoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_login);
 
         login_btn = findViewById(R.id.login);
-        username_et = findViewById(R.id.emailEditText);
+        username_et = findViewById(R.id.et_old_password);
 
         // Write a message to the database
         final FirebaseDatabase database = FirebaseDatabase.getInstance();

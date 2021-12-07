@@ -1,7 +1,9 @@
-package edu.neu.madcourse.team_j_sport;
+package edu.neu.madcourse.team_j_sport.user_auth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import edu.neu.madcourse.team_j_sport.HomepageActivity;
+import edu.neu.madcourse.team_j_sport.R;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -66,7 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        firstname_et = findViewById(R.id.emailEditText);
+        firstname_et = findViewById(R.id.et_old_password);
         lastname_et = findViewById(R.id.lastname);
         email_et = findViewById(R.id.email);
         password_et = findViewById(R.id.password);

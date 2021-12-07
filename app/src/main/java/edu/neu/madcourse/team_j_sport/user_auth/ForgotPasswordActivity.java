@@ -1,7 +1,9 @@
-package edu.neu.madcourse.team_j_sport;
+package edu.neu.madcourse.team_j_sport.user_auth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import edu.neu.madcourse.team_j_sport.MainActivity;
+import edu.neu.madcourse.team_j_sport.R;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,7 +35,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        emailEditText = findViewById(R.id.emailEditText);
+        emailEditText = findViewById(R.id.et_old_password);
         resetPasswordButton = findViewById(R.id.submit_reset);
         back_to_login_btn = findViewById(R.id.back_to_login);
         progressBar = findViewById(R.id.progressBar);

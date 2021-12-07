@@ -27,6 +27,9 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import edu.neu.madcourse.team_j_sport.user_auth.ForgotPasswordActivity;
+import edu.neu.madcourse.team_j_sport.user_auth.NewUser;
+import edu.neu.madcourse.team_j_sport.user_auth.RegisterActivity;
 
 import java.util.Objects;
 
@@ -84,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 email = email_et.getText().toString();
                 password = password_et.getText().toString();
+
+                // TODO: need to check for empty Strings
 
                 fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
                         new OnCompleteListener<AuthResult>() {

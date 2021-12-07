@@ -1,4 +1,4 @@
-package edu.neu.madcourse.team_j_sport;
+package edu.neu.madcourse.prev_assignment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,8 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-import edu.neu.madcourse.prev_assignment.ItemMessage;
-import edu.neu.madcourse.prev_assignment.UserLoginActivity;
+import edu.neu.madcourse.team_j_sport.R;
 
 public class MessageActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package edu.neu.madcourse.team_j_sport;
+package edu.neu.madcourse.team_j_sport.user_auth;
 
 import java.io.Serializable;
 
