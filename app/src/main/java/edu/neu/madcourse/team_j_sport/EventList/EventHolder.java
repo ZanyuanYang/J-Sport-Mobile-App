@@ -19,6 +19,7 @@ public class EventHolder extends RecyclerView.ViewHolder {
     public TextView tvEventSummary;
     public TextView tvEventOrganizer;
     public TextView tvEventLocation;
+
     private String eventKey;
 
     public EventHolder(@NonNull View itemView, Context mContext) {

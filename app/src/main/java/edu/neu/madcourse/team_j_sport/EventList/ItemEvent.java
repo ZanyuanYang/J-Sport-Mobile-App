@@ -16,6 +16,7 @@ public class ItemEvent {
         this.organizer = organizer;
         this.location = location;
         this.eventId = eventId;
+
     }
 
     public String getTitle() {

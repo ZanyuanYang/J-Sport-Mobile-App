@@ -133,5 +133,6 @@ public class EventDetailActivity extends AppCompatActivity {
         tvEventLimitPerson = findViewById(R.id.tv_event_detail_limit_person_detail);
         tvEventTime = findViewById(R.id.tv_event_detail_time_detail);
         tvEventContact = findViewById(R.id.tv_event_detail_contact_detail);
+
     }
 }
