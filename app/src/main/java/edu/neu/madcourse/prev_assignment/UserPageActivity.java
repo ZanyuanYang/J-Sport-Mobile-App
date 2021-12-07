@@ -1,4 +1,4 @@
-package edu.neu.madcourse.team_j_sport;
+package edu.neu.madcourse.prev_assignment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,13 +14,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import edu.neu.madcourse.team_j_sport.FCM.FCMServer;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.annotations.NotNull;
+import edu.neu.madcourse.team_j_sport.R;
 
 public class UserPageActivity extends AppCompatActivity {
     public static final String TAG = "UserPageActivity";

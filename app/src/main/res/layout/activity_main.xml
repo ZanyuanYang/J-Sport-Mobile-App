@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/login_img" />
 
     <TextView
-        android:id="@+id/email_text"
+        android:id="@+id/text_old_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -51,8 +51,8 @@
         android:hint="Your email"
         android:inputType="textEmailAddress"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/email_text"
-        app:layout_constraintTop_toBottomOf="@+id/email_text" />
+        app:layout_constraintStart_toStartOf="@+id/text_old_password"
+        app:layout_constraintTop_toBottomOf="@+id/text_old_password" />
 
     <TextView
         android:id="@+id/password_text"
@@ -96,17 +96,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forgot_password" />
-
-    <Button
-        android:id="@+id/login_page"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#5DDAC7"
-        android:text="Login Page"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/forgot_password"

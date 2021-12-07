@@ -1,4 +1,4 @@
-package edu.neu.madcourse.team_j_sport;
+package edu.neu.madcourse.prev_assignment;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,6 +13,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+
+import edu.neu.madcourse.prev_assignment.ItemMessage;
+import edu.neu.madcourse.prev_assignment.MessageHolder;
+import edu.neu.madcourse.team_j_sport.R;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageHolder> {
 

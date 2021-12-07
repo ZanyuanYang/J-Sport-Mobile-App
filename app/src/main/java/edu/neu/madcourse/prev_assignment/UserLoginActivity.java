@@ -1,4 +1,4 @@
-package edu.neu.madcourse.team_j_sport;
+package edu.neu.madcourse.prev_assignment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,6 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import edu.neu.madcourse.team_j_sport.R;
+
 public class UserLoginActivity extends AppCompatActivity {
     public static final String TAG = "UserLoginActivity";
     public static final String GET_USER_KEY = "get user";
@@ -44,7 +46,7 @@ public class UserLoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_login);
 
         login_btn = findViewById(R.id.login);
-        username_et = findViewById(R.id.emailEditText);
+        username_et = findViewById(R.id.et_old_password);
 
         // Write a message to the database
         final FirebaseDatabase database = FirebaseDatabase.getInstance();

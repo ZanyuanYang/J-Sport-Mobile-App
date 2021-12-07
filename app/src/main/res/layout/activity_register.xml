@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".RegisterActivity">
+    tools:context=".user_auth.RegisterActivity">
 
     <ImageView
         android:id="@+id/register_img"
@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/register_text" />
 
     <EditText
-        android:id="@+id/emailEditText"
+        android:id="@+id/et_old_password"
         android:layout_width="352dp"
         android:layout_height="48dp"
         android:layout_gravity="center"
@@ -62,8 +62,8 @@
         android:text="Last Name"
         android:textColor="#555555"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/emailEditText"
-        app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
+        app:layout_constraintStart_toStartOf="@+id/et_old_password"
+        app:layout_constraintTop_toBottomOf="@+id/et_old_password" />
 
     <EditText
         android:id="@+id/lastname"
@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/lastname_text" />
 
     <TextView
-        android:id="@+id/email_text"
+        android:id="@+id/text_old_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -97,8 +97,8 @@
         android:hint="Your email"
         android:inputType="textEmailAddress"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/email_text"
-        app:layout_constraintTop_toBottomOf="@+id/email_text" />
+        app:layout_constraintStart_toStartOf="@+id/text_old_password"
+        app:layout_constraintTop_toBottomOf="@+id/text_old_password" />
 
     <TextView
         android:id="@+id/password_text"

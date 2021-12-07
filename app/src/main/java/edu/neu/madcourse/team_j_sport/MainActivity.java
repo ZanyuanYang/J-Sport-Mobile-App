@@ -34,6 +34,9 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import edu.neu.madcourse.team_j_sport.user_auth.ForgotPasswordActivity;
+import edu.neu.madcourse.team_j_sport.user_auth.NewUser;
+import edu.neu.madcourse.team_j_sport.user_auth.RegisterActivity;
 
 import java.util.Objects;
 
@@ -95,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 email = email_et.getText().toString();
                 password = password_et.getText().toString();
+
+                // TODO: need to check for empty Strings
 
                 fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
                         new OnCompleteListener<AuthResult>() {
@@ -173,17 +178,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         getMyToken();
-
-
-        login_page = findViewById(R.id.login_page);
-        login_page.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, UserLoginActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
         // Write a message to the database
         DatabaseReference myRef = database.getReference("message");

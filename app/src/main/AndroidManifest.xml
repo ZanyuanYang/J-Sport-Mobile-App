@@ -28,13 +28,13 @@
             android:name=".HomepageActivity"
             android:exported="true" />
         <activity
-            android:name=".ForgotPasswordActivity"
+            android:name=".user_auth.ForgotPasswordActivity"
             android:exported="true" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".user_auth.RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".MessageActivity"
+            android:name="edu.neu.madcourse.prev_assignment.MessageActivity"
             android:exported="true" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -43,9 +43,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserLoginActivity" />
-        <activity android:name=".UserPageActivity" />
-        <activity android:name=".UserSendStickerActivity" /> <!-- android:name="com.google.firebase.messaging.MyFirebaseMessagingService" -->
+        <activity android:name="edu.neu.madcourse.prev_assignment.UserLoginActivity" />
+        <activity android:name="edu.neu.madcourse.prev_assignment.UserPageActivity" />
+        <activity android:name="edu.neu.madcourse.prev_assignment.UserSendStickerActivity" /> <!-- android:name="com.google.firebase.messaging.MyFirebaseMessagingService" -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
