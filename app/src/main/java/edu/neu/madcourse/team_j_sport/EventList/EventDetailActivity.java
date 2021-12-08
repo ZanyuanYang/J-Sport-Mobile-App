@@ -1,5 +1,6 @@
 package edu.neu.madcourse.team_j_sport.EventList;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,18 +16,24 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
+import edu.neu.madcourse.team_j_sport.MainActivity;
 import edu.neu.madcourse.team_j_sport.R;
 
 public class EventDetailActivity extends AppCompatActivity {
 
-    TextView tvEventName;
-    TextView tvEventSummary;
-    TextView tvEventDescription;
-    Button btnJoin;
-    TextView tvEventLocation;
-    TextView tvEventLimitPerson;
-    TextView tvEventTime;
-    TextView tvEventContact;
+    private TextView tvEventName;
+    private TextView tvEventSummary;
+    private TextView tvEventDescription;
+    private Button btnJoin;
+    private TextView tvEventLocation;
+    private TextView tvEventLimitPerson;
+    private TextView tvEventTime;
+    private TextView tvEventContact;
+
+    private SharedPreferences sp;
+    private DatabaseReference mDatabase;
+
+    public static final String PARTICIPANTS = "participants";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +43,19 @@ public class EventDetailActivity extends AppCompatActivity {
         initView();
         setText();
 
+        sp = getSharedPreferences("login", MODE_PRIVATE);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         btnJoin.setOnClickListener(view -> {
-            //TODO: Add the user into the event's participants list
+            String token = sp.getString(MainActivity.USER_ID_KEY, "");
+            String firstName = sp.getString(MainActivity.FIRST_NAME_KEY, "");
+            String lastName = sp.getString(MainActivity.LAST_NAME_KEY, "");
+            // Add the user into the event's participants list
+            mDatabase.child("Events")
+                    .child(String.valueOf(getIntent().getStringExtra(EventHolder.EVENT_KEY)))
+                    .child(PARTICIPANTS)
+                    .child(token)
+                    .setValue(firstName + " " + lastName);
         });
     }
 
