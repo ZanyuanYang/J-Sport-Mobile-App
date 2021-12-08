@@ -38,6 +38,7 @@ public class EventDetailActivity extends AppCompatActivity {
     public static final String JOIN = "JOIN";
     public static final String QUIT = "QUIT";
     public static final String FULL = "FULL";
+    public static final String UNLIMITED = "+∞";
 
     private String token;
     private String eventKey;
@@ -165,13 +166,20 @@ public class EventDetailActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String limitPersonText = tvEventLimitPerson.getText().toString();
+                String[] limitPersonOriginal = tvEventLimitPerson.getText().toString().split("/");
+                String limitPersonText;
+                if(limitPersonOriginal.length == 1){
+                    limitPersonText = limitPersonOriginal[0];
+                } else {
+                    limitPersonText = limitPersonOriginal[1];
+                }
                 int limitPerson = 0;
                 boolean unlimited = false;
-                if("".equals(limitPersonText)){
+                if("".equals(limitPersonText) || UNLIMITED.equals(limitPersonText)){
                     unlimited = true;
+                    limitPersonText = UNLIMITED;
                 } else {
-                    limitPerson = Integer.parseInt(tvEventLimitPerson.getText().toString());
+                    limitPerson = Integer.parseInt(limitPersonText);
                 }
                 if (snapshot.hasChild(token)) {
                     btnJoin.setText(QUIT);
@@ -180,6 +188,8 @@ public class EventDetailActivity extends AppCompatActivity {
                 } else {
                     btnJoin.setText(JOIN);
                 }
+                // display the number of current participants
+                tvEventLimitPerson.setText(snapshot.getChildrenCount() + "/" + limitPersonText);
             }
 
             @Override
