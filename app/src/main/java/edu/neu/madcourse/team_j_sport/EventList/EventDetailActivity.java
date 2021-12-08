@@ -55,15 +55,24 @@ public class EventDetailActivity extends AppCompatActivity {
         setText();
 
         btnJoin.setOnClickListener(view -> {
-            String firstName = sp.getString(MainActivity.FIRST_NAME_KEY, "");
-            String lastName = sp.getString(MainActivity.LAST_NAME_KEY, "");
 
-            // Add the user into the event's participants list
-            mDatabase.child("Events")
-                    .child(eventKey)
-                    .child(PARTICIPANTS)
-                    .child(token)
-                    .setValue(firstName + " " + lastName);
+            String Joined = btnJoin.getText().toString();
+            if (QUIT.equals(Joined)) {
+                mDatabase.child("Events")
+                        .child(eventKey)
+                        .child(PARTICIPANTS)
+                        .child(token)
+                        .removeValue();
+            } else {
+                String firstName = sp.getString(MainActivity.FIRST_NAME_KEY, "");
+                String lastName = sp.getString(MainActivity.LAST_NAME_KEY, "");
+                // Add the user into the event's participants list
+                mDatabase.child("Events")
+                        .child(eventKey)
+                        .child(PARTICIPANTS)
+                        .child(token)
+                        .setValue(firstName + " " + lastName);
+            }
         });
     }
 
@@ -154,7 +163,7 @@ public class EventDetailActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.hasChild(token)){
+                if (snapshot.hasChild(token)) {
                     btnJoin.setText(QUIT);
                 } else {
                     btnJoin.setText(JOIN);
