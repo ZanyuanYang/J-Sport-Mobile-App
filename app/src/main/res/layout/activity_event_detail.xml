@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".EventList.EventDetailActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -295,10 +295,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_event_detail_location" />
 
             <TextView
+                android:id="@+id/tv_event_detail_location_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/v_location"
+                app:layout_constraintEnd_toEndOf="@+id/v_location"
+                app:layout_constraintStart_toStartOf="@+id/v_location" />
+
+            <TextView
                 android:id="@+id/tv_event_detail_limit_person_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:textColor="@android:color/white"
                 app:layout_constraintStart_toEndOf="@+id/iv_event_detail_limit_person"
