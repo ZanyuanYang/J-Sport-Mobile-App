@@ -96,7 +96,6 @@ public class EventDetailActivity extends AppCompatActivity {
                 tvEventSummary.setText(Objects.requireNonNull(hashMap.get("summary")).toString());
                 tvEventDescription.setText(Objects.requireNonNull(hashMap.get("description")).toString());
                 tvEventLocation.setText(Objects.requireNonNull(hashMap.get("location")).toString());
-                tvEventLimitPerson.setText(Objects.requireNonNull(hashMap.get("limitPerson")).toString());
                 tvEventTime.setText(Objects.requireNonNull(hashMap.get("time")).toString());
                 tvEventContact.setText(Objects.requireNonNull(hashMap.get("contact")).toString());
 
@@ -114,6 +113,20 @@ public class EventDetailActivity extends AppCompatActivity {
             }
         });
 
+        mDatabase.child("Events")
+                .child(eventKey)
+                .child("limitPerson")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        tvEventLimitPerson.setText(Objects.requireNonNull(snapshot.getValue()).toString());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
         // deal with the limit Person
         mDatabase.child("Events")
