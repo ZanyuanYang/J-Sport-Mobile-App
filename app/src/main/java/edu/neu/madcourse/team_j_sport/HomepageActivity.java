@@ -1,37 +1,22 @@
 package edu.neu.madcourse.team_j_sport;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import edu.neu.madcourse.team_j_sport.navi_bar.EventFragment;
 import edu.neu.madcourse.team_j_sport.navi_bar.MeFragment;
 import edu.neu.madcourse.team_j_sport.navi_bar.PostFragment;
 
 public class HomepageActivity extends AppCompatActivity implements View.OnClickListener{
-
-//    public static final String TAG = "EventListActivity";
-//    public static final String USERS_TABLE_KEY = "users";
-//    public static final String FIRST_NAME_KEY = "firstname";
-//    public static final String LAST_NAME_KEY = "lastname";
-//    public static final String EMAIL_KEY = "email";
-//    public static final String USER_ID_KEY = "user id";
-//    public static final String GET_USER_KEY = "get user";
-//
-//    TextView textView_tv;
-//
-//    SharedPreferences sp;
 
     private final Fragment postFragment = new PostFragment();
     private final Fragment eventFragment = new EventFragment();
