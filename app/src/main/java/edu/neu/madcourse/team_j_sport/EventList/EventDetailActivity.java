@@ -1,5 +1,6 @@
 package edu.neu.madcourse.team_j_sport.EventList;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
@@ -34,25 +35,32 @@ public class EventDetailActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
     public static final String PARTICIPANTS = "participants";
+    public static final String JOIN = "JOIN";
+    public static final String QUIT = "QUIT";
+
+    private String token;
+    private String eventKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
 
+        sp = getSharedPreferences("login", MODE_PRIVATE);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        token = sp.getString(MainActivity.USER_ID_KEY, "");
+        eventKey = String.valueOf(getIntent().getStringExtra(EventHolder.EVENT_KEY));
+
         initView();
         setText();
 
-        sp = getSharedPreferences("login", MODE_PRIVATE);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
         btnJoin.setOnClickListener(view -> {
-            String token = sp.getString(MainActivity.USER_ID_KEY, "");
             String firstName = sp.getString(MainActivity.FIRST_NAME_KEY, "");
             String lastName = sp.getString(MainActivity.LAST_NAME_KEY, "");
+
             // Add the user into the event's participants list
             mDatabase.child("Events")
-                    .child(String.valueOf(getIntent().getStringExtra(EventHolder.EVENT_KEY)))
+                    .child(eventKey)
                     .child(PARTICIPANTS)
                     .child(token)
                     .setValue(firstName + " " + lastName);
@@ -62,7 +70,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private void setText() {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef;
-        myRef = database.getReference().child("Events").child(String.valueOf(getIntent().getStringExtra(EventHolder.EVENT_KEY)));
+        myRef = database.getReference().child("Events").child(eventKey);
         myRef.child("title").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -133,6 +141,24 @@ public class EventDetailActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 tvEventContact.setText(Objects.requireNonNull(snapshot.getValue()).toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        mDatabase.child("Events")
+                .child(eventKey)
+                .child(PARTICIPANTS).addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.hasChild(token)){
+                    btnJoin.setText(QUIT);
+                } else {
+                    btnJoin.setText(JOIN);
+                }
             }
 
             @Override
