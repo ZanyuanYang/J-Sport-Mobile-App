@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.neu.madcourse.team_j_sport">
+    <!-- Always include this permission -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <!-- Include only if your app benefits from precise location access. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,13 +28,13 @@
             android:name=".HomepageActivity"
             android:exported="true" />
         <activity
-            android:name=".ForgotPasswordActivity"
+            android:name=".user_auth.ForgotPasswordActivity"
             android:exported="true" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".user_auth.RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".MessageActivity"
+            android:name="edu.neu.madcourse.prev_assignment.MessageActivity"
             android:exported="true" />
         <activity android:name=".MainActivity">
             <intent-filter>

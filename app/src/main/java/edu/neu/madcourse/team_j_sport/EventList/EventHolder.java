@@ -19,6 +19,7 @@ public class EventHolder extends RecyclerView.ViewHolder {
     public TextView tvEventSummary;
     public TextView tvEventOrganizer;
     public TextView tvEventLocation;
+
     private String eventKey;
 
     public EventHolder(@NonNull View itemView, Context mContext) {
@@ -31,7 +32,6 @@ public class EventHolder extends RecyclerView.ViewHolder {
 
         itemView.setOnClickListener(
                 view -> {
-                  System.out.println("????" + getLayoutPosition());
                   Intent intent = new Intent(mContext, EventDetailActivity.class);
                   intent.putExtra(EVENT_KEY, eventKey);
                   intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

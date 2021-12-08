@@ -19,9 +19,12 @@
         <entry key="app/src/main/res/drawable/ic_search_focused.xml" value="0.3921875" />
         <entry key="app/src/main/res/drawable/shape.xml" value="0.3921875" />
         <entry key="app/src/main/res/layout/activity_add_event.xml" value="0.26667292227828815" />
+        <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_event_detail.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_event_list.xml" value="0.3619791666666667" />
         <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/activity_homepage.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_message.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.1" />
@@ -31,7 +34,7 @@
         <entry key="app/src/main/res/layout/fragment_event.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_me.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_post.xml" value="0.21197916666666666" />
-        <entry key="app/src/main/res/layout/item_event.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/item_event.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_message.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/list_users.xml" value="0.3704710144927536" />
         <entry key="app/src/main/res/layout/navi_bar.xml" value="0.37604166666666666" />

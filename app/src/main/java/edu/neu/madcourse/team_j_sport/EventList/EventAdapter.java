@@ -43,6 +43,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventHolder> {
         holder.tvEventSummary.setText(summary);
         holder.tvEventOrganizer.setText("Organizer: " + currentEvent.getOrganizer());
         holder.tvEventLocation.setText(currentEvent.getLocation());
+
         holder.setEventKey(currentEvent.getEventId());
     }
 
