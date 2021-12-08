@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 import edu.neu.madcourse.team_j_sport.MainActivity;
@@ -27,6 +28,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private TextView tvEventDescription;
     private Button btnJoin;
     private TextView tvEventLocation;
+    private TextView tvEventDistance;
     private TextView tvEventLimitPerson;
     private TextView tvEventTime;
     private TextView tvEventContact;
@@ -56,6 +58,8 @@ public class EventDetailActivity extends AppCompatActivity {
         initView();
         setText();
 
+
+
         btnJoin.setOnClickListener(view -> {
 
             String Joined = btnJoin.getText().toString();
@@ -83,10 +87,25 @@ public class EventDetailActivity extends AppCompatActivity {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef;
         myRef = database.getReference().child("Events").child(eventKey);
-        myRef.child("title").addValueEventListener(new ValueEventListener() {
+        myRef.orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                tvEventName.setText(Objects.requireNonNull(snapshot.getValue()).toString());
+                HashMap hashMap = (HashMap) snapshot.getValue();
+                assert hashMap != null;
+                tvEventName.setText(Objects.requireNonNull(hashMap.get("title")).toString());
+                tvEventSummary.setText(Objects.requireNonNull(hashMap.get("summary")).toString());
+                tvEventDescription.setText(Objects.requireNonNull(hashMap.get("description")).toString());
+                tvEventLocation.setText(Objects.requireNonNull(hashMap.get("location")).toString());
+                tvEventLimitPerson.setText(Objects.requireNonNull(hashMap.get("limitPerson")).toString());
+                tvEventTime.setText(Objects.requireNonNull(hashMap.get("time")).toString());
+                tvEventContact.setText(Objects.requireNonNull(hashMap.get("contact")).toString());
+
+                String currentLatitude = sp.getString(MainActivity.USER_LATITUDE_KEY, "");
+                String currentLongitude = sp.getString(MainActivity.USER_LONGITUDE_KEY, "");
+                String eventLatitude = Objects.requireNonNull(hashMap.get("latitude")).toString();
+                String eventLongitude = Objects.requireNonNull(hashMap.get("longitude")).toString();
+                tvEventDistance.setText(LocationUtils.getDistanceTo(currentLatitude, currentLongitude, eventLatitude, eventLongitude));
+
             }
 
             @Override
@@ -94,72 +113,9 @@ public class EventDetailActivity extends AppCompatActivity {
 
             }
         });
-        myRef.child("summary").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                tvEventSummary.setText(Objects.requireNonNull(snapshot.getValue()).toString());
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
-        myRef.child("description").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                tvEventDescription.setText(Objects.requireNonNull(snapshot.getValue()).toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        myRef.child("location").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                tvEventLocation.setText(Objects.requireNonNull(snapshot.getValue()).toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        myRef.child("limitPerson").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                tvEventLimitPerson.setText(Objects.requireNonNull(snapshot.getValue()).toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        myRef.child("time").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                tvEventTime.setText(Objects.requireNonNull(snapshot.getValue()).toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        myRef.child("contact").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                tvEventContact.setText(Objects.requireNonNull(snapshot.getValue()).toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        // deal with the limit Person
         mDatabase.child("Events")
                 .child(eventKey)
                 .child(PARTICIPANTS).addValueEventListener(new ValueEventListener() {
@@ -205,9 +161,9 @@ public class EventDetailActivity extends AppCompatActivity {
         tvEventDescription = findViewById(R.id.tv_event_detail_description_detail);
         btnJoin = findViewById(R.id.btn_join);
         tvEventLocation = findViewById(R.id.tv_event_detail_location_detail);
+        tvEventDistance = findViewById(R.id.tv_event_detail_location_distance);
         tvEventLimitPerson = findViewById(R.id.tv_event_detail_limit_person_detail);
         tvEventTime = findViewById(R.id.tv_event_detail_time_detail);
         tvEventContact = findViewById(R.id.tv_event_detail_contact_detail);
-
     }
 }
