@@ -37,6 +37,7 @@ public class EventDetailActivity extends AppCompatActivity {
     public static final String PARTICIPANTS = "participants";
     public static final String JOIN = "JOIN";
     public static final String QUIT = "QUIT";
+    public static final String FULL = "FULL";
 
     private String token;
     private String eventKey;
@@ -58,12 +59,13 @@ public class EventDetailActivity extends AppCompatActivity {
 
             String Joined = btnJoin.getText().toString();
             if (QUIT.equals(Joined)) {
+                //Remove the user from the event
                 mDatabase.child("Events")
                         .child(eventKey)
                         .child(PARTICIPANTS)
                         .child(token)
                         .removeValue();
-            } else {
+            } else if (JOIN.equals(Joined)){
                 String firstName = sp.getString(MainActivity.FIRST_NAME_KEY, "");
                 String lastName = sp.getString(MainActivity.LAST_NAME_KEY, "");
                 // Add the user into the event's participants list
@@ -163,8 +165,18 @@ public class EventDetailActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String limitPersonText = tvEventLimitPerson.getText().toString();
+                int limitPerson = 0;
+                boolean unlimited = false;
+                if("".equals(limitPersonText)){
+                    unlimited = true;
+                } else {
+                    limitPerson = Integer.parseInt(tvEventLimitPerson.getText().toString());
+                }
                 if (snapshot.hasChild(token)) {
                     btnJoin.setText(QUIT);
+                } else if (snapshot.getChildrenCount() >= limitPerson && !unlimited) {
+                    btnJoin.setText(FULL);
                 } else {
                     btnJoin.setText(JOIN);
                 }
