@@ -7,9 +7,14 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import edu.neu.madcourse.team_j_sport.R;
+import edu.neu.madcourse.team_j_sport.about_me.MyPostsActivity;
+import edu.neu.madcourse.team_j_sport.navi_bar.MeFragment;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.MergeCursor;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
@@ -72,8 +77,14 @@ public class GalleryActivity extends AppCompatActivity {
                             uploadPhoto(photoUri);
 
                             // Load the selected image into a preview
-                            ImageView ivPreview = (ImageView) findViewById(R.id.iv_preview);
-                            ivPreview.setImageBitmap(selectedImage);
+//                            ImageView ivPreview = (ImageView) findViewById(R.id.iv_preview);
+//                            ivPreview.setImageBitmap(selectedImage);
+
+//                            Fragment frg = null;
+//                            frg = getFragmentManager().findFragmentById(R.id.frg_me);
+//                            FragmentTransaction ftr = getFragmentManager().beginTransaction();
+//                            ftr.detach(frg).attach(frg).commit();
+                            finish();
                         }
                     }
                 });
@@ -111,11 +122,9 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
     public void pickPhoto() {
-
         Intent galleryIntent = new Intent(
                 Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        startActivityForResult(galleryIntent , RESULT_GALLERY );
 
         mGetContent.launch(galleryIntent);
     }
@@ -125,7 +134,7 @@ public class GalleryActivity extends AppCompatActivity {
         Bitmap image = null;
         try {
             // check version of Android on device
-            if (Build.VERSION.SDK_INT > 29) {
+            if (Build.VERSION.SDK_INT > 27) {
                 // on newer versions of Android, use the new decodeBitmap method
                 ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), photoUri);
                 image = ImageDecoder.decodeBitmap(source);
