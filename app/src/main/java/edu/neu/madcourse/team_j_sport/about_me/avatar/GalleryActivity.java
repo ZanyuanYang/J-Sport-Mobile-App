@@ -4,10 +4,12 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import edu.neu.madcourse.team_j_sport.R;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
@@ -15,18 +17,28 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
 import java.io.IOException;
 
 public class GalleryActivity extends AppCompatActivity {
 
     private static final String TAG = "GalleryActivity";
-    public static final int RESULT_GALLERY = 0;
-    public final static int PICK_PHOTO_CODE = 1046;
 
-    ActivityResultLauncher<Intent> mGetContent;
+    private static final String USER_ID = "user id";
+
+    private ActivityResultLauncher<Intent> mGetContent;
+    private SharedPreferences sharedPreferences;
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +46,12 @@ public class GalleryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallary);
 
+        init();
+
+        pickPhoto();
+    }
+
+    private void init() {
         mGetContent = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -51,6 +69,8 @@ public class GalleryActivity extends AppCompatActivity {
                             Bitmap selectedImage = loadFromUri(photoUri);
                             Log.d(TAG, String.valueOf(photoUri));
 
+                            uploadPhoto(photoUri);
+
                             // Load the selected image into a preview
                             ImageView ivPreview = (ImageView) findViewById(R.id.iv_preview);
                             ivPreview.setImageBitmap(selectedImage);
@@ -58,7 +78,36 @@ public class GalleryActivity extends AppCompatActivity {
                     }
                 });
 
-        pickPhoto();
+        sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+        userId = sharedPreferences.getString(USER_ID, "userId");
+
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+    }
+
+    private void uploadPhoto(Uri photoUri) {
+        Log.d(TAG, "Start uploading");
+        Uri file = photoUri;
+//        Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg"));
+        StorageReference avatarRef = storageRef.child("avatars/" + file.getLastPathSegment());
+        UploadTask uploadTask = avatarRef.putFile(file);
+
+        // Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+                Log.d(TAG, "Upload Failed");
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+                Log.d(TAG, "Upload success");
+            }
+        });
+
     }
 
     public void pickPhoto() {
