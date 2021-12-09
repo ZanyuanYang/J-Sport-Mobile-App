@@ -88,8 +88,8 @@ public class GalleryActivity extends AppCompatActivity {
     private void uploadPhoto(Uri photoUri) {
         Log.d(TAG, "Start uploading");
         Uri file = photoUri;
-//        Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg"));
-        StorageReference avatarRef = storageRef.child("avatars/" + file.getLastPathSegment());
+
+        StorageReference avatarRef = storageRef.child("avatars/" + userId + ".jpg");
         UploadTask uploadTask = avatarRef.putFile(file);
 
         // Register observers to listen for when the download is done or if it fails
