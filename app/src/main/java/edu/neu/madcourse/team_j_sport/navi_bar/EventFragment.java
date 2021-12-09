@@ -89,7 +89,7 @@ public class EventFragment extends Fragment {
                         Objects.requireNonNull(hashMap.get("title")).toString(),
                         Objects.requireNonNull(hashMap.get("time")).toString(),
                         Objects.requireNonNull(hashMap.get("summary")).toString(),
-                        Objects.requireNonNull(hashMap.get("contact")).toString(),
+                        Objects.requireNonNull(hashMap.get("organizer")).toString(),
                         Objects.requireNonNull(hashMap.get("location")).toString(),
                         snapshot.getKey()));
                   createRecyclerView();
