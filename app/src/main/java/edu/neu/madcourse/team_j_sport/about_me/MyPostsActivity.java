@@ -12,6 +12,7 @@ import edu.neu.madcourse.team_j_sport.PostList.ItemPost;
 import edu.neu.madcourse.team_j_sport.PostList.PostAdapter;
 import edu.neu.madcourse.team_j_sport.R;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
@@ -49,8 +51,15 @@ public class MyPostsActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
         token = sharedPreferences.getString(MainActivity.USER_ID_KEY, "");
 
+        initView();
         initFloatingBtn();
         initPostList();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void initView() {
+        TextView tvEventList = findViewById(R.id.tv_post_list);
+        tvEventList.setText("My Posts");
     }
 
     private void initFloatingBtn() {

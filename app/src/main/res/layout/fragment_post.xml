@@ -33,7 +33,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:drawableStart="@drawable/ic_list"
-            android:text="@string/post_list"
+            android:text="Post List"
             android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold"

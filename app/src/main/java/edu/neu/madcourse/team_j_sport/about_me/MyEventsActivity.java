@@ -1,11 +1,13 @@
 package edu.neu.madcourse.team_j_sport.about_me;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -46,8 +48,15 @@ public class MyEventsActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
         token = sharedPreferences.getString(MainActivity.USER_ID_KEY, "");
 
-        initEventList();
+        initView();
         initFloatingBtn();
+        initEventList();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void initView() {
+        TextView tvEventList = findViewById(R.id.tv_event_list);
+        tvEventList.setText("My Events");
     }
 
     private void initFloatingBtn() {
