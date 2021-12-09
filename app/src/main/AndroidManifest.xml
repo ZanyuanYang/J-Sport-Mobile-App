@@ -13,8 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".PostList.PostDetailActivity" />
         <activity
-            android:name=".PostList.PostDetailActivity"
+            android:name=".Post.AddPost"
             android:exported="true" />
         <activity android:name=".about_me.EditProfileActivity" />
         <activity android:name=".about_me.ChangePasswordActivity" />

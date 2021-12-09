@@ -3,6 +3,7 @@ package edu.neu.madcourse.team_j_sport.navi_bar;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,12 +25,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-import edu.neu.madcourse.team_j_sport.EventList.EventAdapter;
-import edu.neu.madcourse.team_j_sport.EventList.ItemEvent;
+import edu.neu.madcourse.team_j_sport.Post.AddPost;
 import edu.neu.madcourse.team_j_sport.PostList.ItemPost;
 import edu.neu.madcourse.team_j_sport.PostList.PostAdapter;
 import edu.neu.madcourse.team_j_sport.R;
@@ -48,9 +50,13 @@ public class PostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_post, container, false);
+        initFloatingBtn();
         // Inflate the layout for this fragment
+
         view = inflater.inflate(R.layout.fragment_post, container, false);
         sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
+        initFloatingBtn();
         initPostList();
         return view;
     }
@@ -133,6 +139,14 @@ public class PostFragment extends Fragment {
             }
         }
         postAdapter.filterList(filteredList);
+    }
 
+    private void initFloatingBtn() {
+        FloatingActionButton fab = view.findViewById(R.id.Post_FAB);
+        fab.setOnClickListener(
+                view -> {
+                    Intent intent = new Intent(getActivity(), AddPost.class);
+                    startActivity(intent);
+                });
     }
 }
