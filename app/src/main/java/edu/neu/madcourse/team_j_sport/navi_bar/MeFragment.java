@@ -9,8 +9,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import edu.neu.madcourse.team_j_sport.MainActivity;
@@ -28,9 +36,14 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     public static final String FIRST_NAME_KEY = "firstname";
     public static final String LAST_NAME_KEY = "lastname";
     public static final String EMAIL_KEY = "email";
+    private static final String USER_ID = "user id";
 
-    View view;
-    SharedPreferences sharedPreferences;
+    private View view;
+    private SharedPreferences sharedPreferences;
+    private String userId;
+    private ImageView ivAvatar;
+
+    private FirebaseStorage storage;
 
     public MeFragment() {
         // Required empty public constructor
@@ -41,8 +54,17 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_me, container, false);
-        sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
 
+        storage = FirebaseStorage.getInstance();
+        sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
+        userId = sharedPreferences.getString(USER_ID, "userId");
+
+        init();
+
+        return view;
+    }
+
+    private void init() {
         String name = sharedPreferences.getString(FIRST_NAME_KEY, "fName")
                 + " "
                 + sharedPreferences.getString(LAST_NAME_KEY, "lName");
@@ -53,7 +75,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
         view.findViewById(R.id.iv_edit_profile).setOnClickListener(this::onClick);
         view.findViewById(R.id.iv_log_out).setOnClickListener(this::onClick);
-
         view.findViewById(R.id.iv_avatar).setOnClickListener(this::onClick);
 
         view.findViewById(R.id.tv_my_posts).setOnClickListener(this::onClick);
@@ -62,7 +83,18 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.iv_arrow_1).setOnClickListener(this::onClick);
         view.findViewById(R.id.iv_arrow_2).setOnClickListener(this::onClick);
         view.findViewById(R.id.iv_arrow_3).setOnClickListener(this::onClick);
-        return view;
+
+        ivAvatar = view.findViewById(R.id.iv_avatar);
+
+        loadAvatar();
+    }
+
+    private void loadAvatar() {
+        StorageReference photoRef = storage.getReference().child("avatars/" + userId + ".jpg");
+
+        Glide.with(this)
+                .load(photoRef)
+                .into(ivAvatar);
     }
 
     @Override
@@ -83,12 +115,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 // FIXME: Only using gallery feature for avatars
                 Log.d(TAG, "Avatar is clicked");
                 intent = new Intent(getActivity(), GalleryActivity.class);
-
-//                intent = new Intent();
-//                intent.setAction(android.content.Intent.ACTION_VIEW);
-//                intent.setType("image/*");
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
                 startActivity(intent);
                 break;
 
