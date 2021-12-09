@@ -103,7 +103,36 @@ public class PostFragment extends Fragment {
 
         PostAdapter postAdapter = new PostAdapter(itemPosts, getActivity().getApplicationContext());
 
+        EditText etSearch = view.findViewById(R.id.et_post_search);
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s){
+                filter(s.toString(), postAdapter);
+            }
+        });
+
         recyclerView.setAdapter(postAdapter);
         recyclerView.setLayoutManager(layoutManager);
+    }
+
+    private void filter(String text, PostAdapter postAdapter){
+        ArrayList<ItemPost> filteredList = new ArrayList<>();
+        for(ItemPost item : itemPosts){
+            if(item.getTitle().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(item);
+            }
+        }
+        postAdapter.filterList(filteredList);
+
     }
 }

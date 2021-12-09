@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import edu.neu.madcourse.team_j_sport.EventList.ItemEvent;
 import edu.neu.madcourse.team_j_sport.R;
 
 public class PostAdapter extends RecyclerView.Adapter<PostHolder> {
@@ -49,5 +50,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostHolder> {
     @Override
     public int getItemCount() {
         return postList.size();
+    }
+
+    public void filterList(ArrayList<ItemPost> filteredList){
+        postList = filteredList;
+        notifyDataSetChanged();
     }
 }
