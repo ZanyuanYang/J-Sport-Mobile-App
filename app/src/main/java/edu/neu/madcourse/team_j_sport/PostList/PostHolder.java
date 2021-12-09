@@ -30,10 +30,10 @@ public class PostHolder extends RecyclerView.ViewHolder {
 
         itemView.setOnClickListener(
                 view -> {
-                    Intent intent = new Intent(mContext, EventDetailActivity.class);
+                    Intent intent = new Intent(mContext, PostDetailActivity.class);
                     intent.putExtra(POST_KEY, postKey);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    //mContext.startActivity(intent);
+                    mContext.startActivity(intent);
                 });
     }
 
