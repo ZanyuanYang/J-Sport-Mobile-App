@@ -50,15 +50,21 @@ public class PostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_post, container, false);
-        initFloatingBtn();
         // Inflate the layout for this fragment
-
         view = inflater.inflate(R.layout.fragment_post, container, false);
         sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
         initFloatingBtn();
         initPostList();
         return view;
+    }
+
+    private void initFloatingBtn() {
+        FloatingActionButton fab = view.findViewById(R.id.Post_FAB);
+        fab.setOnClickListener(
+                view -> {
+                    Intent intent = new Intent(getActivity(), AddPost.class);
+                    startActivity(intent);
+                });
     }
 
     private void initPostList() {
@@ -141,12 +147,5 @@ public class PostFragment extends Fragment {
         postAdapter.filterList(filteredList);
     }
 
-    private void initFloatingBtn() {
-        FloatingActionButton fab = view.findViewById(R.id.Post_FAB);
-        fab.setOnClickListener(
-                view -> {
-                    Intent intent = new Intent(getActivity(), AddPost.class);
-                    startActivity(intent);
-                });
-    }
+
 }
