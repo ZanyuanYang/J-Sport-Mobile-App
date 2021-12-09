@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import edu.neu.madcourse.team_j_sport.about_me.ChangePasswordActivity;
 import edu.neu.madcourse.team_j_sport.about_me.EditProfileActivity;
 import edu.neu.madcourse.team_j_sport.about_me.MyEventsActivity;
 import edu.neu.madcourse.team_j_sport.about_me.MyPostsActivity;
+import edu.neu.madcourse.team_j_sport.about_me.avatar.GalleryActivity;
 
 
 public class MeFragment extends Fragment implements View.OnClickListener {
@@ -51,6 +53,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
         view.findViewById(R.id.iv_edit_profile).setOnClickListener(this::onClick);
         view.findViewById(R.id.iv_log_out).setOnClickListener(this::onClick);
+
+        view.findViewById(R.id.iv_avatar).setOnClickListener(this::onClick);
+
         view.findViewById(R.id.tv_my_posts).setOnClickListener(this::onClick);
         view.findViewById(R.id.tv_my_events).setOnClickListener(this::onClick);
         view.findViewById(R.id.tv_change_password).setOnClickListener(this::onClick);
@@ -69,11 +74,24 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.iv_log_out:
-                // TODO: some action to log out
                 sharedPreferences.edit().putBoolean("isUserLogin",false).apply();
                 intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
                 break;
+
+            case R.id.iv_avatar:
+                // FIXME: Only using gallery feature for avatars
+                Log.d(TAG, "Avatar is clicked");
+                intent = new Intent(getActivity(), GalleryActivity.class);
+
+//                intent = new Intent();
+//                intent.setAction(android.content.Intent.ACTION_VIEW);
+//                intent.setType("image/*");
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                startActivity(intent);
+                break;
+
             case R.id.tv_my_posts:
             case R.id.iv_arrow_1:
                 intent = new Intent(getActivity(), MyPostsActivity.class);
