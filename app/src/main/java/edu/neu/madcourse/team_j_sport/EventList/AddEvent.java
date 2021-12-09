@@ -31,6 +31,7 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.UUID;
 
 import edu.neu.madcourse.team_j_sport.R;
 
@@ -147,7 +148,7 @@ public class AddEvent extends AppCompatActivity {
         EditText contactET = findViewById(R.id.Event_ContactEditText);
 
 
-
+        String uid = sp.getString(USER_ID_KEY, "");
         String title = titleET.getText().toString();
         String summary = sumET.getText().toString();
         String description = desET.getText().toString();
@@ -156,7 +157,7 @@ public class AddEvent extends AppCompatActivity {
         String time = timeET.getText().toString() + " " + dateET.getText().toString();
         String contact = contactET.getText().toString();
         String organizer = sp.getString(FIRST_NAME_KEY,"") + " "+ sp.getString(LAST_NAME_KEY, "");
-        Events event = new Events(title, summary, description, zipCode, limitPerson, time, contact,organizer);
+        Events event = new Events(title, summary, description, zipCode, limitPerson, time, contact,organizer, uid);
         return event;
     }
     private void setEventLocation(Events event, long childCnt){
@@ -198,9 +199,11 @@ public class AddEvent extends AppCompatActivity {
                 event.participants = new HashMap<>();
 
                 event.participants.put(sp.getString(USER_ID_KEY,""), event.organizer);
+                String uuid = UUID.randomUUID().toString();
                 mDatabase.child("Events")
-                        .child(String.valueOf(childCnt + 1))
+                        .child(uuid)
                         .setValue(event);
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
