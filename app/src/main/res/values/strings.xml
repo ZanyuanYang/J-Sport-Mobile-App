@@ -26,5 +26,6 @@
     <string name="tv_change_password">Change Password</string>
     <string name="join">join</string>
     <string name="Event_Name">Name</string>
+    <string name="post_list">PostList</string>
 
 </resources>
