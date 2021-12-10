@@ -1,6 +1,5 @@
 package edu.neu.madcourse.team_j_sport.about_me.avatar;
 
-<<<<<<< HEAD
 import android.Manifest;
 import android.Manifest.permission;
 import android.app.Activity;
@@ -18,19 +17,13 @@ import android.provider.Settings;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import edu.neu.madcourse.team_j_sport.MainActivity;
 import edu.neu.madcourse.team_j_sport.R;
 
 public class CameraActivity extends AppCompatActivity {
@@ -228,17 +221,8 @@ public class CameraActivity extends AppCompatActivity {
             photoUtil.uploadBitmap(userId, bData);
 
             Log.d(TAG, "Showing camera preview picture");
+            finish();
         }
-
     }
 }
 
-
-=======
-import androidx.appcompat.app.AppCompatActivity;
-
-public class CameraActivity extends AppCompatActivity {
-
-
-}
->>>>>>> feature/me/gallery
