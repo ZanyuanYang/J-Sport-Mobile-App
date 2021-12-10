@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.neu.madcourse.team_j_sport">
+
     <!-- Include only if your app benefits from precise location access. -->
+    <!-- Always include this permission -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,8 +15,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".about_me.avatar.GalleryActivity"></activity>
+
+        <activity android:name=".about_me.avatar.GalleryActivity"/>
         <activity android:name=".about_me.avatar.CameraActivity" />
+        <activity android:name=".PostList.PostDetailActivity" />
+        <activity
+            android:name=".Post.AddPost"
+            android:exported="true" />
+
         <activity android:name=".about_me.EditProfileActivity" />
         <activity android:name=".about_me.ChangePasswordActivity" />
         <activity android:name=".about_me.MyEventsActivity" />

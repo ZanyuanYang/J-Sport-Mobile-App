@@ -14,9 +14,10 @@ public class Events {
     public String location;
     public String latitude;
     public String longitude;
-    public HashMap<String, String> participants;
+    public String uid;
+    public HashMap<String, HashMap<String, String>> participants;
     public Events(String tit, String sum, String des,
-                  String zip, String lp, String time, String cont, String organizer){
+                  String zip, String lp, String time, String cont, String organizer, String uid){
         this.title = tit;
         this.summary = sum;
         this.description = des;
@@ -25,5 +26,6 @@ public class Events {
         this.time = time;
         this.contact = cont;
         this.organizer = organizer;
+        this.uid = uid;
     }
 }
