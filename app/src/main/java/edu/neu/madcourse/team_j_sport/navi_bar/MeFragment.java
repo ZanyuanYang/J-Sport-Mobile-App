@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,10 @@ import edu.neu.madcourse.team_j_sport.about_me.EditProfileActivity;
 import edu.neu.madcourse.team_j_sport.about_me.MyEventsActivity;
 import edu.neu.madcourse.team_j_sport.about_me.MyPostsActivity;
 
+import edu.neu.madcourse.team_j_sport.about_me.avatar.CameraActivity;
+import edu.neu.madcourse.team_j_sport.about_me.avatar.GalleryActivity;
+
+
 
 public class MeFragment extends Fragment implements View.OnClickListener {
 
@@ -26,6 +31,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     public static final String FIRST_NAME_KEY = "firstname";
     public static final String LAST_NAME_KEY = "lastname";
     public static final String EMAIL_KEY = "email";
+
+    private static final int RC_CODE_AVATAR = 68;
 
     View view;
     SharedPreferences sharedPreferences;
@@ -74,6 +81,20 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
                 break;
+
+            case R.id.iv_avatar:
+                // FIXME: Only using gallery feature for avatars
+
+                Log.d(TAG, "Avatar is clicked");
+                // TODO: Add a dialog to let user choose from Camera and Gallery
+//                intent = new Intent(getActivity(), GalleryActivity.class);
+                intent = new Intent(getActivity(), CameraActivity.class);
+//                startActivity(intent);
+
+                startActivityForResult(intent, RC_CODE_AVATAR);
+
+                break;
+
             case R.id.tv_my_posts:
             case R.id.iv_arrow_1:
                 intent = new Intent(getActivity(), MyPostsActivity.class);
