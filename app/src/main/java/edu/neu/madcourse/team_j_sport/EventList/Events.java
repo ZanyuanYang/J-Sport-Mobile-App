@@ -15,7 +15,7 @@ public class Events {
     public String latitude;
     public String longitude;
     public String uid;
-    public HashMap<String, String> participants;
+    public HashMap<String, HashMap<String, String>> participants;
     public Events(String tit, String sum, String des,
                   String zip, String lp, String time, String cont, String organizer, String uid){
         this.title = tit;

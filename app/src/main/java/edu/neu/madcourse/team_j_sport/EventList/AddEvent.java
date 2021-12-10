@@ -42,7 +42,7 @@ public class AddEvent extends AppCompatActivity {
     private SharedPreferences sp;
     public static final String FIRST_NAME_KEY = "firstname";
     public static final String LAST_NAME_KEY = "lastname";
-
+    public static final String EMAIL_KEY = "email";
     public static final String USER_ID_KEY = "user id";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,8 +197,11 @@ public class AddEvent extends AppCompatActivity {
                 event.longitude = longitude;
                 event.location = city;
                 event.participants = new HashMap<>();
+                HashMap<String, String> map = new HashMap<>();
+                map.put("email", sp.getString(EMAIL_KEY, ""));
+                map.put("username", event.organizer);
+                event.participants.put(sp.getString(USER_ID_KEY,""), map);
 
-                event.participants.put(sp.getString(USER_ID_KEY,""), event.organizer);
                 String uuid = UUID.randomUUID().toString();
                 mDatabase.child("Events")
                         .child(uuid)
