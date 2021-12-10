@@ -58,6 +58,7 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
     private void init() {
+
         sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
         userId = sharedPreferences.getString(USER_ID, "userId");
 

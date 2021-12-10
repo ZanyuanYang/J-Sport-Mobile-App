@@ -72,7 +72,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     etNewPasswordRetype.requestFocus();
                 } else {
                     email = sharedPreferences.getString(EMAIL_KEY, "email");
-                    changePassword(newPassword, email);
+                    changePassword(email, newPassword);
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
@@ -95,7 +95,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     }
 
     private void changePassword(String email, String newPassword) {
-        Log.d(TAG, String.format("email:%s, new password:%s", email, newPassword));
+        Log.d(TAG, String.format("email:%s, new password:'%s'", email, newPassword));
 
         progressBar.setVisibility(View.VISIBLE);
 

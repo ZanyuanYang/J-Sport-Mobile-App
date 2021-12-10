@@ -1,5 +1,6 @@
 package edu.neu.madcourse.team_j_sport.about_me.avatar;
 
+<<<<<<< HEAD
 import android.Manifest;
 import android.Manifest.permission;
 import android.app.Activity;
@@ -233,3 +234,11 @@ public class CameraActivity extends AppCompatActivity {
 }
 
 
+=======
+import androidx.appcompat.app.AppCompatActivity;
+
+public class CameraActivity extends AppCompatActivity {
+
+
+}
+>>>>>>> feature/me/gallery
