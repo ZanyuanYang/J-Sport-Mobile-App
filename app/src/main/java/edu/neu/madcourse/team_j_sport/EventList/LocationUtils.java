@@ -42,7 +42,7 @@ public class LocationUtils {
         double rad = 6371;
         double c = 2 * Math.asin(Math.sqrt(a));
         double res = rad * c;
-        return String.valueOf(res) + " KM";
+        return String.format("%.2f", res) + " KM";
     }
 
 }
