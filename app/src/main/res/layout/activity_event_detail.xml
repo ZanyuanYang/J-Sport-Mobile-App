@@ -163,7 +163,7 @@
                 android:id="@+id/v_location"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:background="#EBA4A4"
+                android:background="@drawable/border_radius_red"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -172,29 +172,28 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginStart="50dp"
-                android:background="#F5C190"
+                android:background="@drawable/border_radius_orange"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/v_location"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <View
                 android:id="@+id/v_time"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="50dp"
-                android:background="#C4EBB1"
+                android:layout_width="291dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/border_radius_green"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/v_location" />
 
             <View
                 android:id="@+id/v_contact"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="50dp"
-                android:background="#B7E9EC"
-                app:layout_constraintStart_toEndOf="@+id/v_time"
-                app:layout_constraintTop_toBottomOf="@+id/v_limit_person" />
+                android:layout_width="291dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/border_radius_blue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/v_time" />
 
             <ImageView
                 android:id="@+id/iv_event_detail_location"
@@ -221,7 +220,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/v_time"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/v_time"
                 app:srcCompat="@drawable/event_detail_time" />
@@ -264,32 +263,33 @@
                 android:id="@+id/tv_event_detail_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="16dp"
                 android:text="@string/Event_Time"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/v_time"
-                app:layout_constraintStart_toStartOf="@+id/v_time"
+                app:layout_constraintBottom_toBottomOf="@+id/v_time"
+                app:layout_constraintStart_toEndOf="@+id/iv_event_detail_time"
                 app:layout_constraintTop_toTopOf="@+id/v_time" />
 
             <TextView
                 android:id="@+id/tv_event_detail_contact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="16dp"
                 android:text="@string/Event_Contact"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/v_contact"
-                app:layout_constraintStart_toStartOf="@+id/v_contact"
+                app:layout_constraintBottom_toBottomOf="@+id/v_contact"
+                app:layout_constraintStart_toEndOf="@+id/iv_event_detail_contact"
                 app:layout_constraintTop_toTopOf="@+id/v_contact" />
 
             <TextView
                 android:id="@+id/tv_event_detail_location_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="8dp"
+                android:hint="location"
                 android:textColor="@android:color/white"
                 app:layout_constraintStart_toEndOf="@+id/iv_event_detail_location"
                 app:layout_constraintTop_toBottomOf="@+id/tv_event_detail_location" />
@@ -298,11 +298,11 @@
                 android:id="@+id/tv_event_detail_location_distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
+                android:layout_marginTop="8dp"
+                android:hint="km"
                 android:textColor="@android:color/white"
-                app:layout_constraintBottom_toBottomOf="@+id/v_location"
-                app:layout_constraintEnd_toEndOf="@+id/v_location"
-                app:layout_constraintStart_toStartOf="@+id/v_location" />
+                app:layout_constraintStart_toStartOf="@+id/tv_event_detail_location_detail"
+                app:layout_constraintTop_toBottomOf="@+id/tv_event_detail_location_detail" />
 
             <TextView
                 android:id="@+id/tv_event_detail_limit_person_detail"
@@ -318,49 +318,51 @@
                 android:id="@+id/tv_event_detail_time_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
+                android:hint="time"
                 android:textColor="@android:color/white"
-                app:layout_constraintStart_toEndOf="@+id/iv_event_detail_time"
-                app:layout_constraintTop_toBottomOf="@+id/tv_event_detail_time" />
+                app:layout_constraintBottom_toBottomOf="@+id/tv_event_detail_time"
+                app:layout_constraintStart_toStartOf="@+id/tv_event_detail_contact_detail"
+                app:layout_constraintTop_toTopOf="@+id/tv_event_detail_time" />
 
             <TextView
                 android:id="@+id/tv_event_detail_contact_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="16dp"
+                android:hint="contact"
                 android:textColor="@android:color/white"
-                app:layout_constraintStart_toEndOf="@+id/iv_event_detail_contact"
-                app:layout_constraintTop_toBottomOf="@+id/tv_event_detail_contact" />
+                app:layout_constraintBottom_toBottomOf="@+id/tv_event_detail_contact"
+                app:layout_constraintStart_toEndOf="@+id/tv_event_detail_contact"
+                app:layout_constraintTop_toTopOf="@+id/tv_event_detail_contact" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/btn_join"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/border_radius"
             android:text="@string/join"
             android:textColor="@android:color/white"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
         <Button
             android:id="@+id/btn_participants_list"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:background="#8C84EB"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/border_radius_purple"
             android:text="PARTICIPANTS"
             android:textColor="@android:color/white"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btn_join"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+            app:layout_constraintEnd_toEndOf="@+id/btn_join"
+            app:layout_constraintStart_toStartOf="@+id/btn_join"
+            app:layout_constraintTop_toBottomOf="@+id/btn_join" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
