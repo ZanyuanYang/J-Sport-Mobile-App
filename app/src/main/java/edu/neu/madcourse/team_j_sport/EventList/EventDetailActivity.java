@@ -2,10 +2,12 @@ package edu.neu.madcourse.team_j_sport.EventList;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -188,6 +190,7 @@ public class EventDetailActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(token.equals(snapshot.getValue())){
                     btnJoin.setText(DELETE);
+                    btnJoin.setBackgroundColor(Color.parseColor("#cc0000"));
                 }
             }
 
