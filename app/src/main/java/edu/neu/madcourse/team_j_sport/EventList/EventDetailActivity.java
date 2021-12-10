@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
+import edu.neu.madcourse.team_j_sport.HomepageActivity;
 import edu.neu.madcourse.team_j_sport.MainActivity;
 import edu.neu.madcourse.team_j_sport.R;
 
@@ -76,12 +77,17 @@ public class EventDetailActivity extends AppCompatActivity {
                 case JOIN:
                     String firstName = sp.getString(MainActivity.FIRST_NAME_KEY, "");
                     String lastName = sp.getString(MainActivity.LAST_NAME_KEY, "");
+
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put(MainActivity.EMAIL_KEY, sp.getString(MainActivity.EMAIL_KEY, ""));
+                    map.put("username", firstName + " " + lastName);
+
                     // Add the user into the event's participants list
                     mDatabase.child("Events")
                             .child(eventKey)
                             .child(PARTICIPANTS)
                             .child(token)
-                            .setValue(firstName + " " + lastName);
+                            .setValue(map);
                     break;
                 case DELETE:
                     // delete the event
