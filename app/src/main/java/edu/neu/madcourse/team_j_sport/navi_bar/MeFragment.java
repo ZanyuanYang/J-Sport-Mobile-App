@@ -10,9 +10,11 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,11 +42,7 @@ import edu.neu.madcourse.team_j_sport.about_me.EditProfileActivity;
 import edu.neu.madcourse.team_j_sport.about_me.MyEventsActivity;
 import edu.neu.madcourse.team_j_sport.about_me.MyPostsActivity;
 import edu.neu.madcourse.team_j_sport.about_me.avatar.GalleryActivity;
-
 import edu.neu.madcourse.team_j_sport.about_me.avatar.CameraActivity;
-import edu.neu.madcourse.team_j_sport.about_me.avatar.GalleryActivity;
-
-
 
 public class MeFragment extends Fragment implements View.OnClickListener {
 
@@ -73,7 +71,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view =  inflater.inflate(R.layout.fragment_me, container, false);
+        view = inflater.inflate(R.layout.fragment_me, container, false);
 
         storage = FirebaseStorage.getInstance();
         sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
@@ -90,8 +88,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 + sharedPreferences.getString(LAST_NAME_KEY, "lName");
         String email = sharedPreferences.getString(EMAIL_KEY, "email");
 
-        ((TextView)(view.findViewById(R.id.tv_me_name))).setText(name);
-        ((TextView)(view.findViewById(R.id.tv_me_email))).setText(email);
+        ((TextView) (view.findViewById(R.id.tv_me_name))).setText(name);
+        ((TextView) (view.findViewById(R.id.tv_me_email))).setText(email);
 
         view.findViewById(R.id.iv_edit_profile).setOnClickListener(this::onClick);
         view.findViewById(R.id.iv_log_out).setOnClickListener(this::onClick);
@@ -123,30 +121,23 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         Intent intent;
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_edit_profile:
                 intent = new Intent(getActivity(), EditProfileActivity.class);
                 startActivity(intent);
                 break;
             case R.id.iv_log_out:
-                sharedPreferences.edit().putBoolean("isUserLogin",false).apply();
+                sharedPreferences.edit().putBoolean("isUserLogin", false).apply();
                 intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
                 break;
 
             case R.id.iv_avatar:
-                // FIXME: Only using gallery feature for avatars
-
                 Log.d(TAG, "Avatar is clicked");
 
-                // TODO: Add a dialog to let user choose from Camera and Gallery
-//                intent = new Intent(getActivity(), GalleryActivity.class);
-//                intent = new Intent(getActivity(), CameraActivity.class);
-//                startActivity(intent);
+                showOptions();
 
 //                startActivityForResult(intent, RC_CODE_AVATAR);
-
-                showOptions();
                 break;
 
             case R.id.tv_my_posts:
@@ -166,40 +157,36 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 intent = new Intent(getActivity(), ChangePasswordActivity.class);
                 startActivity(intent);
                 break;
-
         }
     }
 
     private void showOptions() {
-        AlertDialog dialog = new AlertDialog.Builder(this.getContext()).create();
-        dialog.setTitle("Change your Avatar");
-        dialog.setMessage("What source would you prefer?");
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Open Camera",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(getActivity(), CameraActivity.class);
-                        startActivity(intent);
-                    }
-                });
+        builder.setTitle("Profile Picture")
+                .setMessage("Select a source")
+                .setPositiveButton("Camera",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(getActivity(), CameraActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                .setNegativeButton("Gallery",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(getActivity(), GalleryActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                .setNeutralButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
 
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Open Gallery",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(getActivity(), GalleryActivity.class);
-                        startActivity(intent);
-                    }
-                });
-
-        dialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                        // TODO:
-                    }
-                });
-
-        dialog.show();
+        builder.create().show();
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -213,7 +200,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         if (requestCode == RC_CODE_AVATAR) {
             Log.d(TAG, "Trying to refresh");
 
-            // Wait for 2s
+            // Wait -> doesn't work
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
@@ -235,7 +222,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         if (isVisibleToUser) {
             // Refresh your fragment here
             getFragmentManager().beginTransaction().detach(this).attach(this).commit();
-            Log.i(TAG,"IsRefresh = Yes");
+            Log.i(TAG, "IsRefresh = Yes");
         }
     }
 }
