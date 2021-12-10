@@ -42,7 +42,7 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
         initView();
         initFragment();
         initEvent();
-        selectFragment(1);
+        selectFragment(0);
     }
 
     private void initView() {

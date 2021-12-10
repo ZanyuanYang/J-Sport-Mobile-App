@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -203,7 +204,8 @@ public class EventDetailActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(token.equals(snapshot.getValue())){
                     btnJoin.setText(DELETE);
-                    btnJoin.setBackgroundColor(Color.parseColor("#cc0000"));
+                    btnJoin.setBackgroundResource(R.drawable.border_radius_danger);
+
                     btnParticipants.setVisibility(View.VISIBLE);
                 }
             }

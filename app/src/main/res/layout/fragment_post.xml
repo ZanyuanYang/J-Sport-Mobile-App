@@ -23,7 +23,7 @@
             android:background="@drawable/custom_input"
             android:drawableStart="@drawable/custom_search_icon"
             android:drawablePadding="12dp"
-            android:hint="Basketball"
+            android:hint="Search.."
             android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
