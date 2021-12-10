@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -34,6 +35,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private TextView tvEventLimitPerson;
     private TextView tvEventTime;
     private TextView tvEventContact;
+    private Button btnParticipants;
 
     private SharedPreferences sp;
     private DatabaseReference mDatabase;
@@ -191,6 +193,7 @@ public class EventDetailActivity extends AppCompatActivity {
                 if(token.equals(snapshot.getValue())){
                     btnJoin.setText(DELETE);
                     btnJoin.setBackgroundColor(Color.parseColor("#cc0000"));
+                    btnParticipants.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -211,6 +214,7 @@ public class EventDetailActivity extends AppCompatActivity {
         tvEventLimitPerson = findViewById(R.id.tv_event_detail_limit_person_detail);
         tvEventTime = findViewById(R.id.tv_event_detail_time_detail);
         tvEventContact = findViewById(R.id.tv_event_detail_contact_detail);
+        btnParticipants = findViewById(R.id.btn_participants_list);
     }
 
     private String ifNull(Object str){
