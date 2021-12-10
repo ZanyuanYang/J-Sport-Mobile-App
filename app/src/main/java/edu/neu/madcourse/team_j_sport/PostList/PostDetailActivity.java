@@ -22,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import edu.neu.madcourse.team_j_sport.EventList.LocationUtils;
@@ -45,8 +47,8 @@ public class PostDetailActivity extends AppCompatActivity {
 
     Button btnDelete;
 
-    int maxId = -1;
     String firstname, lastname;
+    String commentTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,8 +142,8 @@ public class PostDetailActivity extends AppCompatActivity {
                             Comment comment = new Comment();
                             comment.setUid(userIdd);
                             comment.setComment(etComment.getText().toString());
-                            comment.setFirstname(firstname);
-                            comment.setLastname(lastname);
+                            comment.setUsername(firstname + " " + lastname);
+                            comment.setCommentTime(commentTime);
 
                             myRef.child("Posts")
                                     .child(postKeyy)

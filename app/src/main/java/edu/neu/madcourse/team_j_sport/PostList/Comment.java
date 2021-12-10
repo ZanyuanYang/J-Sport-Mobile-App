@@ -4,8 +4,25 @@ public class Comment {
 
     private String uid;
     private String comment;
-    private String firstname;
-    private String lastname;
+    private String username;
+    private String commentTime;
+
+    public String getCommentTime() {
+        return commentTime;
+    }
+
+    public void setCommentTime(String commentTime) {
+        this.commentTime = commentTime;
+    }
+
+
+
+    public Comment(String uid, String comment, String username, String commentTime) {
+        this.uid = uid;
+        this.comment = comment;
+        this.username = username;
+        this.commentTime = commentTime;
+    }
 
     public String getUid() {
         return uid;
@@ -23,28 +40,15 @@ public class Comment {
         this.comment = comment;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getLastname() {
-        return lastname;
-    }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public Comment(String uid, String comment, String firstname, String lastname) {
-        this.uid = uid;
-        this.comment = comment;
-        this.firstname = firstname;
-        this.lastname = lastname;
-    }
 
     public Comment() {
     }
