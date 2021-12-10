@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.telephony.PhoneNumberUtils;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +33,8 @@ import java.io.InputStream;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import edu.neu.madcourse.team_j_sport.R;
 
@@ -72,11 +75,13 @@ public class AddEvent extends AppCompatActivity {
     }
 
     private void addEvent(){
+        Events newEvent = getEventInfo();
+        if(!checkEvent(newEvent)) return;
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 long childCnt = snapshot.getChildrenCount();
-                Events newEvent = getEventInfo();
+
                 setEventLocation(newEvent, childCnt);
 //                mDatabase.child("Events")
 //                        .child(String.valueOf(childCnt + 1))
@@ -220,5 +225,49 @@ public class AddEvent extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    private boolean checkEvent(Events event){
+        EditText timeET = findViewById(R.id.Event_TimeEditText);
+        EditText dateET = findViewById(R.id.event_DateEditText);
+        if(event.title == null || event.title.length() == 0){
+            toastWithText("Please enter the title of the event!");;
+            return false;
+        }else if(timeET.getText().toString() == null || timeET.getText().toString().length() == 0){
+            toastWithText("Please select the time of the event!");
+            return false;
+        }else if(dateET.getText().toString() == null || dateET.getText().toString().length() == 0){
+            toastWithText("Please select the date of the event!");
+            return false;
+        }else if(event.summary == null || event.summary.length() == 0){
+            toastWithText("Please enter the summary of the event!");
+            return false;
+        }else if(event.description == null || event.description.length() == 0){
+            toastWithText("Please enter the description of the event!");
+            return false;
+        }else if(event.limitPerson == null || event.limitPerson.length() == 0){
+            toastWithText("Please enter the limit person of the event!");
+            return false;
+        }else if(event.contact == null || event.contact.length() == 0){
+            toastWithText("Please enter the contact of the event!");
+            return false;
+        }else if(event.zipCode == null || event.zipCode.length() == 0){
+            toastWithText("Please enter the zipcode of the event!");
+            return false;
+        }
+        Pattern pattern1 = Pattern.compile("^[0-9]{5}(?:-[0-9]{4})?$");
+        Matcher matcher1 = pattern1.matcher(event.zipCode);
+        boolean zipValid = matcher1.matches();
+        if(!zipValid){
+            toastWithText("Please enter a valid zipcode!");
+            return false;
+        }
+        if(!PhoneNumberUtils.isGlobalPhoneNumber(event.contact)){
+            toastWithText("Please enter a valid phone number");
+            return false;
+        }
+        return true;
 
+    }
+    private void toastWithText(String str){
+        Toast.makeText(AddEvent.this,str, Toast.LENGTH_SHORT).show();
+    }
 }
