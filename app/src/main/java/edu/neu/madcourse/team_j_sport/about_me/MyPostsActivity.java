@@ -93,7 +93,7 @@ public class MyPostsActivity extends AppCompatActivity {
                                 if(token.equals(uid)){
                                     itemPosts.add(
                                             new ItemPost(
-                                                    "",
+                                                    Objects.requireNonNull(hashMap.get("uid")).toString(),
                                                     Objects.requireNonNull(hashMap.get("title")).toString(),
                                                     Objects.requireNonNull(hashMap.get("content")).toString(),
                                                     snapshot.getKey()));

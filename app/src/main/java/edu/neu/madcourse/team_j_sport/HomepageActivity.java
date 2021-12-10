@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import androidx.lifecycle.Lifecycle;
 import edu.neu.madcourse.team_j_sport.navi_bar.EventFragment;
 import edu.neu.madcourse.team_j_sport.navi_bar.MeFragment;
 import edu.neu.madcourse.team_j_sport.navi_bar.PostFragment;
@@ -59,8 +60,12 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.add(R.id.id_content, postFragment);
         fragmentTransaction.add(R.id.id_content, eventFragment);
-        fragmentTransaction.add(R.id.id_content, meFragment);
+//        fragmentTransaction.add(R.id.id_content, meFragment);
         fragmentTransaction.commit();
+
+        fm.beginTransaction().add(R.id.id_content, meFragment)
+                .setMaxLifecycle(meFragment, Lifecycle.State.RESUMED)
+                .commit();
     }
 
     private void initEvent() {

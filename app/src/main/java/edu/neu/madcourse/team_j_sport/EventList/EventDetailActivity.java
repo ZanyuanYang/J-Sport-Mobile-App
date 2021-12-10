@@ -1,11 +1,15 @@
 package edu.neu.madcourse.team_j_sport.EventList;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,7 +21,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
+import edu.neu.madcourse.team_j_sport.HomepageActivity;
 import edu.neu.madcourse.team_j_sport.MainActivity;
+import edu.neu.madcourse.team_j_sport.ParticipantsList.ParticipantsListActivity;
 import edu.neu.madcourse.team_j_sport.R;
 
 public class EventDetailActivity extends AppCompatActivity {
@@ -31,6 +37,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private TextView tvEventLimitPerson;
     private TextView tvEventTime;
     private TextView tvEventContact;
+    private Button btnParticipants;
 
     private SharedPreferences sp;
     private DatabaseReference mDatabase;
@@ -76,12 +83,17 @@ public class EventDetailActivity extends AppCompatActivity {
                 case JOIN:
                     String firstName = sp.getString(MainActivity.FIRST_NAME_KEY, "");
                     String lastName = sp.getString(MainActivity.LAST_NAME_KEY, "");
+
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put(MainActivity.EMAIL_KEY, sp.getString(MainActivity.EMAIL_KEY, ""));
+                    map.put("username", firstName + " " + lastName);
+
                     // Add the user into the event's participants list
                     mDatabase.child("Events")
                             .child(eventKey)
                             .child(PARTICIPANTS)
                             .child(token)
-                            .setValue(firstName + " " + lastName);
+                            .setValue(map);
                     break;
                 case DELETE:
                     // delete the event
@@ -90,6 +102,15 @@ public class EventDetailActivity extends AppCompatActivity {
                             .removeValue();
                     finish();
                     break;
+            }
+        });
+
+        btnParticipants.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ParticipantsListActivity.class);
+                intent.putExtra(EventHolder.EVENT_KEY, eventKey);
+                startActivity(intent);
             }
         });
     }
@@ -182,6 +203,8 @@ public class EventDetailActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(token.equals(snapshot.getValue())){
                     btnJoin.setText(DELETE);
+                    btnJoin.setBackgroundColor(Color.parseColor("#cc0000"));
+                    btnParticipants.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -202,6 +225,7 @@ public class EventDetailActivity extends AppCompatActivity {
         tvEventLimitPerson = findViewById(R.id.tv_event_detail_limit_person_detail);
         tvEventTime = findViewById(R.id.tv_event_detail_time_detail);
         tvEventContact = findViewById(R.id.tv_event_detail_contact_detail);
+        btnParticipants = findViewById(R.id.btn_participants_list);
     }
 
     private String ifNull(Object str){

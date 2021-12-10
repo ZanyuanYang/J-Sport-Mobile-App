@@ -85,7 +85,7 @@ public class PostFragment extends Fragment {
                                 assert hashMap != null;
                                 itemPosts.add(
                                         new ItemPost(
-                                                "",
+                                                Objects.requireNonNull(hashMap.get("uid")).toString(),
                                                 Objects.requireNonNull(hashMap.get("title")).toString(),
                                                 Objects.requireNonNull(hashMap.get("content")).toString(),
                                                 snapshot.getKey()));
