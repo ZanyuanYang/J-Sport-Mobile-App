@@ -16,7 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 import edu.neu.madcourse.team_j_sport.MainActivity;
 import edu.neu.madcourse.team_j_sport.R;
@@ -40,6 +39,8 @@ public class EventDetailActivity extends AppCompatActivity {
     public static final String JOIN = "JOIN";
     public static final String QUIT = "QUIT";
     public static final String FULL = "FULL";
+    public static final String DELETE = "DELETE";
+    public static final String EXPIRED = "EXPIRED";
     public static final String UNLIMITED = "+∞";
 
     private String token;
@@ -62,23 +63,33 @@ public class EventDetailActivity extends AppCompatActivity {
 
         btnJoin.setOnClickListener(view -> {
 
-            String Joined = btnJoin.getText().toString();
-            if (QUIT.equals(Joined)) {
-                //Remove the user from the event
-                mDatabase.child("Events")
-                        .child(eventKey)
-                        .child(PARTICIPANTS)
-                        .child(token)
-                        .removeValue();
-            } else if (JOIN.equals(Joined)){
-                String firstName = sp.getString(MainActivity.FIRST_NAME_KEY, "");
-                String lastName = sp.getString(MainActivity.LAST_NAME_KEY, "");
-                // Add the user into the event's participants list
-                mDatabase.child("Events")
-                        .child(eventKey)
-                        .child(PARTICIPANTS)
-                        .child(token)
-                        .setValue(firstName + " " + lastName);
+            String joinText = btnJoin.getText().toString();
+            switch (joinText) {
+                case QUIT:
+                    //Remove the user from the event
+                    mDatabase.child("Events")
+                            .child(eventKey)
+                            .child(PARTICIPANTS)
+                            .child(token)
+                            .removeValue();
+                    break;
+                case JOIN:
+                    String firstName = sp.getString(MainActivity.FIRST_NAME_KEY, "");
+                    String lastName = sp.getString(MainActivity.LAST_NAME_KEY, "");
+                    // Add the user into the event's participants list
+                    mDatabase.child("Events")
+                            .child(eventKey)
+                            .child(PARTICIPANTS)
+                            .child(token)
+                            .setValue(firstName + " " + lastName);
+                    break;
+                case DELETE:
+                    // delete the event
+                    mDatabase.child("Events")
+                            .child(eventKey)
+                            .removeValue();
+                    finish();
+                    break;
             }
         });
     }
@@ -91,19 +102,20 @@ public class EventDetailActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 HashMap hashMap = (HashMap) snapshot.getValue();
-                assert hashMap != null;
-                tvEventName.setText(Objects.requireNonNull(hashMap.get("title")).toString());
-                tvEventSummary.setText(Objects.requireNonNull(hashMap.get("summary")).toString());
-                tvEventDescription.setText(Objects.requireNonNull(hashMap.get("description")).toString());
-                tvEventLocation.setText(Objects.requireNonNull(hashMap.get("location")).toString());
-                tvEventTime.setText(Objects.requireNonNull(hashMap.get("time")).toString());
-                tvEventContact.setText(Objects.requireNonNull(hashMap.get("contact")).toString());
+                if(hashMap != null){
+                    tvEventName.setText(ifNull(hashMap.get("title")));
+                    tvEventSummary.setText(ifNull(hashMap.get("summary")));
+                    tvEventDescription.setText(ifNull(hashMap.get("description")));
+                    tvEventLocation.setText(ifNull(hashMap.get("location")));
+                    tvEventTime.setText(ifNull(hashMap.get("time")));
+                    tvEventContact.setText(ifNull(hashMap.get("contact")));
 
-                String currentLatitude = sp.getString(MainActivity.USER_LATITUDE_KEY, "");
-                String currentLongitude = sp.getString(MainActivity.USER_LONGITUDE_KEY, "");
-                String eventLatitude = Objects.requireNonNull(hashMap.get("latitude")).toString();
-                String eventLongitude = Objects.requireNonNull(hashMap.get("longitude")).toString();
-                tvEventDistance.setText(LocationUtils.getDistanceTo(currentLatitude, currentLongitude, eventLatitude, eventLongitude));
+                    String currentLatitude = sp.getString(MainActivity.USER_LATITUDE_KEY, "");
+                    String currentLongitude = sp.getString(MainActivity.USER_LONGITUDE_KEY, "");
+                    String eventLatitude = ifNull(hashMap.get("latitude"));
+                    String eventLongitude = ifNull(hashMap.get("longitude"));
+                    tvEventDistance.setText(LocationUtils.getDistanceTo(currentLatitude, currentLongitude, eventLatitude, eventLongitude));
+                }
 
             }
 
@@ -113,13 +125,11 @@ public class EventDetailActivity extends AppCompatActivity {
             }
         });
 
-        mDatabase.child("Events")
-                .child(eventKey)
-                .child("limitPerson")
+        myRef.child("limitPerson")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        tvEventLimitPerson.setText(Objects.requireNonNull(snapshot.getValue()).toString());
+                        tvEventLimitPerson.setText(snapshot.getValue() == null ? "" : snapshot.getValue().toString());
                     }
 
                     @Override
@@ -129,9 +139,7 @@ public class EventDetailActivity extends AppCompatActivity {
                 });
 
         // deal with the limit Person
-        mDatabase.child("Events")
-                .child(eventKey)
-                .child(PARTICIPANTS).addValueEventListener(new ValueEventListener() {
+        myRef.child(PARTICIPANTS).addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -150,15 +158,31 @@ public class EventDetailActivity extends AppCompatActivity {
                 } else {
                     limitPerson = Integer.parseInt(limitPersonText);
                 }
-                if (snapshot.hasChild(token)) {
+                if(!snapshot.exists()){
+                    btnJoin.setText(EXPIRED);
+                } else if (snapshot.hasChild(token)) {
                     btnJoin.setText(QUIT);
                 } else if (snapshot.getChildrenCount() >= limitPerson && !unlimited) {
                     btnJoin.setText(FULL);
-                } else {
+                } else if(!DELETE.equals(btnJoin.getText().toString())){
                     btnJoin.setText(JOIN);
                 }
                 // display the number of current participants
                 tvEventLimitPerson.setText(snapshot.getChildrenCount() + "/" + limitPersonText);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        myRef.child("uid").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(token.equals(snapshot.getValue())){
+                    btnJoin.setText(DELETE);
+                }
             }
 
             @Override
@@ -178,5 +202,13 @@ public class EventDetailActivity extends AppCompatActivity {
         tvEventLimitPerson = findViewById(R.id.tv_event_detail_limit_person_detail);
         tvEventTime = findViewById(R.id.tv_event_detail_time_detail);
         tvEventContact = findViewById(R.id.tv_event_detail_contact_detail);
+    }
+
+    private String ifNull(Object str){
+        if(str == null){
+            return "";
+        } else {
+            return str.toString();
+        }
     }
 }
