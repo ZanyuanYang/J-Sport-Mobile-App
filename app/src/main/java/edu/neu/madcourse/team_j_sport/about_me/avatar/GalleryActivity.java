@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import edu.neu.madcourse.team_j_sport.R;
+import edu.neu.madcourse.team_j_sport.navi_bar.MeFragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,8 +15,10 @@ import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -71,6 +74,7 @@ public class GalleryActivity extends AppCompatActivity {
                             Bitmap selectedImage = loadFromUri(photoUri);
                             Log.d(TAG, String.valueOf(photoUri));
 
+                            changeAvatar(selectedImage);
                             photoUtil.uploadPhoto(userId, photoUri);
 
                             // DEBUGLoad the selected image into a preview
@@ -89,6 +93,18 @@ public class GalleryActivity extends AppCompatActivity {
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
         mGetContent.launch(galleryIntent);
+    }
+
+    public void changeAvatar(Bitmap bitmap) {
+        Log.d(TAG, "Changing avatar");
+
+        ImageView avatar = MeFragment.ivAvatar;
+
+        if (bitmap == null) Log.e(TAG, "changeAvatar, bitmap is null");
+        if (avatar == null) Log.e(TAG, "changeAvatar, avatar iv is null");
+
+        avatar.setImageBitmap(bitmap);
+        Log.d(TAG, "Avatar should be changed");
     }
 
     public Bitmap loadFromUri(Uri photoUri) {
