@@ -1,12 +1,17 @@
 package edu.neu.madcourse.team_j_sport.PostList;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -41,6 +46,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostHolder> {
 
         //TODO: init the avatar
         holder.ivAvatar.setImageResource(R.drawable.avatar_default);
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("avatars/" + currentPost.getAvatar() +".jpg");
+        Glide.with(mContext /* context */)
+                .load(storageReference)
+                .into(holder.ivAvatar);
+
         holder.tvPostTitle.setText(currentPost.getTitle());
         holder.tvPostContent.setText(content);
 
