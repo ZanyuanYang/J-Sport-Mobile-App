@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.neu.madcourse.team_j_sport">
+
+    <!-- Include only if your app benefits from precise location access. -->
     <!-- Always include this permission -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Include only if your app benefits from precise location access. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -16,10 +18,15 @@
         <activity
             android:name=".ParticipantsList.ParticipantsListActivity"
             android:exported="true" />
+
+        <activity android:name=".about_me.avatar.GalleryActivity"/>
+        <activity android:name=".about_me.avatar.CameraActivity" />
+
         <activity android:name=".PostList.PostDetailActivity" />
         <activity
             android:name=".Post.AddPost"
             android:exported="true" />
+
         <activity android:name=".about_me.EditProfileActivity" />
         <activity android:name=".about_me.ChangePasswordActivity" />
         <activity android:name=".about_me.MyEventsActivity" />
@@ -66,6 +73,8 @@
  Set color used with incoming notification messages. This is used when no color is set for the incoming
              notification message. See README(https://goo.gl/6BKBk7) for more.
         -->
+
+
         <service
             android:name=".FCM.MyFirebaseMessagingService"
             android:exported="false">
@@ -74,5 +83,22 @@
             </intent-filter>
         </service>
     </application>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <queries>
+        <!-- Camera -->
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
 </manifest>
