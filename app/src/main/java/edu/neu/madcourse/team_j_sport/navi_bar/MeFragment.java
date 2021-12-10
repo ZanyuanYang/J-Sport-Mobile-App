@@ -57,7 +57,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private View view;
     private SharedPreferences sharedPreferences;
     private String userId;
-    private ImageView ivAvatar;
+
+    public static ImageView ivAvatar;
 
     private FirebaseStorage storage;
 

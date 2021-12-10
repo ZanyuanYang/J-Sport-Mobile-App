@@ -4,33 +4,25 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import edu.neu.madcourse.team_j_sport.R;
-import edu.neu.madcourse.team_j_sport.about_me.MyPostsActivity;
 import edu.neu.madcourse.team_j_sport.navi_bar.MeFragment;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.MergeCursor;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
 import java.io.IOException;
 
 public class GalleryActivity extends AppCompatActivity {
@@ -48,7 +40,6 @@ public class GalleryActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
 
@@ -83,46 +74,18 @@ public class GalleryActivity extends AppCompatActivity {
                             Bitmap selectedImage = loadFromUri(photoUri);
                             Log.d(TAG, String.valueOf(photoUri));
 
+                            changeAvatar(selectedImage);
                             photoUtil.uploadPhoto(userId, photoUri);
 
-                            // Load the selected image into a preview
+                            // DEBUGLoad the selected image into a preview
 //                            ImageView ivPreview = (ImageView) findViewById(R.id.iv_preview);
 //                            ivPreview.setImageBitmap(selectedImage);
 
-//                            Fragment frg = null;
-//                            frg = getFragmentManager().findFragmentById(R.id.frg_me);
-//                            FragmentTransaction ftr = getFragmentManager().beginTransaction();
-//                            ftr.detach(frg).attach(frg).commit();
                             finish();
                         }
                     }
                 });
     }
-//
-//    private void uploadPhoto(Uri photoUri) {
-//        Log.d(TAG, "Start uploading");
-//        Uri file = photoUri;
-//
-//        StorageReference avatarRef = storageRef.child("avatars/" + userId + ".jpg");
-//        UploadTask uploadTask = avatarRef.putFile(file);
-//
-//        // Register observers to listen for when the download is done or if it fails
-//        uploadTask.addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception exception) {
-//                // Handle unsuccessful uploads
-//                Log.d(TAG, "Upload Failed");
-//            }
-//        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-//                // ...
-//                Log.d(TAG, "Upload success");
-//            }
-//        });
-//
-//    }
 
     public void pickPhoto() {
         Intent galleryIntent = new Intent(
@@ -130,6 +93,18 @@ public class GalleryActivity extends AppCompatActivity {
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
         mGetContent.launch(galleryIntent);
+    }
+
+    public void changeAvatar(Bitmap bitmap) {
+        Log.d(TAG, "Changing avatar");
+
+        ImageView avatar = MeFragment.ivAvatar;
+
+        if (bitmap == null) Log.e(TAG, "changeAvatar, bitmap is null");
+        if (avatar == null) Log.e(TAG, "changeAvatar, avatar iv is null");
+
+        avatar.setImageBitmap(bitmap);
+        Log.d(TAG, "Avatar should be changed");
     }
 
     public Bitmap loadFromUri(Uri photoUri) {

@@ -1,7 +1,10 @@
 package edu.neu.madcourse.team_j_sport.about_me.avatar;
 
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -10,6 +13,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import androidx.annotation.NonNull;
+import edu.neu.madcourse.team_j_sport.navi_bar.MeFragment;
 
 public class PhotoUtil {
 
@@ -18,12 +22,10 @@ public class PhotoUtil {
     private FirebaseStorage storage;
     private StorageReference storageRef;
 
-
     public PhotoUtil() {
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
     }
-
 
     public void uploadBitmap(String userId, byte[] data) {
         Log.d(TAG, "Start bitmap uploading");
