@@ -2,6 +2,7 @@ package edu.neu.madcourse.team_j_sport.navi_bar;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -28,6 +29,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import androidx.fragment.app.FragmentTransaction;
@@ -139,10 +141,12 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
                 // TODO: Add a dialog to let user choose from Camera and Gallery
 //                intent = new Intent(getActivity(), GalleryActivity.class);
-                intent = new Intent(getActivity(), CameraActivity.class);
+//                intent = new Intent(getActivity(), CameraActivity.class);
 //                startActivity(intent);
 
-                startActivityForResult(intent, RC_CODE_AVATAR);
+//                startActivityForResult(intent, RC_CODE_AVATAR);
+
+                showOptions();
                 break;
 
             case R.id.tv_my_posts:
@@ -166,6 +170,41 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    private void showOptions() {
+        AlertDialog dialog = new AlertDialog.Builder(this.getContext()).create();
+        dialog.setTitle("Change your Avatar");
+        dialog.setMessage("What source would you prefer?");
+
+        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Open Camera",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getActivity(), CameraActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Open Gallery",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getActivity(), GalleryActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+        dialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        // TODO:
+                    }
+                });
+
+        dialog.show();
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    // Methods trying to resolve Fragment refresh
+    //////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

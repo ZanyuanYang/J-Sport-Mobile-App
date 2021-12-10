@@ -93,7 +93,7 @@ public class CameraActivity extends AppCompatActivity {
         alertDialog.setTitle("Alert");
         alertDialog.setMessage("App needs to access the Camera.");
 
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "DONT ALLOW",
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "DON'T ALLOW",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -111,6 +111,7 @@ public class CameraActivity extends AppCompatActivity {
                                 MY_PERMISSIONS_REQUEST_CAMERA);
                     }
                 });
+
         alertDialog.show();
     }
 
@@ -148,8 +149,7 @@ public class CameraActivity extends AppCompatActivity {
                     String permission = permissions[i];
 
                     if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-                        boolean
-                                showRationale =
+                        boolean showRationale =
                                 ActivityCompat.shouldShowRequestPermissionRationale(
                                         this, permission);
 
@@ -207,7 +207,6 @@ public class CameraActivity extends AppCompatActivity {
 
         if (requestCode == RC_CAMERA) {
             Log.d(TAG, "Resolving camera'c picture");
-
 
 //            Bitmap picture = (Bitmap) data.getExtras().get("data");
 //            ImageView image = (ImageView) findViewById(R.id.iv_camera_preview);
