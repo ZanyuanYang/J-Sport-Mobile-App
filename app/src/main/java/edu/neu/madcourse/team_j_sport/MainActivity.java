@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             Toast.makeText(MainActivity.this, "4", Toast.LENGTH_SHORT).show();
-            fusedLocationClient.getLastLocation()
+            fusedLocationClient.getCurrentLocation(100, null)
                     .addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
