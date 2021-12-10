@@ -1,6 +1,7 @@
 package edu.neu.madcourse.team_j_sport.EventList;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 
 import edu.neu.madcourse.team_j_sport.HomepageActivity;
 import edu.neu.madcourse.team_j_sport.MainActivity;
+import edu.neu.madcourse.team_j_sport.ParticipantsList.ParticipantsListActivity;
 import edu.neu.madcourse.team_j_sport.R;
 
 public class EventDetailActivity extends AppCompatActivity {
@@ -100,6 +102,15 @@ public class EventDetailActivity extends AppCompatActivity {
                             .removeValue();
                     finish();
                     break;
+            }
+        });
+
+        btnParticipants.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ParticipantsListActivity.class);
+                intent.putExtra(EventHolder.EVENT_KEY, eventKey);
+                startActivity(intent);
             }
         });
     }

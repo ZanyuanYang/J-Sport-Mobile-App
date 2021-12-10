@@ -13,6 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".ParticipantsList.ParticipantsListActivity"
+            android:exported="true" />
         <activity android:name=".PostList.PostDetailActivity" />
         <activity
             android:name=".Post.AddPost"

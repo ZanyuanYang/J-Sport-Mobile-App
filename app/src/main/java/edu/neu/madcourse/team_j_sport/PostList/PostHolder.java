@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import edu.neu.madcourse.team_j_sport.EventList.EventDetailActivity;
 import edu.neu.madcourse.team_j_sport.R;
 
 public class PostHolder extends RecyclerView.ViewHolder {
@@ -24,9 +23,9 @@ public class PostHolder extends RecyclerView.ViewHolder {
 
     public PostHolder(@NonNull View itemView, Context mContext) {
         super(itemView);
-        ivAvatar = itemView.findViewById(R.id.iv_post_list_avatar);
-        tvPostTitle = itemView.findViewById(R.id.tv_post_list_title);
-        tvPostContent = itemView.findViewById(R.id.tv_post_list_content);
+        ivAvatar = itemView.findViewById(R.id.iv_post_avatar);
+        tvPostTitle = itemView.findViewById(R.id.tv_post_title);
+        tvPostContent = itemView.findViewById(R.id.tv_post_content);
 
         itemView.setOnClickListener(
                 view -> {
