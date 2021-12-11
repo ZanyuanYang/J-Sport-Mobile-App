@@ -55,7 +55,7 @@ public class PostFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_post, container, false);
         sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
         initFloatingBtn();
-        initPostList();
+//        initPostList();
         return view;
     }
 

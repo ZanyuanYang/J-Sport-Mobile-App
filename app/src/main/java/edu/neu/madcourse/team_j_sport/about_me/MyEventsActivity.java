@@ -49,7 +49,7 @@ public class MyEventsActivity extends AppCompatActivity {
 
         initView();
         initFloatingBtn();
-        initEventList();
+//        initEventList();
     }
 
     @SuppressLint("SetTextI18n")
