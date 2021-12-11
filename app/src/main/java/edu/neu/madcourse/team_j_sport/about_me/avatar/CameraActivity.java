@@ -48,7 +48,9 @@ public class CameraActivity extends AppCompatActivity {
         init();
     }
 
-    // FIXME: after permission is requested, the app couldn't redirect back to the "Camera"
+    // Done: after permission is requested, the app couldn't redirect back to the "Camera"
+    //  Don't allow could send user back to profile page
+    //  Fixed
     public void init() {
         photoUtil = new PhotoUtil();
 
@@ -58,7 +60,8 @@ public class CameraActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             if (getFromPref(this, ALLOW_KEY)) {
                 showSettingsAlert();
-            } else if (ContextCompat.checkSelfPermission(this, permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            } else if (ContextCompat.checkSelfPermission(this, permission.CAMERA)
+                    != PackageManager.PERMISSION_GRANTED) {
                 // Should we show an explanation?
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission.CAMERA)) {
                     showAlert();
@@ -68,11 +71,24 @@ public class CameraActivity extends AppCompatActivity {
                             MY_PERMISSIONS_REQUEST_CAMERA);
                 }
             }
+
+//            if (!getFromPref(this, ALLOW_KEY)) {
+//                Log.d(TAG, "getFromPref true");
+//            } else {
+//                openCamera();
+//                Log.d(TAG, "getFromPref false");
+//            }
+
         } else {
             openCamera();
         }
     }
 
+    public static Boolean getFromPref(Context context, String key) {
+        SharedPreferences myPrefs = context.getSharedPreferences(CAMERA_PREF,
+                Context.MODE_PRIVATE);
+        return (myPrefs.getBoolean(key, false));
+    }
 
     public static void saveToPreferences(Context context, String key, Boolean allowed) {
         SharedPreferences myPrefs = context.getSharedPreferences(CAMERA_PREF,
@@ -80,12 +96,6 @@ public class CameraActivity extends AppCompatActivity {
         SharedPreferences.Editor prefsEditor = myPrefs.edit();
         prefsEditor.putBoolean(key, allowed);
         prefsEditor.commit();
-    }
-
-    public static Boolean getFromPref(Context context, String key) {
-        SharedPreferences myPrefs = context.getSharedPreferences(CAMERA_PREF,
-                Context.MODE_PRIVATE);
-        return (myPrefs.getBoolean(key, false));
     }
 
     private void showAlert() {
@@ -103,7 +113,6 @@ public class CameraActivity extends AppCompatActivity {
 
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "ALLOW",
                 new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         ActivityCompat.requestPermissions(CameraActivity.this,
@@ -120,11 +129,11 @@ public class CameraActivity extends AppCompatActivity {
         alertDialog.setTitle("Alert");
         alertDialog.setMessage("App needs to access the Camera.");
 
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "DONT ALLOW",
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "DON'T ALLOW",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        //finish();
+                        finish();
                     }
                 });
 
@@ -164,6 +173,8 @@ public class CameraActivity extends AppCompatActivity {
                             // the app setting
                             saveToPreferences(CameraActivity.this, ALLOW_KEY, true);
                         }
+                    } else {
+                        openCamera();
                     }
                 }
             }
