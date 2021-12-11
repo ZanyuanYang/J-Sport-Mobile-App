@@ -44,8 +44,6 @@ public class EventFragment extends Fragment {
     View view;
     SharedPreferences sharedPreferences;
 
-    public static RecyclerView mRV;
-
     public EventFragment() {
         // Required empty public constructor
     }
@@ -56,20 +54,21 @@ public class EventFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_event, container, false);
         sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
-        mRV = view.findViewById(R.id.rv_event_list);
         initEventList();
         initFloatingBtn();
-
         return view;
     }
-
 
     public void onResume() {
         super.onResume();
         Log.d(TAG, "Resumed");
-        EditText et = view.findViewById(R.id.et_search);
+
+        // Restore the search box and remove focus
+        EditText et = view.findViewById(R.id.et_event_search);
         et.setText("");
         et.clearFocus();
+
+        // Clear the current recyclerView and fetch the latest events from database
         itemEvents = new ArrayList<>();
         initEventList();
     }
@@ -133,7 +132,7 @@ public class EventFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.rv_event_list);
         recyclerView.setHasFixedSize(true);
 
-        EditText editText = view.findViewById(R.id.et_search);
+        EditText editText = view.findViewById(R.id.et_event_search);
 
         EventAdapter eventAdapter = new EventAdapter(itemEvents, getActivity().getApplicationContext());
 
@@ -167,6 +166,5 @@ public class EventFragment extends Fragment {
             }
         }
         eventAdapter.filterList(filteredList);
-
     }
 }

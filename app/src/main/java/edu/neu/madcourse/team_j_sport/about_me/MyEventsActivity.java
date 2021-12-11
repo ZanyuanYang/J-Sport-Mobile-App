@@ -39,7 +39,6 @@ public class MyEventsActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     private String token;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,7 +119,7 @@ public class MyEventsActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.rv_event_list);
         recyclerView.setHasFixedSize(true);
 
-        EditText editText = findViewById(R.id.et_search);
+        EditText editText = findViewById(R.id.et_event_search);
 
         EventAdapter eventAdapter = new EventAdapter(itemEvents, getApplicationContext());
 
