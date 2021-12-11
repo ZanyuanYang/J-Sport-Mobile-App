@@ -77,6 +77,7 @@ public class AddEvent extends AppCompatActivity {
     private void addEvent(){
         Events newEvent = getEventInfo();
         if(!checkEvent(newEvent)) return;
+
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -182,6 +183,7 @@ public class AddEvent extends AppCompatActivity {
                     String responseData = response.body().string();
                     parseJSONWithJSONObject(responseData, event, childCnt);
                 }catch (Exception e){
+                    toastWithText("Add Event Failed, Please try again!");
                     e.printStackTrace();
                 }
             }
@@ -191,9 +193,30 @@ public class AddEvent extends AppCompatActivity {
         try {
 //            JSONArray jsonArray = new JSONArray(jsonData);
             JSONObject jsonObject = new JSONObject(jsonData);
+//            System.out.println("ASDXC1");
+
+//            System.out.println("ASDXC2");
             boolean success = jsonObject.getBoolean("success");
+
+//            System.out.println("ASDXC3");
+            System.out.println(success);
             if(success){
+
                 JSONArray arr = jsonObject.getJSONArray("location");
+//                toastWithText("!!!");
+//                System.out.println(arr);
+                if(arr == null || arr.length() == 0){
+//                    System.out.println(arr);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            toastWithText("Failed to add an event, please enter a valid zip code");
+                            finish();
+                        }
+                    });
+
+
+                }
                 JSONObject dic = arr.getJSONObject(0);
                 String latitude = dic.getString("latitude");
                 String longitude = dic.getString("longitude");
@@ -220,8 +243,11 @@ public class AddEvent extends AppCompatActivity {
                     }
                 });
 
+            }else{
+                toastWithText("Failed to add an event");
             }
         } catch (Exception e){
+
             e.printStackTrace();
         }
     }
@@ -256,14 +282,17 @@ public class AddEvent extends AppCompatActivity {
         Pattern pattern = Pattern.compile("^[0-9]{5}(?:-[0-9]{4})?$");
         Matcher matcher = pattern.matcher(event.zipCode);
         boolean zipValid = matcher.matches();
+
         if(!zipValid){
             toastWithText("Please enter a valid zipcode!");
             return false;
         }
+
         if(!PhoneNumberUtils.isGlobalPhoneNumber(event.contact)){
             toastWithText("Please enter a valid phone number");
             return false;
         }
+
         pattern = Pattern.compile("^[1-9]+[0-9]*$|^0$");
         matcher = pattern.matcher(event.limitPerson);
         boolean personValid = matcher.matches();
@@ -271,6 +300,7 @@ public class AddEvent extends AppCompatActivity {
             toastWithText("Please enter a valid limit person!");
             return false;
         }
+
         return true;
 
     }
