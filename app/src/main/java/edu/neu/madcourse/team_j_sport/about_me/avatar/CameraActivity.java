@@ -1,6 +1,6 @@
 package edu.neu.madcourse.team_j_sport.about_me.avatar;
 
-import android.Manifest;
+
 import android.Manifest.permission;
 import android.app.Activity;
 import android.content.Context;
@@ -11,8 +11,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.ImageView;
@@ -25,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import edu.neu.madcourse.team_j_sport.R;
+import edu.neu.madcourse.team_j_sport.navi_bar.MeFragment;
 
 public class CameraActivity extends AppCompatActivity {
 
@@ -231,8 +230,22 @@ public class CameraActivity extends AppCompatActivity {
             photoUtil.uploadBitmap(userId, bData);
 
             Log.d(TAG, "Showing camera preview picture");
+            changeAvatar(photo);
+
             finish();
         }
+    }
+
+    public void changeAvatar(Bitmap bitmap) {
+        Log.d(TAG, "Changing avatar");
+
+        ImageView avatar = MeFragment.ivAvatar;
+
+        if (bitmap == null) Log.e(TAG, "changeAvatar, bitmap is null");
+        if (avatar == null) Log.e(TAG, "changeAvatar, avatar iv is null");
+
+        avatar.setImageBitmap(bitmap);
+        Log.d(TAG, "Avatar should be changed");
     }
 }
 
