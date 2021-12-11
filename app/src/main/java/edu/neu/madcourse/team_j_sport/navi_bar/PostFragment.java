@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -147,5 +148,17 @@ public class PostFragment extends Fragment {
         postAdapter.filterList(filteredList);
     }
 
+    public void onResume() {
+        super.onResume();
+
+        // Restore the search box and remove focus
+        EditText et = view.findViewById(R.id.et_post_search);
+        et.setText("");
+        et.clearFocus();
+
+        // Clear the current recyclerView and fetch the latest events from database
+        itemPosts.clear();
+        initPostList();
+    }
 
 }

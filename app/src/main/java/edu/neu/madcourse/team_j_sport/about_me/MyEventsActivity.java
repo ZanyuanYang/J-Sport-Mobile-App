@@ -155,4 +155,17 @@ public class MyEventsActivity extends AppCompatActivity {
         eventAdapter.filterList(filteredList);
 
     }
+
+    public void onResume() {
+        super.onResume();
+
+        // Restore the search box and remove focus
+        EditText et = findViewById(R.id.et_event_search);
+        et.setText("");
+        et.clearFocus();
+
+        // Clear the current recyclerView and fetch the latest events from database
+        itemEvents.clear();
+        initEventList();
+    }
 }
