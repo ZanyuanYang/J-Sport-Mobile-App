@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,8 +30,6 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
 
-import edu.neu.madcourse.team_j_sport.PostList.ItemPost;
-import edu.neu.madcourse.team_j_sport.PostList.PostAdapter;
 import edu.neu.madcourse.team_j_sport.PostList.PostHolder;
 import edu.neu.madcourse.team_j_sport.R;
 
@@ -144,7 +140,6 @@ public class PostDetailActivity extends AppCompatActivity {
                         lastname = userSnapshot.getValue() + "";
                     }
                 }
-
             }
 
             @Override
@@ -202,9 +197,7 @@ public class PostDetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NotNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NotNull DatabaseError databaseError) { }
         });
 
     }
@@ -240,7 +233,5 @@ public class PostDetailActivity extends AppCompatActivity {
 
                     }
                 });
-
-
     }
 }

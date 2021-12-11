@@ -153,23 +153,21 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
+                public void onCancelled(@NonNull DatabaseError error) { }
             });
 
             btnDelete.setOnClickListener(
                     view -> {
                         Log.d(CH_TAG, "Removing comment-" + commentKey);
 
-                        // delete the event
+                        // Delete the event
                         mRef.child("Posts")
                                 .child(postKey)
                                 .child("comments")
                                 .child(commentKey)
                                 .removeValue();
 
-                        // update the comment list and refresh recyclerView
+                        // Update the comment list and refresh recyclerView
                         removeCommentById(commentKey);
                         notifyDataSetChanged();
                     });
