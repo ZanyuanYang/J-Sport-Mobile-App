@@ -253,15 +253,22 @@ public class AddEvent extends AppCompatActivity {
             toastWithText("Please enter the zipcode of the event!");
             return false;
         }
-        Pattern pattern1 = Pattern.compile("^[0-9]{5}(?:-[0-9]{4})?$");
-        Matcher matcher1 = pattern1.matcher(event.zipCode);
-        boolean zipValid = matcher1.matches();
+        Pattern pattern = Pattern.compile("^[0-9]{5}(?:-[0-9]{4})?$");
+        Matcher matcher = pattern.matcher(event.zipCode);
+        boolean zipValid = matcher.matches();
         if(!zipValid){
             toastWithText("Please enter a valid zipcode!");
             return false;
         }
         if(!PhoneNumberUtils.isGlobalPhoneNumber(event.contact)){
             toastWithText("Please enter a valid phone number");
+            return false;
+        }
+        pattern = Pattern.compile("^[1-9]+[0-9]*$|^0$");
+        matcher = pattern.matcher(event.limitPerson);
+        boolean personValid = matcher.matches();
+        if(!personValid){
+            toastWithText("Please enter a valid limit person!");
             return false;
         }
         return true;
