@@ -4,37 +4,91 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EEF2F6"
     tools:context=".Post.AddPost">
 
     <EditText
         android:id="@+id/Post_TitleEditText"
+        android:layout_width="292dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_add_input"
+        android:padding="4dp"
+        app:layout_constraintStart_toStartOf="@+id/title_text"
+        app:layout_constraintTop_toBottomOf="@+id/title_text" />
+
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Title"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32" />
+        app:layout_constraintTop_toBottomOf="@+id/add_post"
+        app:srcCompat="@drawable/ic_message" />
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Title"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <EditText
         android:id="@+id/Post_ContentEditText"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"
+        android:gravity="top"
         android:hint="Say something..."
+        android:background="@drawable/custom_add_input"
+        android:maxLines="20"
+        android:padding="5dp"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/Post_TitleEditText"
+        app:layout_constraintStart_toStartOf="@+id/content"
+        app:layout_constraintTop_toBottomOf="@+id/content" />
+
+    <Button
+        android:id="@+id/Post_SubmitButton"
+        android:layout_width="122dp"
+        android:layout_height="47dp"
+        android:layout_gravity="center"
+        android:background="@drawable/border_radius"
+        android:text="Submit"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Post_ContentEditText" />
+
+    <TextView
+        android:id="@+id/add_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Add Post"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/Post_SubmitButton"
+    <TextView
+        android:id="@+id/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+        android:layout_marginTop="24dp"
+        android:text="Content"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/Post_TitleEditText"
+        app:layout_constraintTop_toBottomOf="@+id/Post_TitleEditText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
