@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
@@ -22,10 +26,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
-import edu.neu.madcourse.team_j_sport.HomepageActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import edu.neu.madcourse.team_j_sport.MainActivity;
 import edu.neu.madcourse.team_j_sport.ParticipantsList.ParticipantsListActivity;
 import edu.neu.madcourse.team_j_sport.R;
+import edu.neu.madcourse.team_j_sport.navi_bar.EventFragment;
 
 public class EventDetailActivity extends AppCompatActivity {
 
@@ -43,6 +49,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private DatabaseReference mDatabase;
 
+    public static final String TAG = "EventDetailActivity";
     public static final String PARTICIPANTS = "participants";
     public static final String JOIN = "JOIN";
     public static final String QUIT = "QUIT";
@@ -101,6 +108,9 @@ public class EventDetailActivity extends AppCompatActivity {
                     mDatabase.child("Events")
                             .child(eventKey)
                             .removeValue();
+
+                    refreshEventList();
+
                     finish();
                     break;
             }
@@ -116,6 +126,47 @@ public class EventDetailActivity extends AppCompatActivity {
         });
     }
 
+    private void refreshEventList() {
+        Log.d(TAG, "Trying to refresh");
+
+
+    }
+
+//    private void createRecyclerView() {
+//        View view = EventFragment.mView;
+//        RecyclerView recyclerView = EventFragment.mRV;
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(EventFragment.class);
+////        RecyclerView recyclerView = view.findViewById(R.id.rv_event_list);
+//        recyclerView.setHasFixedSize(true);
+//
+//        EditText editText = view.findViewById(R.id.edittext);
+//
+//        EventAdapter eventAdapter = new EventAdapter(itemEvents, (EventFragment.class).getApplicationContext());
+//
+//        editText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after){
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s){
+//                filter(s.toString(), eventAdapter);
+//            }
+//        });
+//
+//
+//        recyclerView.setAdapter(eventAdapter);
+//        recyclerView.setLayoutManager(layoutManager);
+//    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     private void setText() {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef;

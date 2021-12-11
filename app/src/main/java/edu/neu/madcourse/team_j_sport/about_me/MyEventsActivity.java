@@ -120,7 +120,7 @@ public class MyEventsActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.rv_event_list);
         recyclerView.setHasFixedSize(true);
 
-        EditText editText = findViewById(R.id.edittext);
+        EditText editText = findViewById(R.id.et_search);
 
         EventAdapter eventAdapter = new EventAdapter(itemEvents, getApplicationContext());
 
