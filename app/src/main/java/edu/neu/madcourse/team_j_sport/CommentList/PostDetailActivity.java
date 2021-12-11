@@ -50,6 +50,8 @@ public class PostDetailActivity extends AppCompatActivity {
     private EditText etComment;
     private Button btnReply;
 
+    private CommentAdapter commentAdapter;
+
     FirebaseAuth fAuth;
 
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -77,7 +79,6 @@ public class PostDetailActivity extends AppCompatActivity {
     }
 
     private void initCommentList() {
-
         DatabaseReference myRef = database.getReference().child("Posts").child(postKey).child("comments");
 
         myRef
@@ -101,17 +102,21 @@ public class PostDetailActivity extends AppCompatActivity {
 
                             @Override
                             public void onChildChanged(
-                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                            }
 
                             @Override
-                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
+                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                            }
 
                             @Override
                             public void onChildMoved(
-                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                            }
 
                             @Override
-                            public void onCancelled(@NonNull DatabaseError error) {}
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
                         });
     }
 
@@ -120,7 +125,7 @@ public class PostDetailActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.rv_comment_list);
         recyclerView.setHasFixedSize(true);
 
-        CommentAdapter commentAdapter = new CommentAdapter(comments, getApplicationContext(), myRef, postKey);
+        commentAdapter = new CommentAdapter(comments, getApplicationContext(), myRef, postKey);
 
         recyclerView.setAdapter(commentAdapter);
         recyclerView.setLayoutManager(layoutManager);
@@ -129,21 +134,22 @@ public class PostDetailActivity extends AppCompatActivity {
     private void initUsername() {
         fAuth = FirebaseAuth.getInstance();
         userId = fAuth.getCurrentUser().getUid();
-        myRef.child("Users").child(userId).addValueEventListener(new ValueEventListener(){
+        myRef.child("Users").child(userId).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot){
-                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
-                    if(userSnapshot.getKey().equals("firstname")){
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    if (userSnapshot.getKey().equals("firstname")) {
                         firstname = userSnapshot.getValue() + "";
                     }
-                    if(userSnapshot.getKey().equals("lastname")){
+                    if (userSnapshot.getKey().equals("lastname")) {
                         lastname = userSnapshot.getValue() + "";
                     }
                 }
 
             }
+
             @Override
-            public void onCancelled(@NotNull DatabaseError databaseError){
+            public void onCancelled(@NotNull DatabaseError databaseError) {
 
             }
         });
@@ -155,7 +161,7 @@ public class PostDetailActivity extends AppCompatActivity {
         myRef.child("Posts").child(postKey).child("uid").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(userId.equals(snapshot.getValue())){
+                if (userId.equals(snapshot.getValue())) {
                     btnDelete.setVisibility(View.VISIBLE);
                 }
             }
@@ -175,40 +181,40 @@ public class PostDetailActivity extends AppCompatActivity {
         tvContent = findViewById(R.id.content);
         tvDate = findViewById(R.id.date);
 
-        myRef.child("Posts").child(postKey).addValueEventListener(new ValueEventListener(){
+        myRef.child("Posts").child(postKey).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot){
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
-                    if(userSnapshot.getKey().equals("username")){
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    if (userSnapshot.getKey().equals("username")) {
                         tvUsername.setText(userSnapshot.getValue() + "");
                     }
-                    if(userSnapshot.getKey().equals("title")){
+                    if (userSnapshot.getKey().equals("title")) {
                         tvTitle.setText(userSnapshot.getValue() + "");
                     }
-                    if(userSnapshot.getKey().equals("content")){
+                    if (userSnapshot.getKey().equals("content")) {
                         tvContent.setText(userSnapshot.getValue() + "");
                     }
-                    if(userSnapshot.getKey().equals("date")){
+                    if (userSnapshot.getKey().equals("date")) {
                         tvDate.setText(userSnapshot.getValue() + "");
                     }
                 }
 
             }
+
             @Override
-            public void onCancelled(@NotNull DatabaseError databaseError){
+            public void onCancelled(@NotNull DatabaseError databaseError) {
 
             }
         });
 
     }
 
-    private void submitComment(String userIdd, String postKeyy){
-
-        myRef.child("Posts").child(postKeyy).child("comments")
-                .addValueEventListener(new ValueEventListener(){
+    private void submitComment(String userIdd, String postKey) {
+        myRef.child("Posts").child(postKey).child("comments")
+                .addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot){
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         etComment = findViewById(R.id.comment);
                         btnReply = findViewById(R.id.reply);
                         String commentId = UUID.randomUUID().toString();
@@ -221,7 +227,7 @@ public class PostDetailActivity extends AppCompatActivity {
                             comment.setCommentTime(commentTime);
 
                             myRef.child("Posts")
-                                    .child(postKeyy)
+                                    .child(postKey)
                                     .child("comments")
                                     .child(commentId)
                                     .setValue(comment);
@@ -229,14 +235,13 @@ public class PostDetailActivity extends AppCompatActivity {
                         });
 
                     }
+
                     @Override
-                    public void onCancelled(@NotNull DatabaseError databaseError){
+                    public void onCancelled(@NotNull DatabaseError databaseError) {
 
                     }
                 });
 
 
     }
-
-
 }
