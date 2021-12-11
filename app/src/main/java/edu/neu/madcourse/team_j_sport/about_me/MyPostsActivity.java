@@ -53,7 +53,7 @@ public class MyPostsActivity extends AppCompatActivity {
 
         initView();
         initFloatingBtn();
-        initPostList();
+//        initPostList();
     }
 
     @SuppressLint("SetTextI18n")
