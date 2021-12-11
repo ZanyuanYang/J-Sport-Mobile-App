@@ -57,9 +57,8 @@ public class AddEvent extends AppCompatActivity {
         initTimePicker();
         initDatePicker();
         //TODO : Organizer
-        //TODO :
-
     }
+
     private void initView(){
         Button btn = findViewById(R.id.Event_SubmitButton);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +69,7 @@ public class AddEvent extends AppCompatActivity {
             }
         });
     }
+
     private void setUpFirebase(){
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
@@ -130,7 +130,6 @@ public class AddEvent extends AppCompatActivity {
                 int hour = cldr.get(Calendar.HOUR_OF_DAY);
                 int minute = cldr.get(Calendar.MINUTE);
 
-
                 timePicker = new TimePickerDialog(AddEvent.this,
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
@@ -142,8 +141,8 @@ public class AddEvent extends AppCompatActivity {
             }
         });
     }
-    private Events getEventInfo(){
 
+    private Events getEventInfo(){
         EditText titleET = findViewById(R.id.Event_TitleEditText);
         EditText sumET = findViewById(R.id.Event_SummaryEditText);
         EditText desET = findViewById(R.id.Event_DescriptionEditText);
@@ -167,7 +166,6 @@ public class AddEvent extends AppCompatActivity {
         return event;
     }
     private void setEventLocation(Events event, long childCnt){
-
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -203,7 +201,6 @@ public class AddEvent extends AppCompatActivity {
             if(success){
 
                 JSONArray arr = jsonObject.getJSONArray("location");
-//                toastWithText("!!!");
 //                System.out.println(arr);
                 if(arr == null || arr.length() == 0){
 //                    System.out.println(arr);
@@ -214,7 +211,6 @@ public class AddEvent extends AppCompatActivity {
                             finish();
                         }
                     });
-
 
                 }
                 JSONObject dic = arr.getJSONObject(0);
@@ -247,10 +243,10 @@ public class AddEvent extends AppCompatActivity {
                 toastWithText("Failed to add an event");
             }
         } catch (Exception e){
-
             e.printStackTrace();
         }
     }
+
     private boolean checkEvent(Events event){
         EditText timeET = findViewById(R.id.Event_TimeEditText);
         EditText dateET = findViewById(R.id.event_DateEditText);

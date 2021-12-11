@@ -18,6 +18,14 @@ public class ItemComment {
         this.commentId = commentId;
     }
 
+    public ItemComment(ItemComment ic) {
+        this.avatar = ic.avatar;
+        this.username = ic.username;
+        this.time = ic.time;
+        this.content = ic.content;
+        this.commentId = ic.commentId;
+    }
+
     public String getAvatar() {
         return avatar;
     }
