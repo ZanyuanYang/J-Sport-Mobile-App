@@ -40,7 +40,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentHolder> {
     @Override
     public CommentHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment, parent, false);
-        return new CommentHolder(view, mContext, mRef);
+        return new CommentHolder(view, mContext, mRef, postKey);
     }
 
     @Override
@@ -61,7 +61,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentHolder> {
 
         holder.tvContent.setText(currentComment.getContent());
         holder.setCommentKey(currentComment.getCommentId());
-        holder.setPostKey(postKey);
     }
 
     @Override
