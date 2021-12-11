@@ -129,7 +129,7 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
-        android:background="@drawable/shape"
+        android:background="@drawable/border_radius"
         android:hint="Sign Up"
         android:letterSpacing="0.1"
         android:maxLines="1"
