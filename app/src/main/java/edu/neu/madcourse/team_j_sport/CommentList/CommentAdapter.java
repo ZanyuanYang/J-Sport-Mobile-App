@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -22,17 +23,21 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentHolder> {
 
     private ArrayList<ItemComment> comments;
     private final Context mContext;
+    private final DatabaseReference mRef;
+    private final String postKey;
 
-    public CommentAdapter(ArrayList<ItemComment> comments, Context mContext) {
+    public CommentAdapter(ArrayList<ItemComment> comments, Context mContext, DatabaseReference mRef, String postKey) {
         this.comments = comments;
         this.mContext = mContext;
+        this.mRef = mRef;
+        this.postKey = postKey;
     }
 
     @NonNull
     @Override
     public CommentHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment, parent, false);
-        return new CommentHolder(view, mContext);
+        return new CommentHolder(view, mContext, mRef);
     }
 
     @Override
@@ -50,6 +55,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentHolder> {
         holder.tvTime.setText(currentComment.getTime());
         holder.tvContent.setText(currentComment.getContent());
         holder.setCommentKey(currentComment.getCommentId());
+        holder.setPostKey(postKey);
     }
 
     @Override

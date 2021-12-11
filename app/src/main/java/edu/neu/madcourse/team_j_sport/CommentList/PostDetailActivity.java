@@ -117,7 +117,7 @@ public class PostDetailActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.rv_comment_list);
         recyclerView.setHasFixedSize(true);
 
-        CommentAdapter commentAdapter = new CommentAdapter(comments, getApplicationContext());
+        CommentAdapter commentAdapter = new CommentAdapter(comments, getApplicationContext(), myRef, postKey);
 
         recyclerView.setAdapter(commentAdapter);
         recyclerView.setLayoutManager(layoutManager);
