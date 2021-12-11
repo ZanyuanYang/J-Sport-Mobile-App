@@ -1,4 +1,4 @@
-package edu.neu.madcourse.team_j_sport.PostList;
+package edu.neu.madcourse.team_j_sport.CommentList;
 
 public class Comment {
 

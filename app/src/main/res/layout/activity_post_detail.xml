@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#EEF2F6"
-        tools:context=".PostList.PostDetailActivity">
+        tools:context=".CommentList.PostDetailActivity">
 
         <Button
             android:id="@+id/btn_post_delete"
