@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -149,6 +150,20 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private void initView() {
         btnDelete = findViewById(R.id.btn_post_delete);
+
+        myRef.child("Posts").child(postKey).child("uid").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(userId.equals(snapshot.getValue())){
+                    btnDelete.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         btnDelete.setOnClickListener(view -> {
             myRef.child("Posts").child(postKey).removeValue();
             finish();
