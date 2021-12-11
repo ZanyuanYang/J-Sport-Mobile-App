@@ -14,7 +14,7 @@
         android:layout_height="match_parent">
 
         <EditText
-            android:id="@+id/edittext"
+            android:id="@+id/et_event_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -41,7 +41,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edittext" />
+            app:layout_constraintTop_toBottomOf="@+id/et_event_search" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_event_list"
