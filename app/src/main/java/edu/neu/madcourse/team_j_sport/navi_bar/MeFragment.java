@@ -27,9 +27,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -92,7 +90,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         ((TextView) (view.findViewById(R.id.tv_me_name))).setText(name);
         ((TextView) (view.findViewById(R.id.tv_me_email))).setText(email);
 
-        view.findViewById(R.id.iv_edit_profile).setOnClickListener(this::onClick);
+//        view.findViewById(R.id.iv_edit_profile).setOnClickListener(this::onClick);
         view.findViewById(R.id.iv_log_out).setOnClickListener(this::onClick);
         view.findViewById(R.id.iv_avatar).setOnClickListener(this::onClick);
 
@@ -123,14 +121,16 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
-            case R.id.iv_edit_profile:
-                intent = new Intent(getActivity(), EditProfileActivity.class);
-                startActivity(intent);
-                break;
+//            case R.id.iv_edit_profile:
+//                intent = new Intent(getActivity(), EditProfileActivity.class);
+//                startActivity(intent);
+//                break;
             case R.id.iv_log_out:
                 sharedPreferences.edit().putBoolean("isUserLogin", false).apply();
-                intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
+//                System.out.println("ASDCD");
+//                intent = new Intent(getActivity(), MainActivity.class);
+//                startActivity(intent);
+                getActivity().finish();
                 break;
 
             case R.id.iv_avatar:
@@ -226,4 +226,17 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             Log.i(TAG, "IsRefresh = Yes");
         }
     }
+
+    /**
+     *
+     * TODO:
+     * - Add Post (UI)
+     * - Post & Comment's list order should be reversed
+     * - Post/Comments
+     *  - Comment list
+     * - Restricted Delete should be restricted to Owner only
+     * ------------
+     * - * Event list order
+     *
+     */
 }

@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,7 +15,6 @@ import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,7 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
-import edu.neu.madcourse.team_j_sport.HomepageActivity;
 import edu.neu.madcourse.team_j_sport.MainActivity;
 import edu.neu.madcourse.team_j_sport.ParticipantsList.ParticipantsListActivity;
 import edu.neu.madcourse.team_j_sport.R;
@@ -43,6 +44,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private DatabaseReference mDatabase;
 
+    public static final String TAG = "EventDetailActivity";
     public static final String PARTICIPANTS = "participants";
     public static final String JOIN = "JOIN";
     public static final String QUIT = "QUIT";
@@ -66,8 +68,6 @@ public class EventDetailActivity extends AppCompatActivity {
 
         initView();
         setText();
-
-
 
         btnJoin.setOnClickListener(view -> {
 
