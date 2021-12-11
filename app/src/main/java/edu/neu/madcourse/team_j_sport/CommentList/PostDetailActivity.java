@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.UUID;
 
 import edu.neu.madcourse.team_j_sport.PostList.ItemPost;
 import edu.neu.madcourse.team_j_sport.PostList.PostAdapter;
@@ -192,11 +193,9 @@ public class PostDetailActivity extends AppCompatActivity {
                 .addValueEventListener(new ValueEventListener(){
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot){
-                        int size = (int) dataSnapshot.getChildrenCount();
-                        size++;
                         etComment = findViewById(R.id.comment);
                         btnReply = findViewById(R.id.reply);
-                        int finalSize = size;
+                        String commentId = UUID.randomUUID().toString();
                         btnReply.setOnClickListener(view -> {
 
                             Comment comment = new Comment();
@@ -208,7 +207,7 @@ public class PostDetailActivity extends AppCompatActivity {
                             myRef.child("Posts")
                                     .child(postKeyy)
                                     .child("comments")
-                                    .child(finalSize + "")
+                                    .child(commentId)
                                     .setValue(comment);
                             etComment.setText("");
                         });
