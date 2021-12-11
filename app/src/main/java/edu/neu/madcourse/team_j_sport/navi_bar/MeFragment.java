@@ -127,8 +127,10 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 //                break;
             case R.id.iv_log_out:
                 sharedPreferences.edit().putBoolean("isUserLogin", false).apply();
-                intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
+//                System.out.println("ASDCD");
+//                intent = new Intent(getActivity(), MainActivity.class);
+//                startActivity(intent);
+                getActivity().finish();
                 break;
 
             case R.id.iv_avatar:
