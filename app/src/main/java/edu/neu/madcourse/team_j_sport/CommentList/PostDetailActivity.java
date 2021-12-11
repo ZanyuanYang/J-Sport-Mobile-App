@@ -2,6 +2,7 @@ package edu.neu.madcourse.team_j_sport.CommentList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +39,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private final ArrayList<ItemComment> comments = new ArrayList<>();
 
     public static final String USER_ID_KEY = "user id";
+    public static final int COMMENT_MAX_LENGTH = 100;
 
     private String postKey;
     private String userId;
@@ -178,19 +180,18 @@ public class PostDetailActivity extends AppCompatActivity {
         myRef.child("Posts").child(postKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    if (userSnapshot.getKey().equals("username")) {
-                        tvUsername.setText(userSnapshot.getValue() + "");
+                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                    if(userSnapshot.getKey().equals("username")){
+                        tvUsername.setText(String.valueOf(userSnapshot.getValue()).trim());
                     }
-                    if (userSnapshot.getKey().equals("title")) {
-                        tvTitle.setText(userSnapshot.getValue() + "");
+                    if(userSnapshot.getKey().equals("title")){
+                        tvTitle.setText(String.valueOf(userSnapshot.getValue()).trim());
                     }
-                    if (userSnapshot.getKey().equals("content")) {
-                        tvContent.setText(userSnapshot.getValue() + "");
+                    if(userSnapshot.getKey().equals("content")){
+                        tvContent.setText(String.valueOf(userSnapshot.getValue()).trim());
                     }
-                    if (userSnapshot.getKey().equals("date")) {
-                        tvDate.setText(userSnapshot.getValue() + "");
+                    if(userSnapshot.getKey().equals("date")){
+                        tvDate.setText(String.valueOf(userSnapshot.getValue()).trim());
                     }
                 }
 
