@@ -228,17 +228,17 @@ public class MainActivity extends AppCompatActivity {
         return res;
     }
     public void setUpLocation(){
-        Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         if(ActivityCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             //when permission granted
-            Toast.makeText(MainActivity.this, "2", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this, "2", Toast.LENGTH_SHORT).show();
             getCurrentLocation();
         }else{
             //When permission denied
             //Request permission
-            Toast.makeText(MainActivity.this, "3", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this, "3", Toast.LENGTH_SHORT).show();
             ActivityCompat.requestPermissions(MainActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
     public void getCurrentLocation(){
         try {
 
-            Toast.makeText(MainActivity.this, "4", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this, "4", Toast.LENGTH_SHORT).show();
             fusedLocationClient.getCurrentLocation(100, null)
                     .addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
@@ -254,14 +254,14 @@ public class MainActivity extends AppCompatActivity {
                     //When success
                     if(location != null){
                         String str = String.valueOf(location.getLatitude() ) + String.valueOf(location.getLongitude());
-                        Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
                         System.out.println(str);
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putString(USER_LATITUDE_KEY, String.valueOf(location.getLatitude() ));
                         editor.putString(USER_LONGITUDE_KEY, String.valueOf(location.getLongitude()));
                         editor.apply();
                     }else{
-                        Toast.makeText(MainActivity.this, "5", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "5", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
