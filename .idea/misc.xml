@@ -38,7 +38,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_message.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_my_post.xml" value="0.358695652173913" />
-        <entry key="app/src/main/res/layout/activity_post_detail.xml" value="0.35054347826086957" />
+        <entry key="app/src/main/res/layout/activity_post_detail.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_user_login.xml" value="0.24592391304347827" />
         <entry key="app/src/main/res/layout/activity_user_page.xml" value="0.36594202898550726" />

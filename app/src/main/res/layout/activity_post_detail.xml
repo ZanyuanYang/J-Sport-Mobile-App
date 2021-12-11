@@ -16,12 +16,13 @@
         <Button
             android:id="@+id/btn_post_delete"
             android:layout_width="50dp"
-            android:layout_height="30dp"
+            android:layout_height="20dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/border_radius_danger1"
             android:text="@string/delete"
             android:textColor="#FFFFFF"
             android:textSize="10sp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/date"
             app:layout_constraintEnd_toStartOf="@+id/date"
             app:layout_constraintTop_toTopOf="@+id/date" />
