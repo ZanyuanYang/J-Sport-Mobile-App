@@ -39,7 +39,7 @@ import edu.neu.madcourse.team_j_sport.R;
 public class PostFragment extends Fragment {
 
     private final ArrayList<ItemPost> itemPosts = new ArrayList<>();
-
+    private PostAdapter postAdapter;
     View view;
     SharedPreferences sharedPreferences;
 
@@ -54,6 +54,8 @@ public class PostFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_post, container, false);
         sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
         initFloatingBtn();
+//        initPostList();
+        createRecyclerView();
         initPostList();
         return view;
     }
@@ -82,6 +84,7 @@ public class PostFragment extends Fragment {
                             public void onChildAdded(
                                     @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                 HashMap hashMap = (HashMap) snapshot.getValue();
+//                                System.out.println("ASDCF1");
                                 assert hashMap != null;
                                 itemPosts.add(
                                         new ItemPost(
@@ -89,7 +92,7 @@ public class PostFragment extends Fragment {
                                                 Objects.requireNonNull(hashMap.get("title")).toString(),
                                                 Objects.requireNonNull(hashMap.get("content")).toString(),
                                                 snapshot.getKey()));
-                                createRecyclerView();
+                                postAdapter.notifyDataSetChanged();
                             }
 
                             @Override
@@ -113,7 +116,7 @@ public class PostFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.rv_post_list);
         recyclerView.setHasFixedSize(true);
 
-        PostAdapter postAdapter = new PostAdapter(itemPosts, getActivity().getApplicationContext());
+        postAdapter = new PostAdapter(itemPosts, getActivity().getApplicationContext());
 
         EditText etSearch = view.findViewById(R.id.et_post_search);
         etSearch.addTextChangedListener(new TextWatcher() {
