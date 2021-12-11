@@ -1,6 +1,6 @@
 package edu.neu.madcourse.team_j_sport.about_me.avatar;
 
-import android.Manifest;
+
 import android.Manifest.permission;
 import android.app.Activity;
 import android.content.Context;
@@ -11,8 +11,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.ImageView;
@@ -25,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import edu.neu.madcourse.team_j_sport.R;
+import edu.neu.madcourse.team_j_sport.navi_bar.MeFragment;
 
 public class CameraActivity extends AppCompatActivity {
 
@@ -48,7 +47,9 @@ public class CameraActivity extends AppCompatActivity {
         init();
     }
 
-    // FIXME: after permission is requested, the app couldn't redirect back to the "Camera"
+    // Done: after permission is requested, the app couldn't redirect back to the "Camera"
+    //  Don't allow could send user back to profile page
+    //  Fixed
     public void init() {
         photoUtil = new PhotoUtil();
 
@@ -58,7 +59,8 @@ public class CameraActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             if (getFromPref(this, ALLOW_KEY)) {
                 showSettingsAlert();
-            } else if (ContextCompat.checkSelfPermission(this, permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            } else if (ContextCompat.checkSelfPermission(this, permission.CAMERA)
+                    != PackageManager.PERMISSION_GRANTED) {
                 // Should we show an explanation?
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission.CAMERA)) {
                     showAlert();
@@ -68,11 +70,24 @@ public class CameraActivity extends AppCompatActivity {
                             MY_PERMISSIONS_REQUEST_CAMERA);
                 }
             }
+
+//            if (!getFromPref(this, ALLOW_KEY)) {
+//                Log.d(TAG, "getFromPref true");
+//            } else {
+//                openCamera();
+//                Log.d(TAG, "getFromPref false");
+//            }
+
         } else {
             openCamera();
         }
     }
 
+    public static Boolean getFromPref(Context context, String key) {
+        SharedPreferences myPrefs = context.getSharedPreferences(CAMERA_PREF,
+                Context.MODE_PRIVATE);
+        return (myPrefs.getBoolean(key, false));
+    }
 
     public static void saveToPreferences(Context context, String key, Boolean allowed) {
         SharedPreferences myPrefs = context.getSharedPreferences(CAMERA_PREF,
@@ -80,12 +95,6 @@ public class CameraActivity extends AppCompatActivity {
         SharedPreferences.Editor prefsEditor = myPrefs.edit();
         prefsEditor.putBoolean(key, allowed);
         prefsEditor.commit();
-    }
-
-    public static Boolean getFromPref(Context context, String key) {
-        SharedPreferences myPrefs = context.getSharedPreferences(CAMERA_PREF,
-                Context.MODE_PRIVATE);
-        return (myPrefs.getBoolean(key, false));
     }
 
     private void showAlert() {
@@ -103,7 +112,6 @@ public class CameraActivity extends AppCompatActivity {
 
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "ALLOW",
                 new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         ActivityCompat.requestPermissions(CameraActivity.this,
@@ -120,11 +128,11 @@ public class CameraActivity extends AppCompatActivity {
         alertDialog.setTitle("Alert");
         alertDialog.setMessage("App needs to access the Camera.");
 
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "DONT ALLOW",
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "DON'T ALLOW",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        //finish();
+                        finish();
                     }
                 });
 
@@ -164,6 +172,8 @@ public class CameraActivity extends AppCompatActivity {
                             // the app setting
                             saveToPreferences(CameraActivity.this, ALLOW_KEY, true);
                         }
+                    } else {
+                        openCamera();
                     }
                 }
             }
@@ -220,8 +230,22 @@ public class CameraActivity extends AppCompatActivity {
             photoUtil.uploadBitmap(userId, bData);
 
             Log.d(TAG, "Showing camera preview picture");
+            changeAvatar(photo);
+
             finish();
         }
+    }
+
+    public void changeAvatar(Bitmap bitmap) {
+        Log.d(TAG, "Changing avatar");
+
+        ImageView avatar = MeFragment.ivAvatar;
+
+        if (bitmap == null) Log.e(TAG, "changeAvatar, bitmap is null");
+        if (avatar == null) Log.e(TAG, "changeAvatar, avatar iv is null");
+
+        avatar.setImageBitmap(bitmap);
+        Log.d(TAG, "Avatar should be changed");
     }
 }
 
