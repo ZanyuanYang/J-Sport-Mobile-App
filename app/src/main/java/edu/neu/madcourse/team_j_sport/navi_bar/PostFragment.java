@@ -163,6 +163,7 @@ public class PostFragment extends Fragment {
 
         // Clear the current recyclerView and fetch the latest events from database
         itemPosts.clear();
+        createRecyclerView();
         initPostList();
     }
 
