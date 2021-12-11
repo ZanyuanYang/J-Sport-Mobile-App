@@ -81,8 +81,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private void initCommentList() {
         DatabaseReference myRef = database.getReference().child("Posts").child(postKey).child("comments");
 
-        myRef
-                .orderByKey()
+        myRef.orderByKey()
                 .addChildEventListener(
                         new ChildEventListener() {
                             @Override

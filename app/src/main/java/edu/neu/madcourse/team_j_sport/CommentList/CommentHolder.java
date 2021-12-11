@@ -2,6 +2,7 @@ package edu.neu.madcourse.team_j_sport.CommentList;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,7 +20,6 @@ import edu.neu.madcourse.team_j_sport.MainActivity;
 import edu.neu.madcourse.team_j_sport.R;
 
 public class CommentHolder extends RecyclerView.ViewHolder {
-
     public static final String COMMENT_KEY = "comment key";
 
     public ImageView ivAvatar;
@@ -64,6 +64,8 @@ public class CommentHolder extends RecyclerView.ViewHolder {
                             .child("comments")
                             .child(commentKey)
                             .removeValue();
+
+
                 });
     }
 
@@ -71,5 +73,4 @@ public class CommentHolder extends RecyclerView.ViewHolder {
     public void setCommentKey(String commentKey) {
         this.commentKey = commentKey;
     }
-
 }
