@@ -46,6 +46,7 @@
         <entry key="app/src/main/res/layout/fragment_event.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_me.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_post.xml" value="0.21197916666666666" />
+        <entry key="app/src/main/res/layout/item_comment.xml" value="0.3423913043478261" />
         <entry key="app/src/main/res/layout/item_event.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_message.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/item_post.xml" value="0.35054347826086957" />
