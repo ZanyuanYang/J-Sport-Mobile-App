@@ -82,6 +82,7 @@ public class PostFragment extends Fragment {
                             @Override
                             public void onChildAdded(
                                     @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                                System.out.println("onResume");
                                 HashMap hashMap = (HashMap) snapshot.getValue();
                                 assert hashMap != null;
                                 itemPosts.add(
@@ -95,7 +96,9 @@ public class PostFragment extends Fragment {
 
                             @Override
                             public void onChildChanged(
-                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
 
                             @Override
                             public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
