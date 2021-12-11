@@ -13,7 +13,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import edu.neu.madcourse.team_j_sport.PostList.ItemPost;
 import edu.neu.madcourse.team_j_sport.PostList.PostHolder;
@@ -52,7 +55,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentHolder> {
                 .into(holder.ivAvatar);
 
         holder.tvUsername.setText(currentComment.getUsername());
-        holder.tvTime.setText(currentComment.getTime());
+
+        // init the time
+        holder.tvTime.setText(getTime(currentComment.getTime()));
+
         holder.tvContent.setText(currentComment.getContent());
         holder.setCommentKey(currentComment.getCommentId());
         holder.setPostKey(postKey);
@@ -63,4 +69,28 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentHolder> {
         return comments.size();
     }
 
+    private String getTime(String currentTime){
+        //String commentTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date commentTime = simpleDateFormat.parse(currentTime, new ParsePosition(0));
+        // s
+        long between = (new Date().getTime() - commentTime.getTime())/1000;
+        if(between < 60){
+            return between + "s ago";
+        }
+        // min
+        between /= 60;
+        if(between < 60){
+            return between + "mins ago";
+        }
+        // hour
+        between /= 60;
+        if(between < 24){
+            return between + "hours ago";
+        }
+        //day
+        between /= 24;
+        return between + "days ago";
+    }
 }
