@@ -9,6 +9,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/border_radius.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/border_radius_blue.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/border_radius_circle.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/border_radius_danger.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/border_radius_danger1.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/border_radius_green.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/border_radius_orange.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/border_radius_purple.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/border_radius_red.xml" value="0.3921875" />
         <entry key="app/src/main/res/drawable/custom_add_input.xml" value="0.3921875" />
         <entry key="app/src/main/res/drawable/custom_input.xml" value="0.3921875" />
         <entry key="app/src/main/res/drawable/custom_search_icon.xml" value="0.3921875" />
@@ -28,13 +36,20 @@
         <entry key="app/src/main/res/layout/activity_homepage.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_message.xml" value="0.37604166666666666" />
+<<<<<<< HEAD
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.25043470300975024" />
+=======
+        <entry key="app/src/main/res/layout/activity_my_post.xml" value="0.358695652173913" />
+        <entry key="app/src/main/res/layout/activity_post_detail.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.33" />
+>>>>>>> a37b3e3393fbd14949f4bd3a19b1cc5bfdbedfd6
         <entry key="app/src/main/res/layout/activity_user_login.xml" value="0.24592391304347827" />
         <entry key="app/src/main/res/layout/activity_user_page.xml" value="0.36594202898550726" />
         <entry key="app/src/main/res/layout/activity_user_send_sticker.xml" value="0.3114695245577566" />
         <entry key="app/src/main/res/layout/fragment_event.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_me.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_post.xml" value="0.21197916666666666" />
+        <entry key="app/src/main/res/layout/item_comment.xml" value="0.3423913043478261" />
         <entry key="app/src/main/res/layout/item_event.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_message.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/list_users.xml" value="0.3704710144927536" />

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import edu.neu.madcourse.team_j_sport.CommentList.PostDetailActivity;
 import edu.neu.madcourse.team_j_sport.R;
 
 public class PostHolder extends RecyclerView.ViewHolder {

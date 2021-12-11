@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,6 @@ public class PostFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_post, container, false);
         sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
         initFloatingBtn();
-//        initPostList();
         createRecyclerView();
         initPostList();
         return view;
@@ -83,6 +83,7 @@ public class PostFragment extends Fragment {
                             @Override
                             public void onChildAdded(
                                     @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                                System.out.println("onResume");
                                 HashMap hashMap = (HashMap) snapshot.getValue();
 //                                System.out.println("ASDCF1");
                                 assert hashMap != null;
@@ -97,7 +98,9 @@ public class PostFragment extends Fragment {
 
                             @Override
                             public void onChildChanged(
-                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
 
                             @Override
                             public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
@@ -150,5 +153,17 @@ public class PostFragment extends Fragment {
         postAdapter.filterList(filteredList);
     }
 
+    public void onResume() {
+        super.onResume();
+
+        // Restore the search box and remove focus
+        EditText et = view.findViewById(R.id.et_post_search);
+        et.setText("");
+        et.clearFocus();
+
+        // Clear the current recyclerView and fetch the latest events from database
+        itemPosts.clear();
+        initPostList();
+    }
 
 }

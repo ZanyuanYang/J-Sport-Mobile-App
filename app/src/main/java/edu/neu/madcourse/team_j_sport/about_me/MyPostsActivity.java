@@ -53,7 +53,7 @@ public class MyPostsActivity extends AppCompatActivity {
 
         initView();
         initFloatingBtn();
-        initPostList();
+//        initPostList();
     }
 
     @SuppressLint("SetTextI18n")
@@ -157,5 +157,16 @@ public class MyPostsActivity extends AppCompatActivity {
         postAdapter.filterList(filteredList);
     }
 
+    public void onResume() {
+        super.onResume();
 
+        // Restore the search box and remove focus
+        EditText et = findViewById(R.id.et_post_search);
+        et.setText("");
+        et.clearFocus();
+
+        // Clear the current recyclerView and fetch the latest events from database
+        itemPosts.clear();
+        initPostList();
+    }
 }

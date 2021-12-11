@@ -22,7 +22,7 @@
         <activity android:name=".about_me.avatar.GalleryActivity"/>
         <activity android:name=".about_me.avatar.CameraActivity" />
 
-        <activity android:name=".PostList.PostDetailActivity" />
+        <activity android:name=".CommentList.PostDetailActivity" />
         <activity
             android:name=".Post.AddPost"
             android:exported="true" />
