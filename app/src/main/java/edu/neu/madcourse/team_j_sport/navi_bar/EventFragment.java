@@ -101,7 +101,7 @@ public class EventFragment extends Fragment {
                                     Objects.requireNonNull(hashMap.get("summary")).toString(),
                                     Objects.requireNonNull(hashMap.get("organizer")).toString(),
                                     Objects.requireNonNull(hashMap.get("location")).toString(),
-                                    snapshot.getKey()));
+                                    data.getKey()));
                 }
                 if(eventAdapter == null){
                     createRecyclerView();
