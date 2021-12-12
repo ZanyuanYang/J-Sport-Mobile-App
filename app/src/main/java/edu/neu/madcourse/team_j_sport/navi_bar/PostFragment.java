@@ -39,9 +39,13 @@ import edu.neu.madcourse.team_j_sport.R;
 
 public class PostFragment extends Fragment {
 
+    public static final String TAG = "PostFragment";
     private final ArrayList<ItemPost> itemPosts = new ArrayList<>();
 
     View view;
+    PostAdapter postAdapter;
+
+
     SharedPreferences sharedPreferences;
 
     public PostFragment() {
@@ -69,46 +73,59 @@ public class PostFragment extends Fragment {
     }
 
     private void initPostList() {
-
+        Log.d(TAG, "init List");
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef;
 
         myRef = database.getReference().child("Posts");
 
-        myRef
-                .orderByKey()
+        myRef.orderByKey()
                 .addChildEventListener(
                         new ChildEventListener() {
                             @Override
                             public void onChildAdded(
                                     @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//                                System.out.println("onResume");
+                                Log.d(TAG, "childEvent - add");
+
+                                String key = snapshot.getKey();
                                 HashMap hashMap = (HashMap) snapshot.getValue();
-                                assert hashMap != null;
-                                itemPosts.add(
-                                        new ItemPost(
-                                                Objects.requireNonNull(hashMap.get("uid")).toString(),
-                                                Objects.requireNonNull(hashMap.get("title")).toString(),
-                                                Objects.requireNonNull(hashMap.get("content")).toString(),
-                                                snapshot.getKey()));
-                                createRecyclerView();
+                                if (hashMap == null) throw new AssertionError();
+
+                                if (!itemPosts.contains(key)) {
+                                    Log.d(TAG, "onChildAdded - add Post");
+                                    itemPosts.add(
+                                            new ItemPost(
+                                                    Objects.requireNonNull(hashMap.get("uid")).toString(),
+                                                    Objects.requireNonNull(hashMap.get("title")).toString(),
+                                                    Objects.requireNonNull(hashMap.get("content")).toString(),
+                                                    snapshot.getKey()));
+                                    createRecyclerView();
+                                }
                             }
 
                             @Override
                             public void onChildChanged(
                                     @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                                Log.d(TAG, "childEvent - change");
+                                postAdapter.notifyDataSetChanged();
                             }
 
                             @Override
-                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
+                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                                Log.d(TAG, "childEvent - remove");
+                                postAdapter.notifyDataSetChanged();
+                            }
 
                             @Override
                             public void onChildMoved(
-                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                Log.d(TAG, "childEvent - move");
+                            }
 
                             @Override
-                            public void onCancelled(@NonNull DatabaseError error) {}
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.d(TAG, "childEvent - error");
+                            }
                         });
     }
 
@@ -117,12 +134,12 @@ public class PostFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.rv_post_list);
         recyclerView.setHasFixedSize(true);
 
-        PostAdapter postAdapter = new PostAdapter(itemPosts, getActivity().getApplicationContext());
+        postAdapter = new PostAdapter(itemPosts, getActivity().getApplicationContext());
 
         EditText etSearch = view.findViewById(R.id.et_post_search);
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after){
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
 
@@ -132,7 +149,7 @@ public class PostFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s){
+            public void afterTextChanged(Editable s) {
                 filter(s.toString(), postAdapter);
             }
         });
@@ -141,10 +158,10 @@ public class PostFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    private void filter(String text, PostAdapter postAdapter){
+    private void filter(String text, PostAdapter postAdapter) {
         ArrayList<ItemPost> filteredList = new ArrayList<>();
-        for(ItemPost item : itemPosts){
-            if(item.getTitle().toLowerCase().contains(text.toLowerCase())){
+        for (ItemPost item : itemPosts) {
+            if (item.getTitle().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item);
             }
         }
