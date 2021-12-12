@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -27,18 +28,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.UUID;
 
 import edu.neu.madcourse.team_j_sport.Post.AddPost;
+import edu.neu.madcourse.team_j_sport.Post.Posts;
 import edu.neu.madcourse.team_j_sport.PostList.ItemPost;
 import edu.neu.madcourse.team_j_sport.PostList.PostAdapter;
 import edu.neu.madcourse.team_j_sport.R;
 
 public class PostFragment extends Fragment {
-
     public static final String TAG = "PostFragment";
     private final ArrayList<ItemPost> itemPosts = new ArrayList<>();
 
@@ -59,7 +62,7 @@ public class PostFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_post, container, false);
         sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
         initFloatingBtn();
-//        initPostList();
+        initPostList();
         return view;
     }
 
@@ -76,8 +79,27 @@ public class PostFragment extends Fragment {
         Log.d(TAG, "init List");
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef;
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                itemPosts.clear();
+                for(DataSnapshot data : snapshot.getChildren()){
+                    HashMap hashMap = (HashMap) data.getValue();
+                    assert hashMap != null;
+                    itemPosts.add(
+                            new ItemPost(
+                                    Objects.requireNonNull(hashMap.get("uid")).toString(),
+                                    Objects.requireNonNull(hashMap.get("title")).toString(),
+                                    Objects.requireNonNull(hashMap.get("content")).toString(),
+                                    data.getKey()));
+                }
+                if(postAdapter == null){
+                    createRecyclerView();
+                }else postAdapter.notifyDataSetChanged();
+            }
 
-        myRef = database.getReference().child("Posts");
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
         myRef.orderByKey()
                 .addChildEventListener(
@@ -186,14 +208,11 @@ public class PostFragment extends Fragment {
 
     public void onResume() {
         super.onResume();
-
         // Restore the search box and remove focus
         EditText et = view.findViewById(R.id.et_post_search);
         et.setText("");
         et.clearFocus();
-
         // Clear the current recyclerView and fetch the latest events from database
-        itemPosts.clear();
         initPostList();
     }
 
