@@ -113,6 +113,11 @@ public class PostFragment extends Fragment {
                             @Override
                             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
                                 Log.d(TAG, "childEvent - remove");
+                                String key = snapshot.getKey();
+                                HashMap hashMap = (HashMap) snapshot.getValue();
+                                Log.d(TAG, key + " " + Objects.requireNonNull(hashMap.get("title")).toString());
+
+                                removeItemById(key);
                                 postAdapter.notifyDataSetChanged();
                             }
 
@@ -127,6 +132,17 @@ public class PostFragment extends Fragment {
                                 Log.d(TAG, "childEvent - error");
                             }
                         });
+    }
+
+    private void removeItemById(String id) {
+        int target = -1;
+        for (int i = 0; i < itemPosts.size(); i++) {
+            if (itemPosts.get(i).getPostId().equals(id))
+                target = i;
+        }
+        if (target != -1) {
+            itemPosts.remove(target);
+        }
     }
 
     private void createRecyclerView() {
