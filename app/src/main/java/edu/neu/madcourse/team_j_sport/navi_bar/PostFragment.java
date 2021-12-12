@@ -79,28 +79,7 @@ public class PostFragment extends Fragment {
         Log.d(TAG, "init List");
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef;
-        ValueEventListener listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                itemPosts.clear();
-                for(DataSnapshot data : snapshot.getChildren()){
-                    HashMap hashMap = (HashMap) data.getValue();
-                    assert hashMap != null;
-                    itemPosts.add(
-                            new ItemPost(
-                                    Objects.requireNonNull(hashMap.get("uid")).toString(),
-                                    Objects.requireNonNull(hashMap.get("title")).toString(),
-                                    Objects.requireNonNull(hashMap.get("content")).toString(),
-                                    data.getKey()));
-                }
-                if(postAdapter == null){
-                    createRecyclerView();
-                }else postAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+        myRef = database.getReference().child("Posts");
         myRef.orderByKey()
                 .addChildEventListener(
                         new ChildEventListener() {
