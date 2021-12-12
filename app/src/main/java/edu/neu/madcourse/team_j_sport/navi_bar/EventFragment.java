@@ -26,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,13 +35,14 @@ import java.util.Objects;
 import edu.neu.madcourse.team_j_sport.EventList.AddEvent;
 import edu.neu.madcourse.team_j_sport.EventList.EventAdapter;
 import edu.neu.madcourse.team_j_sport.EventList.ItemEvent;
+import edu.neu.madcourse.team_j_sport.PostList.ItemPost;
 import edu.neu.madcourse.team_j_sport.R;
 
 public class EventFragment extends Fragment {
 
     public static final String TAG = "EventFragment";
     private ArrayList<ItemEvent> itemEvents = new ArrayList<>();
-
+    private EventAdapter eventAdapter;
     View view;
     SharedPreferences sharedPreferences;
 
@@ -55,22 +57,21 @@ public class EventFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_event, container, false);
         sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
-//        initEventList();
+
         initFloatingBtn();
+        initEventList();
         return view;
     }
 
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "Resumed");
-
         // Restore the search box and remove focus
         EditText et = view.findViewById(R.id.et_event_search);
         et.setText("");
         et.clearFocus();
 
         // Clear the current recyclerView and fetch the latest events from database
-        itemEvents = new ArrayList<>();
+
         initEventList();
     }
 
@@ -86,46 +87,71 @@ public class EventFragment extends Fragment {
     private void initEventList() {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef;
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                itemEvents.clear();
+                for(DataSnapshot data : snapshot.getChildren()){
+                    HashMap hashMap = (HashMap) data.getValue();
+                    assert hashMap != null;
+                    itemEvents.add(
+                            new ItemEvent(
+                                    Objects.requireNonNull(hashMap.get("title")).toString(),
+                                    Objects.requireNonNull(hashMap.get("time")).toString(),
+                                    Objects.requireNonNull(hashMap.get("summary")).toString(),
+                                    Objects.requireNonNull(hashMap.get("organizer")).toString(),
+                                    Objects.requireNonNull(hashMap.get("location")).toString(),
+                                    snapshot.getKey()));
+                }
+                if(eventAdapter == null){
+                    createRecyclerView();
+                }else eventAdapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
         myRef = database.getReference().child("Events");
-
-        myRef.orderByKey()
-                .addChildEventListener(
-                        new ChildEventListener() {
-                            @Override
-                            public void onChildAdded(
-                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                HashMap hashMap = (HashMap) snapshot.getValue();
-                                assert hashMap != null;
-                                itemEvents.add(
-                                        new ItemEvent(
-                                                Objects.requireNonNull(hashMap.get("title")).toString(),
-                                                Objects.requireNonNull(hashMap.get("time")).toString(),
-                                                Objects.requireNonNull(hashMap.get("summary")).toString(),
-                                                Objects.requireNonNull(hashMap.get("organizer")).toString(),
-                                                Objects.requireNonNull(hashMap.get("location")).toString(),
-                                                snapshot.getKey()));
-                                createRecyclerView();
-                            }
-
-                            @Override
-                            public void onChildChanged(
-                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                            }
-
-                            @Override
-                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                            }
-
-                            @Override
-                            public void onChildMoved(
-                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                            }
-                        });
+        myRef.addValueEventListener(listener);
+//        myRef.orderByKey()
+//                .addChildEventListener(
+//                        new ChildEventListener() {
+//                            @Override
+//                            public void onChildAdded(
+//                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                                HashMap hashMap = (HashMap) snapshot.getValue();
+//                                assert hashMap != null;
+//                                itemEvents.add(
+//                                        new ItemEvent(
+//                                                Objects.requireNonNull(hashMap.get("title")).toString(),
+//                                                Objects.requireNonNull(hashMap.get("time")).toString(),
+//                                                Objects.requireNonNull(hashMap.get("summary")).toString(),
+//                                                Objects.requireNonNull(hashMap.get("organizer")).toString(),
+//                                                Objects.requireNonNull(hashMap.get("location")).toString(),
+//                                                snapshot.getKey()));
+//                                createRecyclerView();
+//                            }
+//
+//                            @Override
+//                            public void onChildChanged(
+//                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                            }
+//
+//                            @Override
+//                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//                            }
+//
+//                            @Override
+//                            public void onChildMoved(
+//                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError error) {
+//                            }
+//                        });
     }
 
     private void createRecyclerView() {
@@ -135,7 +161,7 @@ public class EventFragment extends Fragment {
 
         EditText editText = view.findViewById(R.id.et_event_search);
 
-        EventAdapter eventAdapter = new EventAdapter(itemEvents, getActivity().getApplicationContext());
+        eventAdapter = new EventAdapter(itemEvents, getActivity().getApplicationContext());
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override

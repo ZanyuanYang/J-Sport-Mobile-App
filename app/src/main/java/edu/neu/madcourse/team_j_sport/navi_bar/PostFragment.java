@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -27,19 +28,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.UUID;
 
 import edu.neu.madcourse.team_j_sport.Post.AddPost;
+import edu.neu.madcourse.team_j_sport.Post.Posts;
 import edu.neu.madcourse.team_j_sport.PostList.ItemPost;
 import edu.neu.madcourse.team_j_sport.PostList.PostAdapter;
 import edu.neu.madcourse.team_j_sport.R;
 
 public class PostFragment extends Fragment {
 
-    private final ArrayList<ItemPost> itemPosts = new ArrayList<>();
+    private ArrayList<ItemPost> itemPosts = new ArrayList<>();
     private PostAdapter postAdapter;
     View view;
     SharedPreferences sharedPreferences;
@@ -55,7 +59,6 @@ public class PostFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_post, container, false);
         sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
         initFloatingBtn();
-        createRecyclerView();
         initPostList();
         return view;
     }
@@ -73,52 +76,85 @@ public class PostFragment extends Fragment {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef;
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                itemPosts.clear();
+                for(DataSnapshot data : snapshot.getChildren()){
+                    HashMap hashMap = (HashMap) data.getValue();
+                    assert hashMap != null;
+                    itemPosts.add(
+                            new ItemPost(
+                                    Objects.requireNonNull(hashMap.get("uid")).toString(),
+                                    Objects.requireNonNull(hashMap.get("title")).toString(),
+                                    Objects.requireNonNull(hashMap.get("content")).toString(),
+                                    data.getKey()));
+                }
+                if(postAdapter == null){
+                    createRecyclerView();
+                }else postAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
 
         myRef = database.getReference().child("Posts");
-
-        myRef
-                .orderByKey()
-                .addChildEventListener(
-                        new ChildEventListener() {
-                            @Override
-                            public void onChildAdded(
-                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+        myRef.addValueEventListener(listener);
+//        myRef
+//                .orderByKey()
+//                .addChildEventListener(
+//                        new ChildEventListener() {
+//                            @Override
+//                            public void onChildAdded(
+//                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 //                                System.out.println("onResume");
-                                HashMap hashMap = (HashMap) snapshot.getValue();
-//                                System.out.println("ASDCF1");
-                                assert hashMap != null;
-                                itemPosts.add(
-                                        new ItemPost(
-                                                Objects.requireNonNull(hashMap.get("uid")).toString(),
-                                                Objects.requireNonNull(hashMap.get("title")).toString(),
-                                                Objects.requireNonNull(hashMap.get("content")).toString(),
-                                                snapshot.getKey()));
-                                postAdapter.notifyDataSetChanged();
-                            }
-
-                            @Override
-                            public void onChildChanged(
-                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                            }
-
-                            @Override
-                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
-
-                            @Override
-                            public void onChildMoved(
-                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {}
-                        });
+//                                HashMap hashMap = (HashMap) snapshot.getValue();
+////
+//                                assert hashMap != null;
+//                                itemPosts.add(
+//                                        new ItemPost(
+//                                                Objects.requireNonNull(hashMap.get("uid")).toString(),
+//                                                Objects.requireNonNull(hashMap.get("title")).toString(),
+//                                                Objects.requireNonNull(hashMap.get("content")).toString(),
+//                                                snapshot.getKey()));
+//                                postAdapter.notifyDataSetChanged();
+//                            }
+//
+//                            @Override
+//                            public void onChildChanged(
+//                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                                HashMap hashMap = (HashMap) snapshot.getValue();
+////
+//                                assert hashMap != null;
+//                                itemPosts.add(
+//                                        new ItemPost(
+//                                                Objects.requireNonNull(hashMap.get("uid")).toString(),
+//                                                Objects.requireNonNull(hashMap.get("title")).toString(),
+//                                                Objects.requireNonNull(hashMap.get("content")).toString(),
+//                                                snapshot.getKey()));
+//                                postAdapter.notifyDataSetChanged();
+//
+//                            }
+//
+//                            @Override
+//                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
+//
+//                            @Override
+//                            public void onChildMoved(
+//                                    @NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+//
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError error) {}
+//                        });
     }
 
     private void createRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         RecyclerView recyclerView = view.findViewById(R.id.rv_post_list);
         recyclerView.setHasFixedSize(true);
-
         postAdapter = new PostAdapter(itemPosts, getActivity().getApplicationContext());
 
         EditText etSearch = view.findViewById(R.id.et_post_search);
@@ -155,15 +191,11 @@ public class PostFragment extends Fragment {
 
     public void onResume() {
         super.onResume();
-
         // Restore the search box and remove focus
         EditText et = view.findViewById(R.id.et_post_search);
         et.setText("");
         et.clearFocus();
-
         // Clear the current recyclerView and fetch the latest events from database
-        itemPosts.clear();
-        createRecyclerView();
         initPostList();
     }
 
